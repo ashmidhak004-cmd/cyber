@@ -1,0 +1,696 @@
+{% extends "base.html" %}
+
+{% block title %}Scenario – CyberSafe QR{% endblock %}
+
+{% block content %}
+<main class="scenarios-container" style="margin-top: 20px; min-height: 80vh;">
+    <!-- Navigation back & forward buttons above card -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 10px;">
+        <a href="{{ url_for('category_view', name=category_name) }}" class="explore-btn" style="text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.95rem;">
+            <i class="fa-solid fa-arrow-left"></i> Back to {{ category.title }}
+        </a>
+        
+        {% if next_id %}
+        <a href="{{ url_for('scenario_view', id=next_id) }}" class="explore-btn" style="text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.95rem;">
+            Next Scenario <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        {% else %}
+        <a href="{{ url_for('index') }}" class="explore-btn" style="text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.95rem;">
+            Go to Home <i class="fa-solid fa-house"></i>
+        </a>
+        {% endif %}
+    </div>
+
+    <!-- The Scenario Card -->
+    <div class="scenario-card" id="scen-{{ scenario_id }}" data-solved="false">
+        <div class="scenario-layout">
+            <!-- Mockup Side -->
+            <div class="scenario-mockup-side">
+                {% if scenario_id == 'sms-lottery' %}
+                    <div class="device-phone">
+                        <div class="phone-screen">
+                            <div class="phone-status-bar">
+                                <span>9:41 AM</span>
+                                <div class="status-icons">
+                                    <i class="fa-solid fa-signal"></i>
+                                    <i class="fa-solid fa-wifi"></i>
+                                    <i class="fa-solid fa-battery-three-quarters"></i>
+                                </div>
+                            </div>
+                            <div class="phone-header">
+                                <i class="fa-solid fa-chevron-left"></i>
+                                <div class="sender-info">
+                                    <div class="sender-avatar"><i class="fa-solid fa-user"></i></div>
+                                    <span class="sender-number">+1 (800) 999-0123</span>
+                                </div>
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div class="phone-chat-body">
+                                <div class="chat-date">Today</div>
+                                <div class="sms-bubble red-flag-target" id="sms-lottery-bubble">
+                                    <span class="flag-marker flag-1" data-flag="🚩 UNKNOWN NUMBER: Organizations don't text you from random mobile accounts."></span>
+                                    <span class="flag-marker flag-2" data-flag="🚩 ARTIFICIAL URGENCY: Making you act instantly prevents you from thinking clearly."></span>
+                                    <span class="flag-marker flag-3" data-flag="🚩 SUSPICIOUS WEBSITE: Official events never use random '.xyz' domain web-addresses."></span>
+                                    <p class="sms-header">🚨 URGENT NOTICE 🚨</p>
+                                    <p>CONGRATULATIONS! Your mobile number won the Grand Mega Cash Prize of <strong>$50,000!</strong></p>
+                                    <p>Claim your funds immediately by registering here:</p>
+                                    <span class="fake-link">http://mega-winner.xyz/cash</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'email-bank' %}
+                    <div class="device-email">
+                        <div class="email-header">
+                            <div class="email-window-controls">
+                                <span class="control red"></span>
+                                <span class="control yellow"></span>
+                                <span class="control green"></span>
+                            </div>
+                            <div class="email-title">Inbox — SecureMail</div>
+                        </div>
+                        <div class="email-content-view">
+                            <div class="email-meta red-flag-target" id="email-bank-meta">
+                                <span class="flag-marker flag-1" data-flag="🚩 SUSPICIOUS SENDER: Banks use domains like 'bank.com', never helper addresses like 'securebank-support.net'."></span>
+                                <p><strong>From:</strong> security-alert@securebank-support.net</p>
+                                <p><strong>To:</strong> customer-verify@user.com</p>
+                                <p><strong>Subject:</strong> <span class="subject-urgency">⚠️ URGENT: Account Suspended Immediately!</span></p>
+                            </div>
+                            <div class="email-body red-flag-target" id="email-bank-body">
+                                <span class="flag-marker flag-2" data-flag="🚩 GENERIC GREETING: Real banks address you by your full registered name, not generic terms."></span>
+                                <span class="flag-marker flag-3" data-flag="🚩 FEAR COMPULSION: Threats of locking your account are designed to make you act in fear without checking."></span>
+                                <p>Dear Customer,</p>
+                                <p>We detected unauthorized login attempts from a foreign IP address on your account. To protect your funds, we have temporarily suspended your account access.</p>
+                                <p>To restore access and verify your identity, click the security link below within 24 hours:</p>
+                                <div class="fake-email-btn">Restore Account Securely</div>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'wa-friend' %}
+                    <div class="device-phone">
+                        <div class="phone-screen">
+                            <div class="phone-status-bar">
+                                <span>2:15 PM</span>
+                                <div class="status-icons">
+                                    <i class="fa-solid fa-signal"></i>
+                                    <i class="fa-solid fa-wifi"></i>
+                                    <i class="fa-solid fa-battery-full"></i>
+                                </div>
+                            </div>
+                            <div class="wa-header">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <div class="wa-contact">
+                                    <div class="wa-avatar"><img src="{{ url_for('static', filename='images/cyberbot.png') }}" class="dummy-friend-pic" alt="Friend Pic" style="filter: hue-rotate(90deg);"></div>
+                                    <div class="wa-contact-text">
+                                        <span class="wa-contact-name">Leo (Classmate)</span>
+                                        <span class="wa-status">online</span>
+                                    </div>
+                                </div>
+                                <div class="wa-actions">
+                                    <i class="fa-solid fa-video"></i>
+                                    <i class="fa-solid fa-phone"></i>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </div>
+                            </div>
+                            <div class="wa-chat-body">
+                                <div class="wa-msg-received red-flag-target" id="wa-msg-1">
+                                    <span class="flag-marker flag-1" data-flag="🚩 NEW PHONE CLAIM: Scammers claim they lost their phone to explain why they are texting from an unrecognized number."></span>
+                                    <p>Hey! I lost my phone yesterday, so this is my temporary number for now. Please delete the old one! 📱</p>
+                                    <span class="msg-time">2:13 PM</span>
+                                </div>
+                                <div class="wa-msg-received red-flag-target" id="wa-msg-2">
+                                    <span class="flag-marker flag-2" data-flag="🚩 EMERGENCY MONEY DEMAND: A sudden urgent need for money is the hallmark of contact impersonation scams."></span>
+                                    <p>Hey, I'm stuck at a pharmacy and my debit card is declined. I need $150 for medicine. Can you wire it to my Venmo link? I'll pay you back tomorrow morning. Super sorry to ask!</p>
+                                    <span class="msg-time">2:14 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'dm-copyright' %}
+                    <div class="device-phone">
+                        <div class="phone-screen">
+                            <div class="phone-status-bar">
+                                <span>5:02 PM</span>
+                                <div class="status-icons">
+                                    <i class="fa-solid fa-signal"></i>
+                                    <i class="fa-solid fa-wifi"></i>
+                                    <i class="fa-solid fa-battery-half"></i>
+                                </div>
+                            </div>
+                            <div class="ig-header">
+                                <i class="fa-solid fa-chevron-left"></i>
+                                <div class="ig-user-info">
+                                    <span class="ig-username">HelpCenter_Verified_Support</span>
+                                </div>
+                                <i class="fa-solid fa-info-circle"></i>
+                            </div>
+                            <div class="ig-chat-body">
+                                <div class="ig-profile-card">
+                                    <div class="ig-big-avatar"><i class="fa-solid fa-shield"></i></div>
+                                    <span class="ig-big-username">HelpCenter_Verified_Support</span>
+                                    <span class="ig-subtext">Instagram Support • 12K followers</span>
+                                </div>
+                                <div class="ig-msg-received red-flag-target" id="ig-msg">
+                                    <span class="flag-marker flag-1" data-flag="🚩 SUPPORT BY DM: Social media platforms never send warning alerts via direct messages."></span>
+                                    <span class="flag-marker flag-2" data-flag="🚩 SUSPICIOUS LINK: The URL 'help-instagram.net' is an unofficial page built by hackers."></span>
+                                    <p><strong>ALERT: Copyright Infringement.</strong></p>
+                                    <p>We received complaints that your account posts violate community standards. Your profile will be permanently deleted within 24 hours.</p>
+                                    <p>If this is an error, appeal immediately by logging in:</p>
+                                    <span class="ig-fake-link">https://help-instagram.net/appeal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'scareware' %}
+                    <div class="device-browser">
+                        <div class="browser-header">
+                            <div class="browser-controls">
+                                <span class="ctrl-dot"></span>
+                                <span class="ctrl-dot"></span>
+                                <span class="ctrl-dot"></span>
+                            </div>
+                            <div class="browser-address-bar red-flag-target" id="browser-url">
+                                <span class="flag-marker flag-1" data-flag="🚩 WEIRD WEB ADDRESS: System diagnostics cannot be run by visiting a webpage ending in '.online'."></span>
+                                <i class="fa-solid fa-lock-open url-warning"></i> system-cleaner-danger.online
+                            </div>
+                        </div>
+                        <div class="browser-viewport">
+                            <div class="scareware-modal red-flag-target" id="scareware-body">
+                                <span class="flag-marker flag-2" data-flag="🚩 EXCESSIVE SYSTEM WARNINGS: Built-in software doesn't alert you via blinking web page components."></span>
+                                <span class="flag-marker flag-3" data-flag="🚩 CALL US ASSISTANCE: Official support never prompts you to call support hotlines from popups."></span>
+                                <div class="warning-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                <h3>⚠️ CRITICAL THREAT DETECTED ⚠️</h3>
+                                <p class="scare-sub">Windows Defender detected <strong>17 Malware Viruses</strong> on your system!</p>
+                                <div class="threat-list">
+                                    <div><i class="fa-solid fa-bug"></i> Trojans: High Risk</div>
+                                    <div><i class="fa-solid fa-shield-virus"></i> Keylogger: Active</div>
+                                </div>
+                                <p class="call-action">Call Support Hotline: <strong>+1-800-444-CYBER</strong></p>
+                                <div class="scare-btns">
+                                    <button class="scare-btn-action">Clean & Protect System</button>
+                                    <button class="scare-btn-cancel">Ignore Risk</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'wifi-snare' %}
+                    <div class="device-phone">
+                        <div class="phone-screen">
+                            <div class="phone-status-bar">
+                                <span>10:30 AM</span>
+                                <div class="status-icons">
+                                    <i class="fa-solid fa-signal"></i>
+                                    <i class="fa-solid fa-wifi"></i>
+                                    <i class="fa-solid fa-battery-three-quarters"></i>
+                                </div>
+                            </div>
+                            <div class="settings-header">
+                                <i class="fa-solid fa-chevron-left"></i>
+                                <span>Wi-Fi Connections</span>
+                                <span></span>
+                            </div>
+                            <div class="settings-body">
+                                <p class="settings-label">CHOOSE A NETWORK...</p>
+                                <div class="wifi-item connected red-flag-target" id="wifi-network-connected">
+                                    <span class="flag-marker flag-1" data-flag="🚩 UNLOCKED NETWORK: Free public networks without lock padlocks do not encrypt network transmissions."></span>
+                                    <span class="flag-marker flag-2" data-flag="🚩 SUSPICIOUS NAME: Scammers set up hotspots labeled like 'Airport' or 'Coffee' to snare travelers."></span>
+                                    <div class="wifi-details">
+                                        <i class="fa-solid fa-wifi wifi-icon"></i>
+                                        <div class="wifi-name-box">
+                                            <span class="wifi-name">Free_Airport_WiFi_Secure</span>
+                                            <span class="wifi-status-sub">Connected</span>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-circle-info wifi-info"></i>
+                                </div>
+                                <div class="wifi-item secured">
+                                    <div class="wifi-details">
+                                        <i class="fa-solid fa-wifi wifi-icon"></i>
+                                        <div class="wifi-name-box">
+                                            <span class="wifi-name">Private_Airport_Staff</span>
+                                            <span class="wifi-status-sub">Saved, Secured</span>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-lock wifi-lock"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'job-scam' %}
+                    <div class="device-phone">
+                        <div class="phone-screen">
+                            <div class="phone-status-bar">
+                                <span>11:15 AM</span>
+                                <div class="status-icons">
+                                    <i class="fa-solid fa-signal"></i>
+                                    <i class="fa-solid fa-wifi"></i>
+                                    <i class="fa-solid fa-battery-full"></i>
+                                </div>
+                            </div>
+                            <div class="tg-header">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <div class="tg-contact">
+                                    <div class="tg-avatar"><i class="fa-solid fa-user-tie"></i></div>
+                                    <div class="tg-contact-text">
+                                        <span class="tg-contact-name">Ava (HR Manager)</span>
+                                        <span class="tg-status">online</span>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </div>
+                            <div class="tg-chat-body">
+                                <div class="tg-msg-received red-flag-target" id="tg-msg-offer">
+                                    <span class="flag-marker flag-1" data-flag="🚩 TOO GOOD TO BE TRUE: High daily salaries for no experience are always signs of a scam."></span>
+                                    <span class="flag-marker flag-2" data-flag="🚩 COLD OUTREACH: Legitimate corporations do not randomly message users offering employment."></span>
+                                    <p><strong>🔥 Remote Job Recruitment 🔥</strong></p>
+                                    <p>Hello! We are looking for part-time assistants to like YouTube videos and rate hotel websites. Work from home using your phone, for just 1-2 hours a day.</p>
+                                    <p>💵 Pay: <strong>$200 - $600 daily</strong>. No registration fees, no experience needed!</p>
+                                    <p>Are you interested in making money with us?</p>
+                                    <div class="fake-tg-btn">Start Earning Money Now</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'grandparent-call' %}
+                    <div class="device-phone">
+                        <div class="phone-screen incoming-call-screen">
+                            <div class="call-top-meta red-flag-target" id="call-meta">
+                                <span class="flag-marker flag-1" data-flag="🚩 SUSPICIOUS CALLER ID: Saved contacts with question marks indicate unknown spoofed details."></span>
+                                <div class="caller-label">INCOMING CALL</div>
+                                <div class="caller-name">GRANDSON?</div>
+                                <div class="caller-number">+1 (555) 234-8765</div>
+                            </div>
+                            <div class="call-transcript-panel red-flag-target" id="call-body">
+                                <span class="flag-marker flag-2" data-flag="🚩 SECRECY REQUISITION: Prevent calling other relatives hides the fraud scheme."></span>
+                                <span class="flag-marker flag-3" data-flag="🚩 SPEED PAYMENT DEMAND: Forcing immediate wire or crypto bail transfers bypassing bank alerts."></span>
+                                <div class="transcript-header"><i class="fa-solid fa-quote-left"></i> Audio Transcript (Simulated Voice)</div>
+                                <p class="transcript-text">"Grandpa? It's me. I'm in a huge emergency... I got into a car accident and got arrested. I'm in jail. Please don't call mom, she will be furious. Please help. Wire $2,000 to this legal account immediately or I can't go home..."</p>
+                            </div>
+                            <div class="call-actions-slider">
+                                <div class="decline-btn"><i class="fa-solid fa-phone-slash"></i></div>
+                                <div class="accept-btn"><i class="fa-solid fa-phone"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Quiz Side -->
+            <div class="scenario-quiz-side">
+                {% if scenario_id == 'sms-lottery' %}
+                    <div class="quiz-badge">Scenario 1 of 8</div>
+                    <h3>The Jackpot SMS</h3>
+                    <p class="scenario-brief">You just received this text message. It claims you won $50,000 in a lottery you don't remember entering!</p>
+                    
+                    <div class="quiz-question">
+                        <h4>Is this text message safe to click?</h4>
+                        <div class="quiz-options">
+                            <button class="option-btn" data-correct="false" data-explanation="lottery-fake">
+                                <i class="fa-solid fa-gift"></i> Yes! I want to claim my cash prize.
+                            </button>
+                            <button class="option-btn" data-correct="true" data-explanation="lottery-fake">
+                                <i class="fa-solid fa-shield-halved"></i> No, this looks like a phishing scam.
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feedback-panel" id="explain-lottery-fake">
+                        <div class="feedback-header">
+                            <span class="feedback-icon-badge"></span>
+                            <span class="feedback-title-text"></span>
+                        </div>
+                        <div class="feedback-content">
+                            <p class="feedback-intro"></p>
+                            
+                            <div class="red-flags-box">
+                                <h5>🚩 Scan Red Flags Revealed:</h5>
+                                <ul>
+                                    <li><strong>Unknown Sender:</strong> Official banks or lotteries do not text from random numbers.</li>
+                                    <li><strong>Unsolicited Wins:</strong> You cannot win a lottery you never bought a ticket for.</li>
+                                    <li><strong>Suspicious URL:</strong> The link ends in `.xyz` which is commonly used by scammers.</li>
+                                </ul>
+                            </div>
+
+                            <div class="how-it-works">
+                                <h5>How this scam works:</h5>
+                                <p>The link leads to a copy of a banking website. When you enter your card details to "deposit the winnings", scammers harvest your card details and empty your account.</p>
+                            </div>
+
+                            <div class="safety-tips-box">
+                                <h5>🛡️ Safety Tips:</h5>
+                                <ul>
+                                    <li>Never open links from numbers you do not recognize.</li>
+                                    <li>Delete and block the sender.</li>
+                                    <li>Report the number to your local carrier or government cybercell (e.g., 7726 in many countries).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'email-bank' %}
+                    <div class="quiz-badge">Scenario 2 of 8</div>
+                    <h3>The Suspicious Email</h3>
+                    <p class="scenario-brief">An email warning of an account suspension arrives. The sender demands validation within 24 hours to secure your funds.</p>
+                    
+                    <div class="quiz-question">
+                        <h4>What is the safest action here?</h4>
+                        <div class="quiz-options">
+                            <button class="option-btn" data-correct="false" data-explanation="email-fake">
+                                <i class="fa-solid fa-mouse-pointer"></i> Click the button to log in and unlock my account.
+                            </button>
+                            <button class="option-btn" data-correct="true" data-explanation="email-fake">
+                                <i class="fa-solid fa-trash-can"></i> Delete the email, and log in directly through my bank's app or call their official helpline.
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feedback-panel" id="explain-email-fake">
+                        <div class="feedback-header">
+                            <span class="feedback-icon-badge"></span>
+                            <span class="feedback-title-text"></span>
+                        </div>
+                        <div class="feedback-content">
+                            <p class="feedback-intro"></p>
+                            
+                            <div class="red-flags-box">
+                                <h5>🚩 Scan Red Flags Revealed:</h5>
+                                <ul>
+                                    <li><strong>Fake Sender Address:</strong> The domain `securebank-support.net` is a mockup created by hackers.</li>
+                                    <li><strong>Generic Salutation:</strong> "Dear Customer" instead of your actual name.</li>
+                                    <li><strong>High-Urgency Threat:</strong> Threatening suspension within 24 hours creates fear.</li>
+                                </ul>
+                            </div>
+
+                            <div class="how-it-works">
+                                <h5>How this scam works:</h5>
+                                <p>The "Restore Account" button redirects to a credential harvester page. When you input your username and password, the scammer receives them instantly, allows them to log into your account, and wires away your savings.</p>
+                            </div>
+
+                            <div class="safety-tips-box">
+                                <h5>🛡️ Safety Tips:</h5>
+                                <ul>
+                                    <li>Never click login buttons within unsolicited emails.</li>
+                                    <li>Check the sender address carefully for typos or odd endings.</li>
+                                    <li>Always type your bank's website manually into the address bar.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'wa-friend' %}
+                    <div class="quiz-badge">Scenario 3 of 8</div>
+                    <h3>The New-Number Friend</h3>
+                    <p class="scenario-brief">An online text from your close friend claims they lost their phone and desperately need money to cover an emergency invoice.</p>
+                    
+                    <div class="quiz-question">
+                        <h4>Is it safe to wire the money immediately?</h4>
+                        <div class="quiz-options">
+                            <button class="option-btn" data-correct="false" data-explanation="wa-friend">
+                                <i class="fa-solid fa-paper-plane"></i> Yes, they are my friend. I must help!
+                            </button>
+                            <button class="option-btn" data-correct="true" data-explanation="wa-friend">
+                                <i class="fa-solid fa-phone-slash"></i> No, I should call them on their actual (original) number first to verify.
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feedback-panel" id="explain-wa-friend">
+                        <div class="feedback-header">
+                            <span class="feedback-icon-badge"></span>
+                            <span class="feedback-title-text"></span>
+                        </div>
+                        <div class="feedback-content">
+                            <p class="feedback-intro"></p>
+                            
+                            <div class="red-flags-box">
+                                <h5>🚩 Scan Red Flags Revealed:</h5>
+                                <ul>
+                                    <li><strong>Sudden Number Swap:</strong> Texting from a brand-new number claiming they lost their phone.</li>
+                                    <li><strong>Panic Trigger:</strong> An urgent request for money is designed to bypass your caution.</li>
+                                    <li><strong>Suspicious Method:</strong> Pushing for immediate online wire transfers.</li>
+                                </ul>
+                            </div>
+
+                            <div class="how-it-works">
+                                <h5>How this scam works:</h5>
+                                <p>Scammers download pictures from social media, look up friends' contacts via leaked databases, and set up duplicate accounts. By posing as the friend in distress, they exploit your kindness to steal quick cash.</p>
+                            </div>
+
+                            <div class="safety-tips-box">
+                                <h5>🛡️ Safety Tips:</h5>
+                                <ul>
+                                    <li>Never send money based on text messages alone.</li>
+                                    <li>Always call the original phone number to confirm it's actually them.</li>
+                                    <li>Set a secret family/friend password or ask a question only your actual friend would know.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'dm-copyright' %}
+                    <div class="quiz-badge">Scenario 4 of 8</div>
+                    <h3>The Account Warning</h3>
+                    <p class="scenario-brief">An account claiming to be Instagram Support sends you a direct message warning that you have violated copyright policies, threating immediate account deletion.</p>
+                    
+                    <div class="quiz-question">
+                        <h4>Would you trust this support link?</h4>
+                        <div class="quiz-options">
+                            <button class="option-btn" data-correct="false" data-explanation="ig-copyright">
+                                <i class="fa-solid fa-key"></i> Yes, I need to log in to appeal.
+                            </button>
+                            <button class="option-btn" data-correct="true" data-explanation="ig-copyright">
+                                <i class="fa-solid fa-ban"></i> No, official platforms never direct message to resolve rules.
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feedback-panel" id="explain-ig-copyright">
+                        <div class="feedback-header">
+                            <span class="feedback-icon-badge"></span>
+                            <span class="feedback-title-text"></span>
+                        </div>
+                        <div class="feedback-content">
+                            <p class="feedback-intro"></p>
+                            
+                            <div class="red-flags-box">
+                                <h5>🚩 Scan Red Flags Revealed:</h5>
+                                <ul>
+                                    <li><strong>In-box Warnings:</strong> Official help centers use account notifications or email, never chats.</li>
+                                    <li><strong>Lookalike URL:</strong> The domain is `help-instagram.net` instead of the official platform domain.</li>
+                                    <li><strong>Immediate Deletion:</strong> Instilling panic (24 hours) is a classic phishing strategy.</li>
+                                </ul>
+                            </div>
+
+                            <div class="how-it-works">
+                                <h5>How this scam works:</h5>
+                                <p>The link leads to a page styled like a portal. When you enter your email, password, and two-factor authentication code, scammers take control of your profile, lock you out, and target your connections.</p>
+                            </div>
+
+                            <div class="safety-tips-box">
+                                <h5>🛡️ Safety Tips:</h5>
+                                <ul>
+                                    <li>If you receive a policy warning, check your app Settings -> Help -> Support Requests.</li>
+                                    <li>Never enter passwords on external links received in chats.</li>
+                                    <li>Set up multi-factor verification (2FA) via authentication apps for security.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'scareware' %}
+                    <div class="quiz-badge">Scenario 5 of 8</div>
+                    <h3>The Virus Warning</h3>
+                    <p class="scenario-brief">While reading news articles online, your screen flashes with an urgent alert warning you that your computer is heavily infected by spyware.</p>
+                    
+                    <div class="quiz-question">
+                        <h4>What is the safest action here?</h4>
+                        <div class="quiz-options">
+                            <button class="option-btn" data-correct="false" data-explanation="scareware">
+                                <i class="fa-solid fa-download"></i> Click 'Clean & Protect' to remove the bugs.
+                            </button>
+                            <button class="option-btn" data-correct="true" data-explanation="scareware">
+                                <i class="fa-solid fa-rectangle-xmark"></i> Close the web browser immediately.
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feedback-panel" id="explain-scareware">
+                        <div class="feedback-header">
+                            <span class="feedback-icon-badge"></span>
+                            <span class="feedback-title-text"></span>
+                        </div>
+                        <div class="feedback-content">
+                            <p class="feedback-intro"></p>
+                            
+                            <div class="red-flags-box">
+                                <h5>🚩 Scan Red Flags Revealed:</h5>
+                                <ul>
+                                    <li><strong>Browser Origin:</strong> Real security tools never run scans inside browser pages.</li>
+                                    <li><strong>Blinking Alarms:</strong> Dramatic alerts are scare tactics to prevent logical reasoning.</li>
+                                    <li><strong>Support Hotline:</strong> Demanding phone assistance is typical of support scams.</li>
+                                </ul>
+                            </div>
+
+                            <div class="how-it-works">
+                                <h5>How this scam works:</h5>
+                                <p>This is "Scareware". Clicking install installs malware, or calling the number links you to fake technicians. They gain remote computer access, install spyware, and demand credit card payments.</p>
+                            </div>
+
+                            <div class="safety-tips-box">
+                                <h5>🛡️ Safety Tips:</h5>
+                                <ul>
+                                        <li>Instantly close pop-ups by pressing `Ctrl + W` (Windows) or `Cmd + W` (Mac).</li>
+                                        <li>Keep system firewalls and browsers updated to block these threats automatically.</li>
+                                        <li>Rely only on local antivirus programs installed directly on your machine.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'wifi-snare' %}
+                    <div class="quiz-badge">Scenario 6 of 8</div>
+                    <h3>The Free Wi-Fi Snare</h3>
+                    <p class="scenario-brief">Waiting for your plane at the airport, you see an open network named "Free_Airport_WiFi_Secure". You connect to it and want to quickly check your bank balance.</p>
+                    
+                    <div class="quiz-question">
+                        <h4>Is it safe to log into your banking app?</h4>
+                        <div class="quiz-options">
+                            <button class="option-btn" data-correct="false" data-explanation="wifi-snare">
+                                <i class="fa-solid fa-circle-check"></i> Yes, it is free and has 'Secure' in the name.
+                            </button>
+                            <button class="option-btn" data-correct="true" data-explanation="wifi-snare">
+                                <i class="fa-solid fa-shield-virus"></i> No, wait until I can use mobile data or a VPN.
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feedback-panel" id="explain-wifi-snare">
+                        <div class="feedback-header">
+                            <span class="feedback-icon-badge"></span>
+                            <span class="feedback-title-text"></span>
+                        </div>
+                        <div class="feedback-content">
+                            <p class="feedback-intro"></p>
+                            
+                            <div class="red-flags-box">
+                                <h5>🚩 Scan Red Flags Revealed:</h5>
+                                <ul>
+                                    <li><strong>No Padlock Lock:</strong> It does not require a password, meaning all traffic is open.</li>
+                                    <li><strong>Fake Trust Label:</strong> Adding "Secure" to the name is an easy way to trick users.</li>
+                                </ul>
+                            </div>
+
+                            <div class="how-it-works">
+                                <h5>How this scam works:</h5>
+                                <p>Hackers run "Evil Twin" Wi-Fi networks in airports or cafes. Once connected, they intercept everything you browse, and they grab passwords, credit card inputs, and session cookies.</p>
+                            </div>
+
+                            <div class="safety-tips-box">
+                                <h5>🛡️ Safety Tips:</h5>
+                                <ul>
+                                    <li>Disable automated Wi-Fi connection configurations on devices.</li>
+                                    <li>Use cellular data (3G/4G/5G) or a Virtual Private Network (VPN) for sensitive tasks.</li>
+                                    <li>Always confirm the cafe/airport official network credentials with personnel.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'job-scam' %}
+                    <div class="quiz-badge">Scenario 7 of 8</div>
+                    <h3>The Too-Easy Job</h3>
+                    <p class="scenario-brief">An unsolicited text message from an unknown "HR Manager" offers an easy work-from-home job that guarantees hundreds of dollars per day for simple video likes.</p>
+                    
+                    <div class="quiz-question">
+                        <h4>Is this a real job opportunity?</h4>
+                        <div class="quiz-options">
+                            <button class="option-btn" data-correct="false" data-explanation="job-scam">
+                                <i class="fa-solid fa-dollar-sign"></i> Yes! I want to earn easy daily cash.
+                            </button>
+                            <button class="option-btn" data-correct="true" data-explanation="job-scam">
+                                <i class="fa-solid fa-user-slash"></i> No, this is a job task scam. Block them!
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feedback-panel" id="explain-job-scam">
+                        <div class="feedback-header">
+                            <span class="feedback-icon-badge"></span>
+                            <span class="feedback-title-text"></span>
+                        </div>
+                        <div class="feedback-content">
+                            <p class="feedback-intro"></p>
+                            
+                            <div class="red-flags-box">
+                                <h5>🚩 Scan Red Flags Revealed:</h5>
+                                <ul>
+                                    <li><strong>Extreme Salary:</strong> Offering $600/day for clicks is financially impossible.</li>
+                                    <li><strong>Random Recruiters:</strong> HR teams do not reach out on personal messaging apps.</li>
+                                    <li><strong>Push to Apps:</strong> Redirecting to Telegram or other apps to initiate work.</li>
+                                </ul>
+                            </div>
+
+                            <div class="how-it-works">
+                                <h5>How this scam works:</h5>
+                                <p>This is a "Task Scam". They pay you $5 or $10 first to win your trust. Then, they require you to buy VIP upgrade packages or deposit money to unlock larger payouts, which they pocket before disabling your profile.</p>
+                            </div>
+
+                            <div class="safety-tips-box">
+                                <h5>🛡️ Safety Tips:</h5>
+                                <ul>
+                                    <li>If a career opportunity sounds too simple and pays too well, it is fake.</li>
+                                    <li>Never send money to an employer to start working or withdraw earnings.</li>
+                                    <li>Block the account immediately.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% elif scenario_id == 'grandparent-call' %}
+                    <div class="quiz-badge">Scenario 8 of 8</div>
+                    <h3>The Urgent Phone Call</h3>
+                    <p class="scenario-brief">A call comes in from a name listed as "GRANDSON?". The voice sounds like your grandson crying, saying he's in jail and needs immediate bail money wired.</p>
+                    
+                    <div class="quiz-question">
+                        <h4>What is the first thing you should do?</h4>
+                        <div class="quiz-options">
+                            <button class="option-btn" data-correct="false" data-explanation="grandparent">
+                                <i class="fa-solid fa-money-bill-transfer"></i> Hurry to the bank to wire the money immediately.
+                            </button>
+                            <button class="option-btn" data-correct="true" data-explanation="grandparent">
+                                <i class="fa-solid fa-phone-slash"></i> Hang up immediately, and call my grandson or his parents directly on their actual known numbers.
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feedback-panel" id="explain-grandparent">
+                        <div class="feedback-header">
+                            <span class="feedback-icon-badge"></span>
+                            <span class="feedback-title-text"></span>
+                        </div>
+                        <div class="feedback-content">
+                            <p class="feedback-intro"></p>
+                            
+                            <div class="red-flags-box">
+                                <h5>🚩 Scan Red Flags Revealed:</h5>
+                                <ul>
+                                    <li><strong>Request for Secrecy:</strong> Demanding you "do not tell mom" is used to prevent you from discovering they are safe.</li>
+                                    <li><strong>Wire Payment Methods:</strong> Requesting wires, gift cards, or crypto bail payments.</li>
+                                    <li><strong>Spoofed Voice/Caller ID:</strong> Using voice clips from social media or spoofing cell numbers.</li>
+                                </ul>
+                            </div>
+
+                            <div class="how-it-works">
+                                <h5>How this scam works:</h5>
+                                <p>This is the "Grandparent Scam". Fraudsters scrape details from social media or use AI voice tools to clone a grandchild's voice. They trigger heavy anxiety to bypass reasoning, making victims pay fake bail collectors.</p>
+                            </div>
+
+                            <div class="safety-tips-box">
+                                <h5>🛡️ Safety Tips:</h5>
+                                <ul>
+                                    <li>Always hang up and verify. Phone numbers and voices can be forged.</li>
+                                    <li>Create a secret family "passcode word" to confirm identity during family emergencies.</li>
+                                    <li>Never send funds via wire transfer, reloadable cards, or cryptocurrency to strangers.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}{{ fraud.title }} – CyberSafe QR{% endblock %}
+
+{% block content %}
+<main class="scenarios-container" style="margin-top: 20px; min-height: 80vh;">
+    <!-- Navigation back buttons above content -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 10px;">
+        <a href="{{ url_for('financial_crimes') }}" class="explore-btn" style="text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.95rem;">
+            <i class="fa-solid fa-arrow-left"></i> Back to Financial Crimes
+        </a>
+        <a href="{{ url_for('index') }}" class="explore-btn" style="text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.95rem;">
+            Go to Home <i class="fa-solid fa-house"></i>
+        </a>
+    </div>
+
+    <!-- Fraud Header Banner -->
+    <div class="category-banner color-fin" style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div class="banner-content">
+            <span style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 12px; margin-bottom: 8px; display: inline-block; color: white;">
+                Financial Cyber Threat
+            </span>
+            <h2 style="display: flex; align-items: center; gap: 10px; color: white; margin-bottom: 8px;">
+                <i class="{{ fraud.icon }}"></i> {{ fraud.title }}
+            </h2>
+            <p style="color: white; font-size: 1.05rem;">{{ fraud.desc }}</p>
+        </div>
+    </div>
+
+    <!-- Main Content Layout (Responsive Two-Column Grid) -->
+    <div class="fraud-detail-layout" style="margin-bottom: 40px;">
+        <!-- Left: How it Works -->
+        <div class="fraud-section-card">
+            <h3 class="section-title"><i class="fa-solid fa-gears" style="color: var(--primary-color);"></i> How the Scam Works</h3>
+            <div class="step-list">
+                {% for step in fraud.how_it_works %}
+                <div class="step-item">
+                    <div class="step-number">{{ loop.index }}</div>
+                    <div class="step-text">{{ step }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Right: Red Flags and Safety Tips -->
+        <div class="fraud-sidebar">
+            <!-- Red Flags -->
+            <div class="fraud-section-card warning-card">
+                <h3 class="section-title warning-title" style="color: var(--danger-color);"><i class="fa-solid fa-triangle-exclamation"></i> Warning Signs (Red Flags)</h3>
+                <ul class="bullet-list warning-list" style="list-style: none;">
+                    {% for sign in fraud.warning_signs %}
+                    <li style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+                        <i class="fa-solid fa-flag bullet-icon" style="color: var(--danger-color); margin-top: 5px;"></i>
+                        <span>{{ sign }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Safety Tips -->
+            <div class="fraud-section-card success-card">
+                <h3 class="section-title success-title" style="color: var(--success-color);"><i class="fa-solid fa-shield-halved"></i> How to Stay Safe</h3>
+                <ul class="bullet-list success-list" style="list-style: none;">
+                    {% for tip in fraud.safety_tips %}
+                    <li style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+                        <i class="fa-solid fa-circle-check bullet-icon" style="color: var(--success-color); margin-top: 5px;"></i>
+                        <span>{{ tip }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Challenge Card (If applicable) -->
+    {% if fraud.scenario_id %}
+    <div class="challenge-cta-card" style="margin-bottom: 50px;">
+        <div class="challenge-cta-content">
+            <div class="challenge-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="challenge-text">
+                <h4 style="margin-bottom: 4px; font-size: 1.15rem;">Interactive Quiz Challenge Available!</h4>
+                <p style="margin: 0; font-size: 0.95rem; opacity: 0.9;">Think you can spot this scam in action? Test your skills in our interactive simulator and earn your graduation shield!</p>
+            </div>
+        </div>
+        <a href="{{ url_for('scenario_view', id=fraud.scenario_id) }}" class="restart-btn challenge-cta-btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            Start Quiz Simulator <i class="fa-solid fa-play"></i>
+        </a>
+    </div>
+    {% endif %}
+</main>
+{% endblock %}

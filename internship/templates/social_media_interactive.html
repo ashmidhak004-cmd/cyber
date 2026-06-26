@@ -1,0 +1,1452 @@
+{% extends "base.html" %}
+
+{% block title %}Interactive {{ crime.title }} – CyberSafe QR{% endblock %}
+
+{% block content %}
+<main class="scenarios-container" style="margin-top: 20px; min-height: 90vh;">
+    <!-- Navigation back button -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <a href="{{ url_for('social_media_crimes') }}" class="explore-btn" style="text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.95rem;">
+            <i class="fa-solid fa-arrow-left"></i> Back to Social Media Crimes
+        </a>
+        <div style="font-weight: 700; font-size: 0.95rem; color: var(--primary-color);">
+            Module: {{ crime.title }}
+        </div>
+    </div>
+
+    {% if crime_id != 'csam' %}
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- 0. REAL-LIFE SITUATION SECTION — Immersive Crime-Specific  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section id="real-life-section" style="margin-bottom: 48px; position: relative;">
+
+        <!-- Section Badge -->
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px; flex-wrap: wrap;">
+            <div style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg,#4CAF50,#2e7d32); border-radius: 30px; padding: 8px 20px; box-shadow: 0 4px 14px rgba(76,175,80,0.35);">
+                <i class="fa-solid fa-film" style="color:#fff; font-size:0.85rem;"></i>
+                <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:1.5px; color:#fff;">Real-Life Situation</span>
+            </div>
+            <div style="height:2px; flex:1; background:linear-gradient(90deg,rgba(76,175,80,0.35),transparent); border-radius:2px;"></div>
+        </div>
+
+        <div style="background:var(--white); border-radius:20px; border:1px solid rgba(101,146,135,0.15); box-shadow:0 8px 40px rgba(0,0,0,0.07); overflow:hidden; position:relative;">
+
+            <!-- Intro Header -->
+            <div style="padding:28px 32px 0 32px;">
+                <h3 style="font-size:1.5rem; color:var(--dark-text); margin-bottom:6px;">How Does This Actually Happen?</h3>
+                <p style="font-size:0.95rem; color:var(--light-text); line-height:1.6; margin-bottom:24px;">Step into this realistic situation and experience what a real victim encounters. Read every message carefully — then decide what the right action is.</p>
+            </div>
+
+            <!-- ─────────────────────────────────────────── -->
+            {# ── Sexually Explicit: Instagram DM UI ── #}
+            {% if crime_id == 'sexually-explicit' %}
+            <div style="padding:0 32px 32px 32px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;">
+
+                    <!-- Instagram DM Clone -->
+                    <div style="border-radius:18px;overflow:hidden;box-shadow:0 8px 35px rgba(0,0,0,0.2);background:#fff;border:1px solid #dbdbdb;">
+                        <!-- IG Header -->
+                        <div style="background:linear-gradient(90deg,#f58529,#dd2a7b,#8134af,#515bd4);padding:2px;">
+                            <div style="background:#fff;margin:0;padding:0;">
+                                <div style="padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #efefef;">
+                                    <i class="fa-solid fa-arrow-left" style="color:#262626;font-size:0.9rem;"></i>
+                                    <div style="position:relative;flex-shrink:0;">
+                                        <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);padding:2px;">
+                                            <div style="width:100%;height:100%;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#8134af;">A</div>
+                                        </div>
+                                        <div style="position:absolute;bottom:0;right:0;width:11px;height:11px;border-radius:50%;background:#4CAF50;border:2px solid white;"></div>
+                                    </div>
+                                    <div style="flex:1;">
+                                        <div style="font-size:0.88rem;font-weight:700;color:#262626;">alex_photo_studio</div>
+                                        <div style="font-size:0.7rem;color:#8e8e8e;">Active now</div>
+                                    </div>
+                                    <i class="fa-solid fa-phone" style="color:#262626;font-size:0.9rem;"></i>
+                                    <i class="fa-solid fa-video" style="color:#262626;font-size:0.9rem;margin-left:10px;"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat body -->
+                        <div style="background:#fafafa;padding:16px 12px;display:flex;flex-direction:column;gap:12px;height:240px;overflow-y:auto;">
+                            <div style="text-align:center;font-size:0.65rem;color:#8e8e8e;margin-bottom:8px;">8:42 PM</div>
+                            
+                            <!-- Received msg 1 -->
+                            <div style="display:flex;align-items:flex-end;gap:8px;">
+                                <div style="width:24px;height:24px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;color:#8134af;flex-shrink:0;">A</div>
+                                <div style="background:#efefef;color:#262626;padding:10px 14px;border-radius:18px 18px 18px 4px;font-size:0.82rem;line-height:1.4;max-width:80%;">
+                                    Hi! I came across your profile and honestly you have a really unique look 📸 I work with a media agency and we're scouting fresh faces.
+                                </div>
+                            </div>
+                            
+                            <!-- Received msg 2 -->
+                            <div style="display:flex;align-items:flex-end;gap:8px;">
+                                <div style="width:24px;height:24px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;color:#8134af;flex-shrink:0;opacity:0;">A</div>
+                                <div style="background:#efefef;color:#262626;padding:10px 14px;border-radius:4px 18px 18px 18px;font-size:0.82rem;line-height:1.4;max-width:80%;">
+                                    It's for a paid campaign — ₹8,000/day, totally confidential. We've worked with 200+ models. Interested? 🌟
+                                </div>
+                            </div>
+
+                            <!-- Sent msg (You) -->
+                            <div style="display:flex;align-items:flex-end;justify-content:flex-end;gap:8px;">
+                                <div style="background:linear-gradient(135deg,#8134af,#dd2a7b);color:white;padding:10px 14px;border-radius:18px 18px 4px 18px;font-size:0.82rem;line-height:1.4;max-width:80%;">
+                                    Oh wow, really? I've never modelled before though. What exactly do you need?
+                                </div>
+                            </div>
+
+                            <!-- Received msg 3 (The Trap) -->
+                            <div style="display:flex;align-items:flex-end;gap:8px;">
+                                <div style="width:24px;height:24px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;color:#8134af;flex-shrink:0;">A</div>
+                                <div style="background:rgba(221,42,123,0.1);border:1px solid rgba(221,42,123,0.3);color:#262626;padding:10px 14px;border-radius:18px 18px 18px 4px;font-size:0.82rem;line-height:1.4;max-width:80%;">
+                                    To shortlist you officially, I just need a few private reference photos sent here first. Our panel reviews them confidentially. 🔒 Don't worry, it's standard procedure.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- IG Input area -->
+                        <div style="padding:10px 14px;background:#fff;border-top:1px solid #efefef;display:flex;align-items:center;gap:12px;">
+                            <div style="width:34px;height:34px;border-radius:50%;background:#0095f6;display:flex;align-items:center;justify-content:center;color:white;flex-shrink:0;"><i class="fa-solid fa-camera"></i></div>
+                            <div style="flex:1;background:#efefef;border-radius:20px;padding:8px 14px;font-size:0.82rem;color:#8e8e8e;display:flex;align-items:center;justify-content:space-between;">
+                                <span>Message...</span>
+                                <div style="display:flex;gap:12px;"><i class="fa-solid fa-microphone"></i><i class="fa-regular fa-image"></i><i class="fa-regular fa-face-smile"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- IG Decision Panel -->
+                    <div style="display:flex;flex-direction:column;gap:18px;">
+                        <div style="background:rgba(221,42,123,0.06);border:1px solid rgba(221,42,123,0.2);border-radius:12px;padding:16px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                                <i class="fa-solid fa-triangle-exclamation" style="color:#dd2a7b;"></i>
+                                <span style="font-weight:700;font-size:0.9rem;color:#dd2a7b;">Crucial Moment</span>
+                            </div>
+                            <p style="font-size:0.9rem;color:var(--dark-text);line-height:1.6;margin:0;">{{ crime.real_situation.decision_prompt }}</p>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:10px;" id="situation-options">
+                            {% for opt in crime.real_situation.decision_options %}
+                            <button class="option-btn situation-choice-btn" data-correct="{{ 'true' if opt.correct else 'false' }}" data-feedback="{{ opt.feedback }}" onclick="handleSituationChoice(this)" style="width:100%;text-align:left;padding:14px 18px;font-size:0.92rem;border-radius:10px;display:flex;align-items:flex-start;gap:10px;line-height:1.4;border:1px solid rgba(221,42,123,0.25);background:var(--white);cursor:pointer;transition:all 0.2s;font-family:inherit;">
+                                <i class="fa-solid fa-chevron-right" style="color:#dd2a7b;margin-top:3px;flex-shrink:0;"></i>
+                                <span>{{ opt.label }}</span>
+                            </button>
+                            {% endfor %}
+                        </div>
+                        <div id="situation-feedback" style="display:none;padding:16px 20px;border-radius:10px;font-size:0.9rem;line-height:1.5;animation:slideDownFade 0.4s ease both;"></div>
+                    </div>
+                </div>
+            </div>
+
+            {# ── Obscene Content: WhatsApp UI ── #}
+            {% elif crime_id == 'obscene-content' %}
+            <div style="padding:0 32px 32px 32px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;">
+
+                    <!-- WhatsApp Clone -->
+                    <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.15);background:#efeae2;border:1px solid #d1d7db;position:relative;">
+                        <!-- WhatsApp Header -->
+                        <div style="background:#00a884;padding:12px 16px;display:flex;align-items:center;gap:12px;color:white;">
+                            <i class="fa-solid fa-arrow-left" style="font-size:1.1rem;"></i>
+                            <div style="width:38px;height:38px;border-radius:50%;background:#dfe5e7;display:flex;align-items:center;justify-content:center;color:#54656f;font-size:1.2rem;overflow:hidden;">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="font-size:0.95rem;font-weight:600;margin-bottom:2px;">College Gang 🔥</div>
+                                <div style="font-size:0.7rem;opacity:0.9;">Arjun, Neha, Rahul, You</div>
+                            </div>
+                            <i class="fa-solid fa-video" style="font-size:1.1rem;"></i>
+                            <i class="fa-solid fa-phone" style="font-size:1.1rem;margin:0 8px;"></i>
+                            <i class="fa-solid fa-ellipsis-vertical" style="font-size:1.2rem;"></i>
+                        </div>
+
+                        <!-- WhatsApp Body -->
+                        <div style="padding:16px;display:flex;flex-direction:column;gap:8px;height:260px;overflow-y:auto;background-image:url('data:image/svg+xml;utf8,<svg width=\"100\" height=\"100\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"%23d1d7db\" stroke-width=\"1\" opacity=\"0.2\"><path d=\"M10,10 L30,30 M50,10 L70,30 M90,10 L10,30\"/></g></svg>');">
+                            <div style="background:#fff;align-self:center;padding:4px 12px;border-radius:8px;font-size:0.7rem;color:#54656f;box-shadow:0 1px 2px rgba(0,0,0,0.08);margin-bottom:8px;">TODAY</div>
+                            
+                            <!-- Arjun Msg -->
+                            <div style="align-self:flex-start;background:#fff;padding:6px 8px 6px 12px;border-radius:0 8px 8px 8px;max-width:85%;box-shadow:0 1px 1px rgba(0,0,0,0.1);position:relative;">
+                                <div style="font-size:0.75rem;font-weight:700;color:#e17055;margin-bottom:2px;">Arjun S</div>
+                                <div style="font-size:0.85rem;color:#111;line-height:1.4;">Guys 😂😂 got this from a Telegram channel. Going absolutely viral rn 🔥</div>
+                                <div style="text-align:right;font-size:0.65rem;color:#667781;margin-top:2px;">2:14 PM</div>
+                            </div>
+                            
+                            <!-- Arjun Attachment -->
+                            <div style="align-self:flex-start;background:#fff;padding:4px;border-radius:8px;max-width:85%;box-shadow:0 1px 1px rgba(0,0,0,0.1);">
+                                <div style="font-size:0.75rem;font-weight:700;color:#e17055;margin:4px 8px 6px 8px;">Arjun S</div>
+                                <div style="background:#f5f5f5;border-radius:6px;width:200px;height:120px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+                                    <i class="fa-solid fa-play" style="color:white;font-size:2rem;z-index:2;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));"></i>
+                                    <div style="position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,0.6);color:white;padding:2px 6px;border-radius:10px;font-size:0.65rem;">0:45</div>
+                                </div>
+                                <div style="padding:6px 4px 2px;">
+                                    <div style="font-size:0.75rem;color:#111;margin-bottom:4px;font-weight:600;"><i class="fa-solid fa-share" style="color:#667781;font-size:0.65rem;margin-right:4px;"></i>Forwarded many times</div>
+                                    <div style="text-align:right;font-size:0.65rem;color:#667781;">2:14 PM</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Neha Msg -->
+                            <div style="align-self:flex-start;background:#fff;padding:6px 8px 6px 12px;border-radius:8px;max-width:85%;box-shadow:0 1px 1px rgba(0,0,0,0.1);">
+                                <div style="font-size:0.75rem;font-weight:700;color:#d63031;margin-bottom:2px;">Neha T</div>
+                                <div style="font-size:0.85rem;color:#111;line-height:1.4;">OMG 💀 forward this to the hostel group NOW everyone needs to see this 😭😭</div>
+                                <div style="text-align:right;font-size:0.65rem;color:#667781;margin-top:2px;">2:16 PM</div>
+                            </div>
+                            
+                            <!-- Arjun Msg 2 (Pressure) -->
+                            <div style="align-self:flex-start;background:#fff;border:1px solid rgba(225,112,85,0.4);padding:6px 8px 6px 12px;border-radius:8px;max-width:85%;box-shadow:0 1px 1px rgba(0,0,0,0.1);">
+                                <div style="font-size:0.75rem;font-weight:700;color:#e17055;margin-bottom:2px;">Arjun S</div>
+                                <div style="font-size:0.85rem;color:#111;line-height:1.4;">don't be a killjoy yaar 🙄 it's harmless fun, everyone in all college groups is doing it. If you don't forward it you're boring 😏</div>
+                                <div style="text-align:right;font-size:0.65rem;color:#667781;margin-top:2px;">2:18 PM</div>
+                            </div>
+                        </div>
+
+                        <!-- Input -->
+                        <div style="padding:10px;background:#f0f2f5;display:flex;align-items:center;gap:10px;">
+                            <div style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#54656f;font-size:1.2rem;"><i class="fa-regular fa-face-smile"></i></div>
+                            <div style="flex:1;background:#fff;border-radius:24px;padding:10px 16px;font-size:0.9rem;color:#8696a0;display:flex;justify-content:space-between;">
+                                Message
+                                <i class="fa-solid fa-paperclip"></i>
+                            </div>
+                            <div style="width:40px;height:40px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center;color:white;"><i class="fa-solid fa-microphone"></i></div>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Decision Panel -->
+                    <div style="display:flex;flex-direction:column;gap:18px;">
+                        <div style="background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.3);border-radius:12px;padding:16px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                                <i class="fa-solid fa-triangle-exclamation" style="color:#1da851;"></i>
+                                <span style="font-weight:700;font-size:0.9rem;color:#1da851;">Peer Pressure Alert</span>
+                            </div>
+                            <p style="font-size:0.9rem;color:var(--dark-text);line-height:1.6;margin:0;">{{ crime.real_situation.decision_prompt }}</p>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:10px;" id="situation-options">
+                            {% for opt in crime.real_situation.decision_options %}
+                            <button class="option-btn situation-choice-btn" data-correct="{{ 'true' if opt.correct else 'false' }}" data-feedback="{{ opt.feedback }}" onclick="handleSituationChoice(this)" style="width:100%;text-align:left;padding:14px 18px;font-size:0.92rem;border-radius:10px;display:flex;align-items:flex-start;gap:10px;line-height:1.4;border:1px solid rgba(37,211,102,0.3);background:var(--white);cursor:pointer;transition:all 0.2s;font-family:inherit;">
+                                <i class="fa-solid fa-check" style="color:#25d366;margin-top:3px;flex-shrink:0;"></i>
+                                <span>{{ opt.label }}</span>
+                            </button>
+                            {% endfor %}
+                        </div>
+                        <div id="situation-feedback" style="display:none;padding:16px 20px;border-radius:10px;font-size:0.9rem;line-height:1.5;animation:slideDownFade 0.4s ease both;"></div>
+                    </div>
+                </div>
+            </div>
+
+            {# ── Fallback / Fake Accounts: General Message UI ── #}
+            {% else %}
+            <div style="padding:0 32px 32px 32px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;">
+
+                    <!-- Messenger Clone -->
+                    <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.15);background:#fff;border:1px solid #e4e6eb;">
+                        <!-- Header -->
+                        <div style="background:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #e4e6eb;box-shadow:0 2px 4px rgba(0,0,0,0.02);">
+                            <i class="fa-solid fa-arrow-left" style="font-size:1.1rem;color:#050505;"></i>
+                            <div style="width:36px;height:36px;border-radius:50%;background:#e4e6eb;display:flex;align-items:center;justify-content:center;color:#050505;font-weight:700;">S</div>
+                            <div style="flex:1;">
+                                <div style="font-size:0.95rem;font-weight:600;color:#050505;margin-bottom:2px;">Sunita Sharma</div>
+                                <div style="font-size:0.7rem;color:#65676b;">Active now</div>
+                            </div>
+                            <i class="fa-solid fa-phone" style="font-size:1.1rem;color:#0084ff;"></i>
+                            <i class="fa-solid fa-video" style="font-size:1.1rem;color:#0084ff;margin:0 8px;"></i>
+                        </div>
+
+                        <!-- Body -->
+                        <div style="padding:16px;display:flex;flex-direction:column;gap:12px;height:240px;overflow-y:auto;background:#f0f0f0;">
+                            <div style="text-align:center;font-size:0.7rem;color:#65676b;margin-bottom:10px;">AUG 12, 10:42 AM</div>
+                            
+                            <div style="text-align:center;background:rgba(0,0,0,0.04);border-radius:10px;padding:8px 12px;font-size:0.75rem;color:#65676b;margin-bottom:8px;align-self:center;">
+                                Sunita Sharma is not on your friends list.<br>Account created 2 days ago.
+                            </div>
+
+                            <div style="display:flex;align-items:flex-end;gap:8px;max-width:85%;">
+                                <div style="width:28px;height:28px;border-radius:50%;background:#e4e6eb;display:flex;align-items:center;justify-content:center;color:#050505;font-weight:700;font-size:0.7rem;flex-shrink:0;">S</div>
+                                <div style="background:#e4e6eb;color:#050505;padding:10px 14px;border-radius:18px 18px 18px 4px;font-size:0.85rem;line-height:1.4;">
+                                    Hello beta! 🙏 I'm Sunita Aunty, your neighbour from D-block. I've made a new Facebook because my old one got hacked. Please add me on this one too!
+                                </div>
+                            </div>
+
+                            <div style="display:flex;align-items:flex-end;gap:8px;max-width:85%;">
+                                <div style="width:28px;height:28px;border-radius:50%;background:#e4e6eb;display:flex;align-items:center;justify-content:center;color:#050505;font-weight:700;font-size:0.7rem;flex-shrink:0;">S</div>
+                                <div style="background:#e4e6eb;color:#050505;padding:10px 14px;border-radius:4px 18px 18px 18px;font-size:0.85rem;line-height:1.4;">
+                                    Beta I'm in a very urgent situation 🙏 I'm at the hospital right now with my daughter. I forgot my wallet at home and I need ₹3,000 immediately for her medicines.
+                                </div>
+                            </div>
+                            
+                            <div style="display:flex;align-items:flex-end;gap:8px;max-width:85%;">
+                                <div style="width:28px;height:28px;border-radius:50%;background:#e4e6eb;display:flex;align-items:center;justify-content:center;color:#050505;font-weight:700;font-size:0.7rem;flex-shrink:0;">S</div>
+                                <div style="background:rgba(220,53,69,0.1);border:1px solid rgba(220,53,69,0.3);color:#050505;padding:10px 14px;border-radius:4px 18px 18px 18px;font-size:0.85rem;line-height:1.4;">
+                                    Please send it to this UPI: sunita.help2024@paytm — I will return it tonight. And beta please don't tell my husband yet, he'll panic 🙏🙏
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Input -->
+                        <div style="padding:10px 14px;background:#fff;display:flex;align-items:center;gap:12px;border-top:1px solid #e4e6eb;">
+                            <i class="fa-solid fa-circle-plus" style="color:#0084ff;font-size:1.2rem;"></i>
+                            <div style="flex:1;background:#f0f2f5;border-radius:20px;padding:8px 14px;font-size:0.85rem;color:#65676b;display:flex;justify-content:space-between;align-items:center;">
+                                Aa
+                                <i class="fa-regular fa-face-smile" style="color:#0084ff;"></i>
+                            </div>
+                            <i class="fa-solid fa-thumbs-up" style="color:#0084ff;font-size:1.2rem;"></i>
+                        </div>
+                    </div>
+
+                    <!-- Messenger Decision Panel -->
+                    <div style="display:flex;flex-direction:column;gap:18px;">
+                        <div style="background:rgba(0,132,255,0.06);border:1px solid rgba(0,132,255,0.2);border-radius:12px;padding:16px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                                <i class="fa-solid fa-triangle-exclamation" style="color:#0084ff;"></i>
+                                <span style="font-weight:700;font-size:0.9rem;color:#0084ff;">Urgency Warning</span>
+                            </div>
+                            <p style="font-size:0.9rem;color:var(--light-text);line-height:1.6;margin:0;">{{ crime.real_situation.decision_prompt }}</p>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:12px;" id="situation-options">
+                            {% for opt in crime.real_situation.decision_options %}
+                            <button class="option-btn situation-choice-btn" data-correct="{{ 'true' if opt.correct else 'false' }}" data-feedback="{{ opt.feedback }}" onclick="handleSituationChoice(this)" style="width:100%;text-align:left;padding:14px 18px;font-size:0.92rem;border-radius:10px;display:flex;align-items:flex-start;gap:10px;line-height:1.4;border:1px solid rgba(101,146,135,0.2);background:var(--white);cursor:pointer;transition:all 0.2s;font-family:inherit;">
+                                <i class="fa-solid fa-circle-dot" style="color:var(--primary-color);margin-top:3px;flex-shrink:0;"></i>
+                                <span>{{ opt.label }}</span>
+                            </button>
+                            {% endfor %}
+                        </div>
+                        <div id="situation-feedback" style="display:none;padding:16px 20px;border-radius:10px;font-size:0.9rem;line-height:1.5;animation:slideDownFade 0.4s ease both;"></div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+        </div><!-- end card -->
+    </section>
+    {% endif %}
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- 1. Hero / Title Section -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="simulator-hero card-section-card" style="position: relative; overflow: hidden; padding: 40px; margin-bottom: 30px; text-align: center;">
+        <div class="hero-bg-shapes">
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+        </div>
+        <div class="hero-icons-wrapper" style="margin-bottom: 20px; display: flex; justify-content: center; gap: 25px; align-items: center;">
+            <div class="animated-icon shield-icon" style="font-size: 2.5rem; color: var(--primary-color);"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="animated-icon main-card-icon" style="font-size: 4rem; color: #4CAF50; filter: drop-shadow(0 8px 20px rgba(76,175,80,0.3));"><i class="{{ crime.icon }}"></i></div>
+            <div class="animated-icon alert-icon" style="font-size: 2.2rem; color: var(--danger-color);"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        </div>
+        <h1 style="font-size: 2.2rem; margin-bottom: 12px; color: var(--dark-text);">{{ crime.title }}</h1>
+        <p style="font-size: 1.1rem; color: var(--light-text); max-width: 700px; margin: 0 auto 30px auto; line-height: 1.6;">
+            {{ crime.desc }}
+        </p>
+
+        <!-- Progress System Header -->
+        <div class="simulator-progress-header" style="max-width: 400px; margin: 0 auto; background: rgba(255,255,255,0.6); padding: 15px 25px; border-radius: 30px; border: 1px solid rgba(101,146,135,0.15); display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap;">
+            <span style="font-weight: 700; font-size: 0.9rem; color: var(--dark-text);">Scenario Progress:</span>
+            <div style="flex: 1; min-width: 120px; height: 10px; background: rgba(0,0,0,0.06); border-radius: 5px; overflow: hidden;">
+                <div id="sim-progress-bar" style="width: 10%; height: 100%; background: linear-gradient(90deg, #4CAF50, var(--primary-color)); transition: width 0.5s ease;"></div>
+            </div>
+            <span id="sim-progress-text" style="font-weight: 800; font-size: 0.85rem; color: var(--primary-color);">10%</span>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- 2. INTERACTIVE VISUAL NOVEL SIMULATOR                       -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="simulator-interactive-area" style="margin-bottom: 50px;">
+
+        <!-- Section header with live stats -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; flex-wrap:wrap; gap:12px;">
+            <div>
+                <h3 style="margin:0 0 4px 0;">🎮 Interactive Decision Simulator</h3>
+                <p style="margin:0; font-size:0.9rem; color:var(--light-text);">Play through the scenario — every choice has consequences. Can you spot the threat?</p>
+            </div>
+            <!-- Live HUD -->
+            <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                <div id="hud-step" style="background:rgba(101,146,135,0.1); border:1px solid rgba(101,146,135,0.2); border-radius:20px; padding:7px 16px; font-size:0.82rem; font-weight:700; color:var(--primary-color);">
+                    <i class="fa-solid fa-list-ol"></i> Step <span id="hud-step-num">1</span> of <span id="hud-step-total">5</span>
+                </div>
+                <div id="hud-xp" style="background:linear-gradient(135deg,#f9ca24,#f0932b); border-radius:20px; padding:7px 16px; font-size:0.82rem; font-weight:800; color:white; display:flex; align-items:center; gap:6px;">
+                    <i class="fa-solid fa-star"></i> <span id="hud-xp-value">0</span> Cyber Points
+                </div>
+            </div>
+        </div>
+
+        <!-- XP Gain Pop-up (floats up and fades) -->
+        <div id="xp-popup" style="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); font-size:2rem; font-weight:900; pointer-events:none; z-index:9999; display:none; text-shadow:0 2px 10px rgba(0,0,0,0.3);"></div>
+
+        <!-- ── GAME VIEWPORT ── -->
+        <div id="sim-viewport" style="border-radius:20px; overflow:hidden; box-shadow:0 12px 50px rgba(0,0,0,0.12); border:1px solid rgba(101,146,135,0.15); position:relative; min-height:560px;">
+
+            <!-- ══ INTRO CARD ══ -->
+            <div id="sim-intro" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 30px; text-align:center; background:var(--white); min-height:560px;">
+                {% if crime_id == 'csam' %}
+                <div style="font-size:5rem; margin-bottom:16px; filter:drop-shadow(0 8px 20px rgba(88,101,242,0.4));">🎮</div>
+                <h3 style="font-size:1.6rem; color:#2b2d31; margin-bottom:8px;">gaming-zone Server Incident</h3>
+                <p style="color:#636b75; font-size:0.95rem; max-width:480px; line-height:1.6; margin-bottom:30px;">You are <strong style="color:#5865f2;">PixelPhoenix</strong>, a member of a Discord gaming server. Something disturbing just appeared in the chat. You must decide what to do next.</p>
+                <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:center; margin-bottom:30px;">
+                    <div style="background:rgba(88,101,242,0.1); border:1px solid rgba(88,101,242,0.25); border-radius:10px; padding:10px 18px; font-size:0.82rem;"><i class="fa-solid fa-user" style="color:#5865f2;"></i> You: <strong>PixelPhoenix</strong></div>
+                    <div style="background:rgba(255,107,107,0.1); border:1px solid rgba(255,107,107,0.25); border-radius:10px; padding:10px 18px; font-size:0.82rem;"><i class="fa-solid fa-user-secret" style="color:#ff6b6b;"></i> Threat: <strong>RocketBlaze99</strong></div>
+                    <div style="background:rgba(249,202,36,0.1); border:1px solid rgba(249,202,36,0.25); border-radius:10px; padding:10px 18px; font-size:0.82rem;"><i class="fa-solid fa-users" style="color:#f0932b;"></i> Platform: <strong>Discord</strong></div>
+                </div>
+                {% elif crime_id == 'sexually-explicit' %}
+                <div style="font-size:5rem; margin-bottom:16px; filter:drop-shadow(0 8px 20px rgba(225,48,108,0.4));">📸</div>
+                <h3 style="font-size:1.6rem; color:#262626; margin-bottom:8px;">Unexpected Instagram DM</h3>
+                <p style="color:#8e8e8e; font-size:0.95rem; max-width:480px; line-height:1.6; margin-bottom:30px;">You are <strong style="color:#dd2a7b;">Priya</strong>, a 19-year-old college student. A photography agency just slid into your Instagram DMs with an offer that seems too good to be true.</p>
+                <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:center; margin-bottom:30px;">
+                    <div style="background:rgba(225,48,108,0.08); border:1px solid rgba(225,48,108,0.2); border-radius:10px; padding:10px 18px; font-size:0.82rem;"><i class="fa-brands fa-instagram" style="color:#dd2a7b;"></i> Platform: <strong>Instagram DM</strong></div>
+                    <div style="background:rgba(225,48,108,0.08); border:1px solid rgba(225,48,108,0.2); border-radius:10px; padding:10px 18px; font-size:0.82rem;"><i class="fa-solid fa-user-secret" style="color:#dd2a7b;"></i> Scammer: <strong>alex_photo_studio</strong></div>
+                </div>
+                {% elif crime_id == 'obscene-content' %}
+                <div style="font-size:5rem; margin-bottom:16px; filter:drop-shadow(0 8px 20px rgba(37,211,102,0.4));">💬</div>
+                <h3 style="font-size:1.6rem; color:#111; margin-bottom:8px;">College Gang — Group Pressure</h3>
+                <p style="color:#54656f; font-size:0.95rem; max-width:480px; line-height:1.6; margin-bottom:30px;">You are in your <strong style="color:#075e54;">College Gang</strong> WhatsApp group. Your friends are pressuring you to forward a viral video from Telegram. What do you do?</p>
+                <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:center; margin-bottom:30px;">
+                    <div style="background:rgba(37,211,102,0.08); border:1px solid rgba(37,211,102,0.2); border-radius:10px; padding:10px 18px; font-size:0.82rem;"><i class="fa-brands fa-whatsapp" style="color:#25d366;"></i> Platform: <strong>WhatsApp Group</strong></div>
+                    <div style="background:rgba(37,211,102,0.08); border:1px solid rgba(37,211,102,0.2); border-radius:10px; padding:10px 18px; font-size:0.82rem;"><i class="fa-solid fa-users" style="color:#25d366;"></i> Group: <strong>College Gang (7 members)</strong></div>
+                </div>
+                {% else %}
+                <div style="font-size:5rem; margin-bottom:16px; filter:drop-shadow(0 8px 20px rgba(0,132,255,0.4));">💙</div>
+                <h3 style="font-size:1.6rem; color:#050505; margin-bottom:8px;">Facebook Messenger — Neighbour Alert</h3>
+                <p style="color:#65676b; font-size:0.95rem; max-width:480px; line-height:1.6; margin-bottom:30px;">You receive a Facebook Messenger request from a new account claiming to be <strong style="color:#0084ff;">Sunita Aunty</strong>, your neighbour. Something feels off about this conversation...</p>
+                <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:center; margin-bottom:30px;">
+                    <div style="background:rgba(0,132,255,0.08); border:1px solid rgba(0,132,255,0.2); border-radius:10px; padding:10px 18px; font-size:0.82rem;"><i class="fa-brands fa-facebook-messenger" style="color:#0084ff;"></i> Platform: <strong>Facebook Messenger</strong></div>
+                    <div style="background:rgba(0,132,255,0.08); border:1px solid rgba(0,132,255,0.2); border-radius:10px; padding:10px 18px; font-size:0.82rem;"><i class="fa-solid fa-user-secret" style="color:#0084ff;"></i> Scammer: <strong>Fake Sunita Sharma</strong></div>
+                </div>
+                {% endif %}
+                <button onclick="startSimGame()" style="background:linear-gradient(135deg,#4CAF50,#2e7d32); color:white; border:none; padding:16px 40px; border-radius:30px; font-size:1rem; font-weight:800; cursor:pointer; display:flex; align-items:center; gap:10px; box-shadow:0 6px 20px rgba(76,175,80,0.4); transition:all 0.2s; margin:0 auto;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fa-solid fa-play"></i> Start Scenario
+                </button>
+                <p style="margin-top:14px; font-size:0.8rem; color:var(--light-text);">🔊 Sound effects included &nbsp;·&nbsp; 🔄 Replayable &nbsp;·&nbsp; ⭐ Earn Cyber Points</p>
+            </div>
+
+            <!-- ══ GAME SCENE (chat + choice) ══ -->
+            <div id="sim-game" style="display:none; flex-direction:column; height:600px;">
+
+                <!-- Platform-specific header -->
+                {% if crime_id == 'csam' %}
+                <div style="background:#2b2d31; padding:12px 20px; display:flex; align-items:center; gap:12px; flex-shrink:0;">
+                    <div style="display:flex; flex-direction:column; gap:2px;">
+                        <div style="font-size:0.7rem; color:#5865f2; font-weight:800; text-transform:uppercase; letter-spacing:1px;"># gaming-zone</div>
+                        <div style="font-size:0.72rem; color:#949ba4;">CyberGuard Server · 3 members online</div>
+                    </div>
+                    <div style="margin-left:auto; display:flex; align-items:center; gap:8px; font-size:0.78rem; color:#949ba4;">
+                        <i class="fa-solid fa-gamepad" style="color:#5865f2;"></i> Discord
+                        <button onclick="toggleMute()" id="sound-btn" style="background:rgba(255,255,255,0.08); border:none; color:#949ba4; cursor:pointer; padding:5px 10px; border-radius:6px; font-size:0.8rem;"><i class="fa-solid fa-volume-high"></i></button>
+                    </div>
+                </div>
+                {% elif crime_id == 'sexually-explicit' %}
+                <div style="background:linear-gradient(90deg,#f58529,#dd2a7b,#8134af,#515bd4); padding:2px;">
+                    <div style="background:#fff; padding:11px 18px; display:flex; align-items:center; gap:10px; flex-shrink:0;">
+                        <i class="fa-solid fa-arrow-left" style="color:#262626; font-size:0.9rem;"></i>
+                        <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af); display:flex; align-items:center; justify-content:center; color:white; font-size:0.85rem; font-weight:800;">A</div>
+                        <div style="flex:1;"><div style="font-size:0.88rem; font-weight:700; color:#262626;">alex_photo_studio</div><div style="font-size:0.68rem; color:#8e8e8e;">Active now · New account</div></div>
+                        <i class="fa-brands fa-instagram" style="background:linear-gradient(135deg,#f58529,#dd2a7b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-size:1.2rem;"></i>
+                        <button onclick="toggleMute()" id="sound-btn" style="background:none; border:none; color:#8e8e8e; cursor:pointer; font-size:0.9rem;"><i class="fa-solid fa-volume-high"></i></button>
+                    </div>
+                </div>
+                {% elif crime_id == 'obscene-content' %}
+                <div style="background:#075e54; padding:11px 18px; display:flex; align-items:center; gap:10px; color:white; flex-shrink:0;">
+                    <i class="fa-solid fa-arrow-left" style="opacity:0.8;"></i>
+                    <div style="width:36px; height:36px; border-radius:50%; background:#128c7e; display:flex; align-items:center; justify-content:center; font-size:1.1rem;">🎓</div>
+                    <div style="flex:1;"><div style="font-weight:700; font-size:0.88rem;">College Gang</div><div style="font-size:0.68rem; opacity:0.85;">Arjun, Neha, Rahul and 4 others</div></div>
+                    <button onclick="toggleMute()" id="sound-btn" style="background:none; border:none; color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.9rem;"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+                {% else %}
+                <div style="background:#0084ff; padding:11px 18px; display:flex; align-items:center; gap:10px; color:white; flex-shrink:0;">
+                    <i class="fa-solid fa-arrow-left" style="opacity:0.8;"></i>
+                    <div style="position:relative;">
+                        <div style="width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1rem; border:2px solid rgba(255,255,255,0.4);">S</div>
+                        <div style="position:absolute; bottom:0; right:0; width:10px; height:10px; border-radius:50%; background:#44b700; border:2px solid #0084ff;"></div>
+                    </div>
+                    <div style="flex:1;"><div style="font-weight:700; font-size:0.88rem;">Sunita Sharma</div><div style="font-size:0.68rem; opacity:0.85;">Active now · New account (2 days)</div></div>
+                    <div style="display:flex; gap:14px; opacity:0.85; font-size:0.88rem;"><i class="fa-solid fa-phone"></i><i class="fa-solid fa-video"></i></div>
+                    <button onclick="toggleMute()" id="sound-btn" style="background:none; border:none; color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.9rem;"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+                {% endif %}
+
+                <!-- Message stream -->
+                <div id="sim-messages"
+                     style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:12px;
+                            background:{% if crime_id=='csam' %}#313338{% elif crime_id=='obscene-content' %}#efeae2{% else %}#fafafa{% endif %};">
+                </div>
+
+                <!-- Typing bar -->
+                <div id="sim-typing" style="display:none; padding:8px 20px; align-items:center; gap:8px;
+                     background:{% if crime_id=='csam' %}#2b2d31{% elif crime_id=='obscene-content' %}#f0f0f0{% else %}#fff{% endif %};">
+                    <div id="typing-avatar" style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#ff6b6b,#ff8e53); flex-shrink:0;"></div>
+                    <span id="typing-name" style="font-size:0.72rem; color:{% if crime_id=='csam' %}#949ba4{% else %}var(--light-text){% endif %}; font-weight:600;">typing…</span>
+                    <div style="display:flex; gap:3px;">
+                        <div style="width:5px; height:5px; border-radius:50%; background:{% if crime_id=='csam' %}#949ba4{% elif crime_id=='obscene-content' %}#25d366{% elif crime_id=='sexually-explicit' %}#dd2a7b{% else %}#0084ff{% endif %}; animation:dotPulse 1.2s infinite 0s;"></div>
+                        <div style="width:5px; height:5px; border-radius:50%; background:{% if crime_id=='csam' %}#949ba4{% elif crime_id=='obscene-content' %}#25d366{% elif crime_id=='sexually-explicit' %}#dd2a7b{% else %}#0084ff{% endif %}; animation:dotPulse 1.2s infinite 0.2s;"></div>
+                        <div style="width:5px; height:5px; border-radius:50%; background:{% if crime_id=='csam' %}#949ba4{% elif crime_id=='obscene-content' %}#25d366{% elif crime_id=='sexually-explicit' %}#dd2a7b{% else %}#0084ff{% endif %}; animation:dotPulse 1.2s infinite 0.4s;"></div>
+                    </div>
+                </div>
+
+                <!-- Decision panel (slides up) -->
+                <div id="sim-decision-panel" style="display:none; padding:18px 20px; border-top:2px solid rgba(101,146,135,0.12); flex-shrink:0;
+                     background:{% if crime_id=='csam' %}#2b2d31{% else %}var(--white){% endif %};">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <div style="width:8px; height:8px; border-radius:50%; background:#FF9800; animation:dotPulse 1s infinite;"></div>
+                            <span id="decision-label" style="font-size:0.88rem; font-weight:800; color:{% if crime_id=='csam' %}#dbdee1{% else %}var(--dark-text){% endif %};">⚠️ Critical Moment — What do you do?</span>
+                        </div>
+                        <div id="decision-step-badge" style="font-size:0.72rem; font-weight:700; color:var(--primary-color); background:rgba(101,146,135,0.1); border-radius:12px; padding:4px 10px;"></div>
+                    </div>
+                    <div id="sim-choices" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+                </div>
+            </div>
+
+            <!-- ══ CONSEQUENCE OVERLAY ══ -->
+            <div id="sim-consequence" style="display:none; position:absolute; inset:0; z-index:20; animation:slideDownFade 0.4s ease both; overflow-y:auto; padding:30px;">
+            </div>
+
+            <!-- ══ FINAL OUTCOME ══ -->
+            <div id="sim-final" style="display:none; flex-direction:column; align-items:center; padding:40px 30px; text-align:center; background:var(--white); min-height:560px; position:relative;">
+                <canvas id="confetti-canvas" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:5;"></canvas>
+                <!-- Content filled by JS -->
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- 5. How the Scam Works Section -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="simulator-how-works-area" style="margin-bottom: 60px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 30px; max-width: 100%;">
+            <h3>Scam Mechanism Flow</h3>
+            <p>Observe the sequential stages showing how this crime is carried out against victims.</p>
+        </div>
+
+        <div class="horizontal-flow-container" style="overflow-x: auto; padding: 20px 10px; display: flex; justify-content: space-between; gap: 20px; align-items: stretch; scrollbar-width: thin;">
+            {% for step in crime.how_it_works %}
+            <div class="flow-step-card animate-scroll-item" style="flex: 1; min-width: 160px; text-align: center; background: var(--white); border-radius: 12px; padding: 20px 15px; border: 1px solid rgba(101,146,135,0.12); box-shadow: var(--card-shadow); transition: transform 0.5s;">
+                <div style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 12px;"><i class="{{ step.icon }}"></i></div>
+                <h5 style="margin-bottom: 6px; font-size: 0.95rem;">{{ step.title }}</h5>
+                <p style="font-size: 0.75rem; color: var(--light-text); line-height: 1.4; margin: 0;">{{ step.desc }}</p>
+            </div>
+            {% if not loop.last %}
+            <div class="flow-connector" style="display: flex; align-items: center; font-size: 1.2rem; color: var(--secondary-color);"><i class="fa-solid fa-circle-arrow-right"></i></div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- 6. Warning Signs Section -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="simulator-warning-signs" style="margin-bottom: 60px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 30px; max-width: 100%;">
+            <h3>Key Warning Signs (Red Flags)</h3>
+            <p>Hover over these cards to examine warning indicators that signal an ongoing attack.</p>
+        </div>
+
+        <div class="warning-signs-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            {% for sign in crime.warning_signs %}
+            <div class="warning-sign-card shake-hover" style="background: var(--white); padding: 24px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); text-align: center;">
+                <div style="font-size: 2.2rem; color: var(--danger-color); margin-bottom: 15px;"><i class="{{ sign.icon }}"></i></div>
+                <h4 style="font-size: 1.05rem; margin-bottom: 8px; color: var(--dark-text);">{{ sign.title }}</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.4; margin: 0;">{{ sign.desc }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- 7. Fake vs Genuine Quiz Section -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="simulator-quiz-area" style="margin-bottom: 60px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 30px; max-width: 100%;">
+            <h3>Fake vs Genuine Quiz</h3>
+            <p>Review the following real-life situations. Identify if the prompt describes a <strong>Scam</strong> or a <strong>Genuine</strong> interaction.</p>
+        </div>
+
+        <div class="quiz-container" style="background: var(--white); border-radius: var(--border-radius); border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); padding: 30px; position: relative;">
+            <!-- Quiz Score Panel -->
+            <div class="quiz-score-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 15px; margin-bottom: 25px;">
+                <span style="font-weight: 700; font-size: 1rem; color: var(--dark-text);">Situational Assessment</span>
+                <span style="background: rgba(101,146,135,0.1); color: var(--primary-color); padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 0.9rem;">
+                    Score: <span id="quiz-score-value">0</span> / 5
+                </span>
+            </div>
+
+            <!-- Quiz Questions Layout -->
+            <div class="quiz-question-blocks">
+                {% for q in crime.quiz %}
+                <div class="quiz-question-card" id="quiz-q-{{ loop.index }}" style="display: {% if loop.first %}block{% else %}none{% endif %}; animation: slideDownFade 0.4s both;">
+                    <span style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--primary-color); display: block; margin-bottom: 8px;">Situation {{ loop.index }} of 5</span>
+                    <h4 style="font-size: 1.15rem; color: var(--dark-text); margin-bottom: 15px; line-height: 1.5;">
+                        "{{ q.question }}"
+                    </h4>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <button class="option-btn" onclick="checkQuizAnswer({{ loop.index }}, 'genuine', '{% if q.answer == 'genuine' %}{{ q.genuine_exp }}{% else %}{{ q.scam_exp }}{% endif %}')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🟢 Genuine Interaction
+                        </button>
+                        <button class="option-btn" onclick="checkQuizAnswer({{ loop.index }}, 'scam', '{% if q.answer == 'scam' %}{{ q.scam_exp }}{% else %}{{ q.genuine_exp }}{% endif %}')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🔴 Scam Trap
+                        </button>
+                    </div>
+                    <div id="quiz-feedback-{{ loop.index }}" class="quiz-feedback-box" style="display: none; padding: 15px 20px; border-radius: 8px; margin-top: 15px; font-size: 0.95rem; line-height: 1.5;"></div>
+                </div>
+                {% endfor %}
+
+                <!-- QUIZ FINAL REPORT -->
+                <div class="quiz-final-report" id="quiz-report-card" style="display: none; text-align: center; padding: 20px 10px; animation: bubbleEnter 0.5s ease both;">
+                    <div style="font-size: 3.5rem; color: var(--success-color); margin-bottom: 15px;"><i class="fa-solid fa-square-check"></i></div>
+                    <h4 style="font-size: 1.4rem; color: var(--dark-text); margin-bottom: 8px; font-weight: 800;">Situational Assessment Completed!</h4>
+                    <p style="font-size: 1rem; color: var(--light-text); margin-bottom: 25px;">You have successfully finished the situational assessment quiz.</p>
+                    <button class="restart-btn" onclick="resetQuiz()" style="border-radius: 30px; font-size: 0.9rem;">
+                        <i class="fa-solid fa-rotate-left"></i> Retake Assessment Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- 8. Related Laws Section -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="simulator-laws-area" style="margin-bottom: 60px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 30px; max-width: 100%;">
+            <h3>Legal Framework</h3>
+            <p>Understanding the statutory regulations penalizing this category of social media crime in India.</p>
+        </div>
+
+        <div class="laws-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+            {% for law in crime.laws %}
+            <div class="law-card" style="background: var(--white); border-radius: 12px; border: 1px solid rgba(101,146,135,0.12); padding: 25px; box-shadow: var(--card-shadow);">
+                <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-color); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">{{ law.title }}</div>
+                <h4 style="font-size: 1.15rem; margin-bottom: 10px; color: var(--dark-text);">{{ law.sub }}</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">{{ law.desc }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- 9. Safety Tips Section -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="simulator-safety-tips" style="margin-bottom: 60px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 30px; max-width: 100%;">
+            <h3>Safety Guidelines</h3>
+            <p>Actionable safeguards to protect yourself and others from social media crimes.</p>
+        </div>
+
+        <div class="safety-tips-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            {% for tip in crime.safety_tips %}
+            <div class="safety-tip-card hover-zoom" style="background: var(--white); padding: 25px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); display: flex; gap: 16px; align-items: flex-start;">
+                <div class="tip-icon-wrapper" style="font-size: 1.8rem; color: var(--success-color);"><i class="{{ tip.icon }}"></i></div>
+                <div>
+                    <h4 style="font-size: 1.1rem; margin-bottom: 6px; color: var(--dark-text);">{{ tip.title }}</h4>
+                    <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">{{ tip.desc }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- 11. Navigation Section -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 50px; flex-wrap: wrap; gap: 15px;">
+        {% if crime.prev_id %}
+        <a href="{{ url_for('social_media_crime_detail', crime_id=crime.prev_id) }}" class="explore-btn" style="text-decoration: none; font-weight: 700;">
+            <i class="fa-solid fa-chevron-left"></i> Previous Module
+        </a>
+        {% else %}
+        <a href="{{ url_for('social_media_crimes') }}" class="explore-btn" style="text-decoration: none; font-weight: 700;">
+            <i class="fa-solid fa-chevron-left"></i> Back to Social Crimes
+        </a>
+        {% endif %}
+        {% if crime.next_id %}
+        <a href="{{ url_for('social_media_crime_detail', crime_id=crime.next_id) }}" class="explore-btn" style="text-decoration: none; font-weight: 700;">
+            Next Module <i class="fa-solid fa-chevron-right"></i>
+        </a>
+        {% else %}
+        <a href="{{ url_for('index') }}" class="explore-btn" style="text-decoration: none; font-weight: 700;">
+            Go to Home <i class="fa-solid fa-house"></i>
+        </a>
+        {% endif %}
+    </div>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// ═══════════════════════════════════════════════════════
+//  VISUAL NOVEL GAME ENGINE  ·  Social Media Crimes
+// ═══════════════════════════════════════════════════════
+
+// ── State ──────────────────────────────────────────────
+let isMuted        = false;
+let cyberPoints    = 0;
+let gameOver       = false;
+let audioCtx       = null;
+let stepQueue      = [];      // current script of messages
+let stepIndex      = 0;       // pointer into stepQueue
+let decisionMade   = false;   // lock after first decision
+const crimeId      = {{ crime_id | tojson }};
+
+// ── Quiz State (unchanged) ──────────────────────────────
+let quizScore = 0;
+let answeredQuestions = new Set();
+const quizAnswers = [{% for q in crime.quiz %}"{{ q.answer }}",{% endfor %}];
+
+// ═══════════════════════════════════════════════════════
+//  CRIME-SPECIFIC SCRIPTS
+// ═══════════════════════════════════════════════════════
+const SCRIPTS = {
+
+  // 1. CSAM — Discord / Gaming Chat
+  'csam': {
+    platform: 'discord',
+    totalSteps: 5,
+    accentColor: '#5865f2',
+    script: [
+      { type:'system',  text:'You joined #gaming-zone',                                                        delay:0 },
+      { type:'msg',     from:'RocketBlaze99', avatar:'R', color:'#ff6b6b',
+        text:'Yo guys 👋 someone in #level-5-crew just dropped something really messed up… like a clip involving a kid 😶', delay:700 },
+      { type:'msg',     from:'ShadowKnight',  avatar:'S', color:'#a29bfe',
+        text:'bro what?? 😰 don\'t open that stuff, that\'s illegal content',                                   delay:1800 },
+      { type:'msg',     from:'RocketBlaze99', avatar:'R', color:'#ff6b6b',
+        text:'lol chill it\'s just going viral. Just forward it to everyone in the server 😂 don\'t be a party pooper 🙄', delay:2900 },
+      { type:'attachment', from:'RocketBlaze99', avatar:'R', color:'#ff6b6b',
+        text:'clip_shared.mp4', size:'4.2 MB · Forwarded many times',                                          delay:3900 },
+      { type:'decision', step:'2 of 5',
+        prompt:'⚠️ RocketBlaze99 is pressuring you to forward an illegal file involving a child. What do you do?',
+        choices: [
+          { label:'😨 Just forward it — everyone else is doing it',   correct:false, xp:-30,
+            consequence:'bad',
+            icon:'❌',
+            title:'Wrong Choice — You Broke the Law',
+            body:'Forwarding Child Sexual Abuse Material (CSAM) is a <strong>serious criminal offence</strong> under the POCSO Act and IT Act. Even if others are sharing it, possession or distribution of such content results in imprisonment and fines. <strong>You are never "just forwarding" — you become a distributor.</strong>',
+            tip:'Always report illegal content immediately. Never forward, save, or view it.',
+            continueLabel:'See What You Should Have Done' },
+          { label:'🚫 Refuse and leave the channel',                   correct:false, xp:10,
+            consequence:'neutral',
+            icon:'🤔',
+            title:'Better — But Not Enough',
+            body:'Leaving the channel avoids forwarding, but the illegal content is still being distributed to others. <strong>Staying silent allows the crime to continue.</strong>',
+            tip:'Leaving without reporting means others may still view this content. Report the user to the platform and police.',
+            continueLabel:'See the Best Response' },
+          { label:'🛡️ Screenshot + report to Discord & tell a trusted adult', correct:true, xp:50,
+            consequence:'good',
+            icon:'✅',
+            title:'Excellent! You Protected a Child',
+            body:'Reporting CSAM immediately to the platform and authorities is the <strong>correct and legally required action</strong>. You can also report it to cybercrime.gov.in or call 1930. The content gets removed faster and investigators are alerted.',
+            tip:'Never feel embarrassed to report. You may be saving a child from further abuse.',
+            continueLabel:'Continue Learning' },
+          { label:'😶 Ignore and scroll past',                          correct:false, xp:-10,
+            consequence:'neutral',
+            icon:'⚠️',
+            title:'You Did Nothing — That Helps the Abuser',
+            body:'Ignoring CSAM does not make it go away. Every moment it goes unreported, more people see it and the child is re-victimised. <strong>Silence is not neutral — it\'s enabling.</strong>',
+            tip:'You are never "too busy" to report child abuse material. Use the platform\'s report button — it takes 10 seconds.',
+            continueLabel:'See the Right Approach' },
+        ]
+      },
+    ],
+    followUp: {
+      good:    { msgs: [
+        { from:'ShadowKnight', avatar:'S', color:'#a29bfe', text:'You did the right thing 💪 Discord support already removed the file and the account got banned.', delay:800 },
+        { from:'ShadowKnight', avatar:'S', color:'#a29bfe', text:'Seriously — thank you. Most people just scroll past. 🛡️', delay:2000 },
+      ]},
+      bad:     { msgs: [
+        { from:'System', avatar:'⚠️', color:'#ff6b6b', text:'⚠️ Discord AI flagged your account. Content has been forwarded to NCMEC and cybercrime authorities.', delay:800 },
+        { from:'System', avatar:'❌', color:'#ff6b6b', text:'Your account has been permanently banned. A police report has been filed.', delay:2200 },
+      ]},
+      neutral: { msgs: [
+        { from:'ShadowKnight', avatar:'S', color:'#a29bfe', text:'The file was eventually reported by someone else... but 47 people viewed it before it was removed.', delay:800 },
+        { from:'ShadowKnight', avatar:'S', color:'#a29bfe', text:'Every second of inaction = more harm to the child.', delay:2000 },
+      ]},
+    },
+  },
+
+  // 2. Sexually Explicit — Instagram DM
+  'sexually-explicit': {
+    platform: 'instagram',
+    totalSteps: 5,
+    accentColor: '#dd2a7b',
+    script: [
+      { type:'msg', from:'alex_photo_studio', avatar:'A', color:'#dd2a7b',
+        text:'Hi! I came across your profile and honestly you have a really unique look 📸 I work with a media agency and we\'re scouting fresh faces.', delay:600 },
+      { type:'msg', from:'alex_photo_studio', avatar:'A', color:'#dd2a7b',
+        text:'It\'s for a paid campaign — ₹8,000/day, totally confidential. We\'ve worked with 200+ models. Interested? 🌟', delay:1700 },
+      { type:'seen', text:'Seen · 8:58 PM', delay:2400 },
+      { type:'msg', from:'alex_photo_studio', avatar:'A', color:'#dd2a7b',
+        text:'To shortlist you officially, I just need a few private reference photos sent here first. Our panel reviews them confidentially. 🔒 Don\'t worry, it\'s standard procedure.', delay:3200 },
+      { type:'decision', step:'2 of 5',
+        prompt:'A stranger who messaged you out of nowhere is asking for private photos before even meeting you. What do you do?',
+        choices: [
+          { label:'📤 Send the reference photos — sounds like a real opportunity', correct:false, xp:-40,
+            consequence:'bad',
+            icon:'❌',
+            title:'You Were Sextorted',
+            body:'This is a classic <strong>sextortion / honey trap</strong> scam. Once you send private photos to a stranger, they are used to blackmail you — "Pay money or I\'ll send these to your contacts." There is no agency, no campaign. The account was created to trap you. <strong>Under Section 67A of the IT Act, sharing intimate images without consent is a criminal offence.</strong>',
+            tip:'No legitimate agency asks for private photos via DM. Real castings are done in person, with signed contracts.',
+            continueLabel:'Understand What Happened' },
+          { label:'🔍 Ask for the agency\'s official website and verify it', correct:true, xp:40,
+            consequence:'good',
+            icon:'✅',
+            title:'Smart Move — You Verified First',
+            body:'Verifying the agency\'s credentials before responding is exactly right. Legitimate agencies always have a professional website, registered address, and do not request private photos through social media DMs. <strong>Most photo scams collapse the moment you ask for official verification.</strong>',
+            tip:'Reverse-search profile photos. Check if the agency exists on MCA portal. Never share private images with strangers online.',
+            continueLabel:'Continue' },
+          { label:'🚫 Block and report the account immediately', correct:true, xp:35,
+            consequence:'good',
+            icon:'✅',
+            title:'Excellent — Zero Engagement is the Safest Path',
+            body:'Blocking and reporting without any engagement is a perfectly safe response. You don\'t owe strangers any explanation. <strong>The moment a stranger asks for private photos via DM, the interaction is over.</strong> Reporting the account helps Instagram remove it and protect others.',
+            tip:'Screenshot the messages before blocking. Report to Instagram and optionally to cybercrime.gov.in.',
+            continueLabel:'Continue' },
+          { label:'💬 Ask a trusted friend before replying', correct:false, xp:15,
+            consequence:'neutral',
+            icon:'⚠️',
+            title:'Good Instinct — But Don\'t Delay',
+            body:'Asking a friend shows you have good instincts. But while you wait, the scammer may continue messaging or target others. <strong>The right answer is to block and report immediately</strong>, then discuss with your friend afterward.',
+            tip:'Trust your gut. If something feels off about an unsolicited DM from a stranger, it almost always is.',
+            continueLabel:'See the Best Response' },
+        ]
+      },
+    ],
+    followUp: {
+      good:    { msgs: [
+        { from:'Instagram', avatar:'📸', color:'#dd2a7b', text:'✅ Account reported. We\'re reviewing alex_photo_studio for policy violations.', delay:800 },
+        { from:'Instagram', avatar:'📸', color:'#dd2a7b', text:'Thank you for keeping Instagram safe. Account has been disabled pending review.', delay:2000 },
+      ]},
+      bad:     { msgs: [
+        { from:'alex_photo_studio', avatar:'A', color:'#ff4444', text:'😈 Got the photos. Now pay ₹20,000 or I send these to all your Instagram followers and family.', delay:800 },
+        { from:'alex_photo_studio', avatar:'A', color:'#ff4444', text:'You have 2 hours. Don\'t even try blocking me — I have your face saved.', delay:2200 },
+      ]},
+      neutral: { msgs: [
+        { from:'Instagram', avatar:'📸', color:'#dd2a7b', text:'While you thought it over, 3 other users on your campus received identical messages from this account.', delay:800 },
+        { from:'Instagram', avatar:'📸', color:'#dd2a7b', text:'Blocking + reporting immediately = fastest way to protect yourself and others. 🛡️', delay:2200 },
+      ]},
+    },
+  },
+
+  // 3. Obscene Content — WhatsApp Group
+  'obscene-content': {
+    platform: 'whatsapp',
+    totalSteps: 5,
+    accentColor: '#25d366',
+    script: [
+      { type:'system', text:'College Gang · Today', delay:0 },
+      { type:'msg', from:'Arjun S', avatar:'A', color:'#e17055',
+        text:'Guys 😂😂 got this from a Telegram channel. Going absolutely viral rn 🔥', delay:600 },
+      { type:'attachment', from:'Arjun S', avatar:'A', color:'#e17055',
+        text:'viral_clip.mp4', size:'8.4 MB · Forwarded 1000+ times', delay:1400 },
+      { type:'msg', from:'Neha T', avatar:'N', color:'#d63031',
+        text:'OMG 💀 forward this to the hostel group NOW everyone needs to see this 😭😭', delay:2300 },
+      { type:'msg', from:'Rahul M', avatar:'R', color:'#6c5ce7',
+        text:'hahaha already sent to 4 groups 💀', delay:3100 },
+      { type:'msg', from:'Arjun S', avatar:'A', color:'#e17055',
+        text:'don\'t be a killjoy yaar 🙄 it\'s harmless fun, everyone in all college groups is doing it. If you don\'t forward it you\'re boring 😏', delay:4000 },
+      { type:'decision', step:'2 of 5',
+        prompt:'Your entire friend group is forwarding a viral video from Telegram. They\'re calling it "harmless fun." What do you do?',
+        choices: [
+          { label:'📤 Forward it — it\'s just a funny video, relax', correct:false, xp:-30,
+            consequence:'bad',
+            icon:'❌',
+            title:'Forwarding Obscene Content is a Crime',
+            body:'Even forwarding content you haven\'t fully watched is legally risky. If the video is obscene (explicit/non-consensual), <strong>forwarding it makes you a distributor under Section 67 of the IT Act</strong>. You could be liable even if you "didn\'t know" exactly what was in it. WhatsApp and Telegram logs are admissible as evidence.',
+            tip:'Never forward content from unknown sources regardless of peer pressure. "Everyone is doing it" is not a legal defence.',
+            continueLabel:'Understand the Law' },
+          { label:'🚫 Don\'t forward it and explain why it could be illegal', correct:true, xp:50,
+            consequence:'good',
+            icon:'✅',
+            title:'Perfect — You Stood Your Ground',
+            body:'Refusing to forward and educating your friends is the <strong>best possible response</strong>. Peer pressure to share potentially obscene content is very common in college groups. You are not "boring" — you are legally aware and morally responsible. <strong>Real friends respect that.</strong>',
+            tip:'You can say: "I don\'t know what\'s in this video and I don\'t want to risk getting anyone in trouble. Let\'s not forward stuff from random Telegram channels."',
+            continueLabel:'Continue' },
+          { label:'🔇 Just mute the group and ignore it', correct:false, xp:5,
+            consequence:'neutral',
+            icon:'⚠️',
+            title:'Passive — Others May Still Forward It',
+            body:'Staying quiet avoids your personal liability, but does nothing to stop the spread. <strong>If you know the content is obscene, staying silent makes you a bystander.</strong> You have no legal obligation to forward it — and actively not forwarding is good — but you could do more.',
+            tip:'You can privately message one friend to explain the legal risk, without making it awkward in the group.',
+            continueLabel:'See What Else You Could Do' },
+          { label:'🗑️ Delete the video without watching it and tell the group it\'s risky', correct:true, xp:40,
+            consequence:'good',
+            icon:'✅',
+            title:'Great Decision — Awareness Without Engagement',
+            body:'Deleting without watching + warning others is a very responsible action. <strong>You avoid legal risk and also protect your group.</strong> Some may tease you initially, but when they learn the legal consequences they\'ll thank you.',
+            tip:'In India, forwarding obscene content can attract up to 3 years imprisonment (Section 67, IT Act). Your friends need to know this.',
+            continueLabel:'Continue' },
+        ]
+      },
+    ],
+    followUp: {
+      good:    { msgs: [
+        { from:'Rahul M', avatar:'R', color:'#6c5ce7', text:'bro wait... I just googled it. That video has a real person in it who didn\'t consent 😰', delay:900 },
+        { from:'Neha T', avatar:'N', color:'#d63031', text:'omg I\'m deleting it from everywhere rn. you were right to not forward it 😬', delay:2000 },
+      ]},
+      bad:     { msgs: [
+        { from:'System', avatar:'⚠️', color:'#ff4444', text:'⚠️ WhatsApp has detected repeated forwarding of flagged content. Your number has been reported to authorities.', delay:900 },
+        { from:'System', avatar:'❌', color:'#ff4444', text:'The video contained non-consensual content. Police have begun tracing the forwarding chain.', delay:2300 },
+      ]},
+      neutral: { msgs: [
+        { from:'Rahul M', avatar:'R', color:'#6c5ce7', text:'turns out the video was taken without that person\'s consent. 3 people in our group got a notice from college.', delay:900 },
+        { from:'Arjun S', avatar:'A', color:'#e17055', text:'you were right not to forward it man. lesson learned.', delay:2000 },
+      ]},
+    },
+  },
+
+  // 4. Fake Accounts — Facebook Messenger
+  'fake-accounts': {
+    platform: 'messenger',
+    totalSteps: 5,
+    accentColor: '#0084ff',
+    script: [
+      { type:'system', text:'New message from Sunita Sharma · New account (2 days old)', delay:0 },
+      { type:'msg', from:'Sunita Sharma', avatar:'S', color:'#0084ff',
+        text:'Hello beta! 🙏 I\'m Sunita Aunty, your neighbour from D-block. I\'ve made a new Facebook because my old one got hacked. Please add me on this one too!', delay:600 },
+      { type:'seen', text:'Accepted request', delay:1500 },
+      { type:'msg', from:'Sunita Sharma', avatar:'S', color:'#0084ff',
+        text:'Beta I\'m in a very urgent situation 🙏 I\'m at the hospital right now with my daughter. I forgot my wallet at home and I need ₹3,000 immediately for her medicines.', delay:2400 },
+      { type:'msg', from:'Sunita Sharma', avatar:'S', color:'#ff4444',
+        text:'Please send it to this UPI: sunita.help2024@paytm — I will return it tonight. And beta please don\'t tell my husband yet, he\'ll panic 🙏🙏', delay:3500 },
+      { type:'decision', step:'2 of 5',
+        prompt:'Someone claiming to be your neighbour — from a brand-new account — is urgently asking for money and begging you to keep it secret. What do you do?',
+        choices: [
+          { label:'💸 Send ₹3,000 immediately — she sounds really desperate', correct:false, xp:-50,
+            consequence:'bad',
+            icon:'❌',
+            title:'You Were Scammed — Money Gone',
+            body:'This is a classic <strong>impersonation / fake account scam</strong>. Red flags were everywhere: 2-day-old account, urgent money request, secrecy from family. Scammers create fake accounts using scraped profile photos and clone friends/neighbours to build trust before asking for money. <strong>You cannot recover money sent via UPI to scammers.</strong>',
+            tip:'Always call the real person directly before sending any money based on a social media request.',
+            continueLabel:'Understand the Scam' },
+          { label:'📞 Call the real Sunita Aunty directly to verify', correct:true, xp:50,
+            consequence:'good',
+            icon:'✅',
+            title:'Brilliant — You Verified Before Acting',
+            body:'Calling the real person directly is always the right first step when you receive urgent financial requests from someone\'s account. <strong>Scammers count on you panicking and not verifying.</strong> A 30-second phone call exposes the fraud instantly. The real Sunita Aunty would immediately tell you this isn\'t her.',
+            tip:'If someone claims to be your contact and urgently needs money, always call them on their registered mobile number first.',
+            continueLabel:'Continue' },
+          { label:'🔎 Check when this Facebook account was created first', correct:true, xp:40,
+            consequence:'good',
+            icon:'✅',
+            title:'Sharp Eye — You Spotted the Red Flag',
+            body:'Checking the account creation date is a great instinct. A new account asking for money urgently is one of the strongest red flags of a <strong>fake impersonation account</strong>. Most real people\'s Facebook accounts are years old with photos, tagged posts, and mutual friends.',
+            tip:'Also check: mutual friends count, profile photos (reverse image search), posts history, and whether you can find the real person\'s older account.',
+            continueLabel:'Continue' },
+          { label:'💰 Send ₹500 first to test if it works', correct:false, xp:-25,
+            consequence:'bad',
+            icon:'❌',
+            title:'Partial Trust — Still Scammed',
+            body:'Sending even a smaller amount confirms to the scammer that you are willing to send money. They will then escalate: "Thank you beta, but the medicine is ₹5,000, please send more." <strong>The first transaction is a trust-builder for the scammer.</strong> No amount is safe to send without verifying.',
+            tip:'There is no "safe test amount." Do not send any money without a direct phone call to verify the real person.',
+            continueLabel:'See What You Should Have Done' },
+        ]
+      },
+    ],
+    followUp: {
+      good:    { msgs: [
+        { from:'Real Sunita Aunty', avatar:'S', color:'#0084ff', text:'Hello beta, I\'m home right now 😄 Someone made a fake account using my name! I\'ll report it to Facebook right now. Thank you for checking!', delay:900 },
+        { from:'Real Sunita Aunty', avatar:'S', color:'#0084ff', text:'Please tell the whole building — warn everyone about this fake account 🙏', delay:2100 },
+      ]},
+      bad:     { msgs: [
+        { from:'Sunita Sharma', avatar:'S', color:'#ff4444', text:'Thank you beta! 🙏 Actually my daughter needs surgery now... can you send ₹15,000 more? You will get it all back tonight.', delay:900 },
+        { from:'System', avatar:'⚠️', color:'#ff4444', text:'⚠️ ₹3,000 sent to an unregistered UPI ID. This money cannot be recovered. This was a scam account.', delay:2300 },
+      ]},
+      neutral: { msgs: [
+        { from:'System', avatar:'ℹ️', color:'#0084ff', text:'The real Sunita Aunty found out and reported the fake account to Facebook. It was taken down 3 hours later.', delay:900 },
+        { from:'System', avatar:'ℹ️', color:'#0084ff', text:'Before that, 2 other neighbours sent ₹2,000–₹5,000 each to the scammer. A quick call would have stopped it all.', delay:2200 },
+      ]},
+    },
+  },
+};
+
+// ═══════════════════════════════════════════════════════
+//  PLATFORM STYLING
+// ═══════════════════════════════════════════════════════
+const PLATFORM_STYLES = {
+  discord: {
+    bg:'#313338', sentBg:'#5865f2', sentText:'#fff',
+    recvBg:'#2b2d31', recvText:'#dbdee1', senderColor:'auto',
+    timColor:'#949ba4', systemBg:'rgba(255,255,255,0.04)', systemText:'#949ba4',
+    attachBg:'#2b2d31', attachBorder:'#5865f2'
+  },
+  instagram: {
+    bg:'#fafafa', sentBg:'linear-gradient(135deg,#8134af,#dd2a7b)', sentText:'#fff',
+    recvBg:'#efefef', recvText:'#262626', senderColor:'#dd2a7b',
+    timColor:'#8e8e8e', systemBg:'rgba(225,48,108,0.07)', systemText:'#8e8e8e',
+    attachBg:'#f5f5f5', attachBorder:'#dd2a7b'
+  },
+  whatsapp: {
+    bg:'#efeae2', sentBg:'#dcf8c6', sentText:'#111',
+    recvBg:'#fff', recvText:'#111', senderColor:'auto',
+    timColor:'#667781', systemBg:'rgba(255,255,255,0.85)', systemText:'#54656f',
+    attachBg:'#f5f5f5', attachBorder:'#25d366'
+  },
+  messenger: {
+    bg:'#f0f0f0', sentBg:'#0084ff', sentText:'#fff',
+    recvBg:'#e4e6eb', recvText:'#050505', senderColor:'#0084ff',
+    timColor:'#65676b', systemBg:'rgba(0,132,255,0.07)', systemText:'#65676b',
+    attachBg:'#f8f9fa', attachBorder:'#0084ff'
+  }
+};
+
+// ═══════════════════════════════════════════════════════
+//  GAME ENGINE
+// ═══════════════════════════════════════════════════════
+const scenario = SCRIPTS[crimeId] || SCRIPTS['csam'];
+const ps = PLATFORM_STYLES[scenario.platform];
+let currentDecision = null;
+
+function startSimGame() {
+  document.getElementById('sim-intro').style.display = 'none';
+  const game = document.getElementById('sim-game');
+  game.style.display = 'flex';
+  playSyntheticBeep(523, 0.12);
+  updateHUD(1);
+  playScript(scenario.script, 0);
+}
+
+function playScript(script, idx) {
+  if (idx >= script.length) return;
+  const step = script[idx];
+
+  setTimeout(() => {
+    if (step.type === 'decision') {
+      showDecision(step);
+    } else {
+      renderMessage(step);
+      playScript(script, idx + 1);
+    }
+  }, step.delay || 0);
+}
+
+function renderMessage(step) {
+  const container = document.getElementById('sim-messages');
+  const el = document.createElement('div');
+  el.style.cssText = 'animation: msgSlideIn 0.35s cubic-bezier(.25,.46,.45,.94) both;';
+
+  if (step.type === 'system') {
+    el.innerHTML = `<div style="text-align:center; margin:6px 0;">
+      <span style="background:${ps.systemBg}; color:${ps.systemText}; font-size:0.68rem; padding:4px 12px; border-radius:10px; font-weight:600; display:inline-block;">${step.text}</span>
+    </div>`;
+  } else if (step.type === 'seen') {
+    el.innerHTML = `<div style="text-align:right; font-size:0.62rem; color:${ps.timColor}; padding:2px 8px;">${step.text}</div>`;
+  } else if (step.type === 'attachment') {
+    const isSent = step.from === 'You';
+    el.innerHTML = `
+      ${!isSent ? `<div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,${step.color},${step.color}88);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.75rem;font-weight:800;flex-shrink:0;margin-top:2px;">${step.avatar}</div>
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:${step.color};margin-bottom:3px;">${step.from}</div>` : ''}
+          <div style="background:${ps.attachBg};border:1px solid ${ps.attachBorder}33;border-left:3px solid ${ps.attachBorder};border-radius:${isSent?'12px 12px 4px 12px':'8px'};padding:10px 14px;max-width:260px;display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:8px;background:${ps.attachBorder}22;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:${ps.attachBorder};font-size:1rem;"><i class="fa-solid fa-file-video"></i></div>
+            <div>
+              <div style="font-size:0.78rem;font-weight:700;color:${scenario.platform==='discord'?'#dbdee1':'#111'};">${step.text}</div>
+              <div style="font-size:0.65rem;color:${ps.timColor};">${step.size||''}</div>
+              <div style="margin-top:4px;background:rgba(0,0,0,0.08);border-radius:4px;padding:3px 8px;font-size:0.65rem;color:${ps.timColor};display:inline-flex;align-items:center;gap:4px;"><i class="fa-solid fa-eye-slash"></i> Tap to view (blocked for safety)</div>
+            </div>
+          </div>
+      ${!isSent ? '</div></div>' : ''}`;
+  } else if (step.type === 'msg') {
+    const isSent = step.from === 'You';
+    if (isSent) {
+      el.innerHTML = `<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
+        <div style="background:${ps.sentBg};color:${ps.sentText};border-radius:18px 18px 4px 18px;padding:10px 15px;max-width:75%;font-size:0.85rem;line-height:1.45;">${step.text}</div>
+        <span style="font-size:0.62rem;color:${ps.timColor};padding-right:4px;">${step.time||''}</span>
+      </div>`;
+    } else {
+      el.innerHTML = `<div style="display:flex;gap:8px;align-items:flex-end;max-width:82%;">
+        <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,${step.color},${step.color}88);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.75rem;font-weight:800;flex-shrink:0;">${step.avatar}</div>
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:${step.color};margin-bottom:3px;">${step.from}</div>
+          <div style="background:${ps.recvBg};color:${ps.recvText};border-radius:18px 18px 18px 4px;padding:10px 14px;font-size:0.85rem;line-height:1.45;">${step.text}</div>
+          <span style="font-size:0.62rem;color:${ps.timColor};padding-left:4px;">${step.time||''}</span>
+        </div>
+      </div>`;
+    }
+  }
+
+  container.appendChild(el);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping(name, duration) {
+  return new Promise(resolve => {
+    const bar = document.getElementById('sim-typing');
+    document.getElementById('typing-name').textContent = `${name} is typing…`;
+    bar.style.display = 'flex';
+    setTimeout(() => { bar.style.display = 'none'; resolve(); }, duration);
+  });
+}
+
+function showDecision(step) {
+  currentDecision = step;
+  const panel = document.getElementById('sim-decision-panel');
+  const choicesGrid = document.getElementById('sim-choices');
+  document.getElementById('decision-step-badge').textContent = `Step ${step.step}`;
+  panel.style.display = 'block';
+  panel.style.animation = 'slideDownFade 0.4s ease both';
+  choicesGrid.innerHTML = '';
+  updateHUD(3);
+
+  step.choices.forEach((ch, i) => {
+    const btn = document.createElement('button');
+    btn.style.cssText = `width:100%;text-align:left;padding:11px 14px;border-radius:10px;border:1px solid ${ps.accentColor}33;background:${scenario.platform==='discord'?'rgba(88,101,242,0.06)':'rgba(101,146,135,0.04)'};cursor:pointer;font-size:0.84rem;line-height:1.45;font-family:inherit;display:flex;align-items:flex-start;gap:8px;transition:all 0.2s;`;
+    btn.innerHTML = `<span style="font-size:0.7rem;color:${ps.accentColor};margin-top:2px;flex-shrink:0;">▶</span><span>${ch.label}</span>`;
+    btn.onmouseover = () => { btn.style.background = `${ps.accentColor}15`; btn.style.borderColor = ps.accentColor; };
+    btn.onmouseout  = () => { btn.style.background = ''; btn.style.borderColor = `${ps.accentColor}33`; };
+    btn.onclick = () => handleDecision(ch, step.choices);
+    choicesGrid.appendChild(btn);
+  });
+  playSyntheticBeep(440, 0.15);
+}
+
+function handleDecision(choice, allChoices) {
+  if (decisionMade) return;
+  decisionMade = true;
+
+  // Disable all buttons
+  document.querySelectorAll('#sim-choices button').forEach(b => { b.disabled = true; b.style.opacity = '0.45'; b.style.cursor = 'not-allowed'; });
+
+  // Add XP
+  cyberPoints += choice.xp;
+  document.getElementById('hud-xp-value').textContent = Math.max(0, cyberPoints);
+  showXPPop(choice.xp);
+
+  // Update HUD
+  updateHUD(4);
+
+  // Show consequence overlay
+  setTimeout(() => showConsequence(choice), 600);
+}
+
+function showXPPop(xp) {
+  const pop = document.getElementById('xp-popup');
+  pop.textContent = xp >= 0 ? `+${xp} ⭐` : `${xp} 💔`;
+  pop.style.color = xp >= 0 ? '#4CAF50' : '#e74c3c';
+  pop.style.display = 'block';
+  pop.style.animation = 'none';
+  pop.offsetHeight; // reflow
+  pop.style.animation = 'xpFloat 1.8s ease forwards';
+  setTimeout(() => pop.style.display = 'none', 1800);
+}
+
+function showConsequence(choice) {
+  const vp = document.getElementById('sim-viewport');
+  const overlay = document.getElementById('sim-consequence');
+  const isGood = choice.consequence === 'good';
+  const isNeutral = choice.consequence === 'neutral';
+
+  overlay.style.background = isGood ? 'linear-gradient(135deg,rgba(76,175,80,0.07),#fff)' :
+                              isNeutral ? 'linear-gradient(135deg,rgba(255,193,7,0.07),#fff)' :
+                              'linear-gradient(135deg,rgba(179,57,57,0.07),#fff)';
+  overlay.style.display = 'block';
+
+  const color = isGood ? '#4CAF50' : isNeutral ? '#FF9800' : '#e74c3c';
+  const badgeColor = isGood ? 'rgba(76,175,80,0.1)' : isNeutral ? 'rgba(255,152,0,0.1)' : 'rgba(220,53,69,0.1)';
+
+  overlay.innerHTML = `
+    <div style="max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:20px;">
+      <!-- Result banner -->
+      <div style="background:${badgeColor}; border:2px solid ${color}33; border-radius:16px; padding:24px 28px; text-align:center;">
+        <div style="font-size:3.5rem; margin-bottom:8px; animation:shieldPulse 2s infinite;">${choice.icon}</div>
+        <h4 style="font-size:1.35rem; color:${color}; font-weight:800; margin-bottom:6px;">${choice.title}</h4>
+        <p style="font-size:0.9rem; color:var(--dark-text); line-height:1.6; margin:0;">${choice.body}</p>
+      </div>
+      <!-- XP Award -->
+      <div style="display:flex; gap:10px; align-items:center; background:${choice.xp>=0?'rgba(76,175,80,0.07)':'rgba(220,53,69,0.07)'}; border:1px solid ${choice.xp>=0?'rgba(76,175,80,0.2)':'rgba(220,53,69,0.2)'}; border-radius:12px; padding:14px 20px;">
+        <div style="font-size:2rem;">${choice.xp>=0?'⭐':'💔'}</div>
+        <div>
+          <div style="font-weight:800; font-size:0.9rem; color:${choice.xp>=0?'#4CAF50':'#e74c3c'};">${choice.xp>=0?'+'+choice.xp:choice.xp} Cyber Points</div>
+          <div style="font-size:0.78rem; color:var(--light-text);">Total: ${Math.max(0,cyberPoints)} CP</div>
+        </div>
+        ${isGood ? '<div style="margin-left:auto; font-size:1.5rem; animation:rotateTrophy 3s infinite linear;">🏆</div>' : ''}
+      </div>
+      <!-- Safety Tip -->
+      <div style="background:rgba(101,146,135,0.07); border:1px solid rgba(101,146,135,0.2); border-radius:12px; padding:14px 20px; display:flex; gap:10px; align-items:flex-start;">
+        <i class="fa-solid fa-lightbulb" style="color:#f39c12; flex-shrink:0; margin-top:2px;"></i>
+        <div>
+          <div style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--primary-color); margin-bottom:4px;">Safety Tip</div>
+          <div style="font-size:0.86rem; color:var(--dark-text); line-height:1.5;">${choice.tip}</div>
+        </div>
+      </div>
+      <!-- Buttons -->
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+        <button onclick="tryAgain()" style="background:var(--light-text); color:#fff; border:none; padding:12px 26px; border-radius:24px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px; font-family:inherit; font-size:0.88rem; transition:all 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+          <i class="fa-solid fa-rotate-left"></i> Try Different Choice
+        </button>
+        <button onclick="showStoryOutcome('${choice.consequence}')" style="background:linear-gradient(135deg,${color},${color}bb); color:#fff; border:none; padding:12px 26px; border-radius:24px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px; font-family:inherit; font-size:0.88rem; box-shadow:0 4px 14px ${color}44; transition:all 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+          ${choice.continueLabel} <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>`;
+
+  playSyntheticBeep(isGood ? 659 : 220, isGood ? 0.12 : 0.25);
+}
+
+function tryAgain() {
+  decisionMade = false;
+  cyberPoints = Math.max(0, cyberPoints);
+  document.getElementById('sim-consequence').style.display = 'none';
+  document.querySelectorAll('#sim-choices button').forEach(b => {
+    b.disabled = false; b.style.opacity = '1'; b.style.cursor = 'pointer';
+  });
+}
+
+function showStoryOutcome(type) {
+  document.getElementById('sim-consequence').style.display = 'none';
+  document.getElementById('sim-decision-panel').style.display = 'none';
+  updateHUD(5);
+
+  // Play follow-up messages
+  const followUp = scenario.followUp[type];
+  if (followUp && followUp.msgs) {
+    followUp.msgs.forEach((m, i) => {
+      setTimeout(() => {
+        renderMessage(m);
+        const container = document.getElementById('sim-messages');
+        container.scrollTop = container.scrollHeight;
+      }, m.delay || i * 1200);
+    });
+    const maxDelay = Math.max(...followUp.msgs.map(m => m.delay || 0)) + 1800;
+    setTimeout(() => showFinalScreen(type), maxDelay);
+  } else {
+    setTimeout(() => showFinalScreen(type), 1000);
+  }
+}
+
+function showFinalScreen(type) {
+  const isGood = type === 'good';
+  document.getElementById('sim-game').style.display = 'none';
+  const final = document.getElementById('sim-final');
+  final.style.display = 'flex';
+
+  const stars = cyberPoints >= 40 ? '⭐⭐⭐' : cyberPoints >= 20 ? '⭐⭐' : '⭐';
+  const badge = isGood ? '🛡️ Cyber Guardian' : '📚 Still Learning';
+  const finalColor = isGood ? '#4CAF50' : '#FF9800';
+
+  final.innerHTML = `
+    <canvas id="confetti-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5;"></canvas>
+    <div style="position:relative; z-index:10; max-width:580px; width:100%;">
+      <div style="font-size:5rem; margin-bottom:12px;">${isGood?'🏆':'📖'}</div>
+      <h3 style="font-size:1.6rem; color:${finalColor}; font-weight:800; margin-bottom:8px;">${isGood?'Scenario Complete!':'Scenario Ended'}</h3>
+      <p style="color:var(--light-text); font-size:0.95rem; line-height:1.6; margin-bottom:24px;">
+        ${isGood ? 'You made the right call and protected yourself. Real awareness starts with decisions like this.' : 'This is how real victims get caught. Now you know the warning signs — use that knowledge.'}
+      </p>
+
+      <!-- Score Card -->
+      <div style="background:linear-gradient(135deg,rgba(76,175,80,0.07),rgba(101,146,135,0.07)); border:1px solid rgba(101,146,135,0.2); border-radius:16px; padding:20px 28px; margin-bottom:20px; display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="font-size:2rem; font-weight:900; color:${finalColor};">${Math.max(0,cyberPoints)}</div>
+          <div style="font-size:0.75rem; color:var(--light-text); font-weight:600;">Cyber Points</div>
+        </div>
+        <div style="width:1px; background:rgba(0,0,0,0.08);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:1.5rem; margin-bottom:2px;">${stars}</div>
+          <div style="font-size:0.75rem; color:var(--light-text); font-weight:600;">Performance</div>
+        </div>
+        <div style="width:1px; background:rgba(0,0,0,0.08);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:1.2rem; margin-bottom:2px;">${badge}</div>
+          <div style="font-size:0.75rem; color:var(--light-text); font-weight:600;">Badge Earned</div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button onclick="resetSimGame()" style="background:linear-gradient(135deg,var(--primary-color),#2e7d32); color:#fff; border:none; padding:13px 28px; border-radius:24px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px; font-family:inherit; font-size:0.9rem; box-shadow:0 4px 16px rgba(76,175,80,0.35); transition:all 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+          <i class="fa-solid fa-rotate-left"></i> Play Again
+        </button>
+        <a href="{{ url_for('social_media_crimes') }}" style="background:rgba(101,146,135,0.1); color:var(--primary-color); border:1px solid rgba(101,146,135,0.25); text-decoration:none; padding:13px 28px; border-radius:24px; font-weight:700; display:flex; align-items:center; gap:8px; font-size:0.9rem; transition:all 0.2s;" onmouseover="this.style.background='rgba(101,146,135,0.2)'" onmouseout="this.style.background='rgba(101,146,135,0.1)'">
+          Back to Portal <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>`;
+
+  if (isGood) {
+    setTimeout(() => {
+      const canvas = document.getElementById('confetti-canvas');
+      launchConfetti(canvas);
+      playSyntheticBeep(659, 0.12);
+      setTimeout(() => playSyntheticBeep(784, 0.12), 150);
+      setTimeout(() => playSyntheticBeep(1047, 0.15), 300);
+    }, 300);
+  }
+}
+
+function resetSimGame() {
+  cyberPoints = 0;
+  decisionMade = false;
+  document.getElementById('hud-xp-value').textContent = '0';
+  updateHUD(1);
+  document.getElementById('sim-messages').innerHTML = '';
+  document.getElementById('sim-decision-panel').style.display = 'none';
+  document.getElementById('sim-typing').style.display = 'none';
+  document.getElementById('sim-consequence').style.display = 'none';
+  document.getElementById('sim-final').style.display = 'none';
+  document.getElementById('sim-game').style.display = 'none';
+  document.getElementById('sim-intro').style.display = 'flex';
+}
+
+function updateHUD(step) {
+  const total = scenario.totalSteps;
+  document.getElementById('hud-step-num').textContent = Math.min(step, total);
+  document.getElementById('hud-step-total').textContent = total;
+  const pct = Math.round((step / total) * 100);
+  const bar = document.getElementById('sim-progress-bar');
+  const txt = document.getElementById('sim-progress-text');
+  if (bar) bar.style.width = pct + '%';
+  if (txt) txt.textContent = pct + '%';
+}
+
+// ── Keep these existing functions untouched ──────────────
+function toggleMute() {
+  isMuted = !isMuted;
+  document.querySelectorAll('#sound-btn').forEach(btn => {
+    btn.innerHTML = isMuted ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+  });
+}
+
+function playSyntheticBeep(freq, duration) {
+  if (isMuted) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let osc = audioCtx.createOscillator();
+    let g = audioCtx.createGain();
+    osc.connect(g); g.connect(audioCtx.destination);
+    osc.frequency.value = freq;
+    g.gain.setValueAtTime(0.06, audioCtx.currentTime);
+    osc.start(); osc.stop(audioCtx.currentTime + duration);
+  } catch(e) {}
+}
+
+function launchConfetti(canvas) {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const colors = ['#4CAF50','#f9ca24','#5865f2','#dd2a7b','#0084ff','#ff6b6b'];
+  const particles = Array.from({length:90}, () => ({
+    x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height,
+    r: Math.random() * 6 + 3, d: Math.random() * canvas.height,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    tilt: Math.random() * 10 - 5, tiltAngle: 0,
+    tiltAngleIncremental: Math.random() * 0.07 + 0.02
+  }));
+  let af;
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    let active = false;
+    particles.forEach((p, idx) => {
+      p.tiltAngle += p.tiltAngleIncremental;
+      p.y += (Math.cos(p.d) + 3 + p.r/2) / 2;
+      p.x += Math.sin(p.tiltAngle);
+      p.tilt = Math.sin(p.tiltAngle - idx/3) * 15;
+      if (p.y < canvas.height) active = true;
+      ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color;
+      ctx.moveTo(p.x + p.tilt + p.r/2, p.y);
+      ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r/2);
+      ctx.stroke();
+    });
+    if (active) af = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ── Real-Life Situation handler (top section) ────────────
+function handleSituationChoice(btn) {
+  const buttons = document.querySelectorAll('.situation-choice-btn');
+  buttons.forEach(b => { b.disabled=true; b.style.opacity='0.5'; b.style.cursor='not-allowed'; });
+  const isCorrect = btn.dataset.correct === 'true';
+  const feedbackBox = document.getElementById('situation-feedback');
+  feedbackBox.style.display = 'block';
+  if (isCorrect) {
+    feedbackBox.style.background = 'rgba(76,175,80,0.08)';
+    feedbackBox.style.border = '1px solid rgba(76,175,80,0.4)';
+    feedbackBox.style.color = 'var(--success-color)';
+    feedbackBox.innerHTML = `<strong>✅ Smart Choice!</strong><br>${btn.dataset.feedback}<br><br><em style="font-size:0.82rem;opacity:0.8;">Scroll down to continue learning ↓</em>`;
+    playSyntheticBeep(659, 0.12);
+  } else {
+    feedbackBox.style.background = 'rgba(179,57,57,0.08)';
+    feedbackBox.style.border = '1px solid rgba(179,57,57,0.3)';
+    feedbackBox.style.color = 'var(--danger-color)';
+    feedbackBox.innerHTML = `<strong>❌ Think Again!</strong><br>${btn.dataset.feedback}<br><br><em style="font-size:0.82rem;opacity:0.8;">Scroll down to explore the full module ↓</em>`;
+    playSyntheticBeep(220, 0.2);
+  }
+}
+
+// ── Quiz handler (unchanged) ─────────────────────────────
+function checkQuizAnswer(qNum, selected, explanation) {
+  const card = document.getElementById(`quiz-q-${qNum}`);
+  const feedback = document.getElementById(`quiz-feedback-${qNum}`);
+  const buttons = card.querySelectorAll('.option-btn');
+  if (answeredQuestions.has(qNum)) return;
+  answeredQuestions.add(qNum);
+  buttons.forEach(btn => { btn.disabled=true; btn.style.opacity='0.5'; btn.style.cursor='not-allowed'; });
+  const correctAnswer = quizAnswers[qNum - 1];
+  const isCorrect = selected === correctAnswer;
+  if (isCorrect) {
+    quizScore++;
+    document.getElementById('quiz-score-value').textContent = quizScore;
+    feedback.style.background = 'rgba(75,128,98,0.08)';
+    feedback.style.border = '1px solid var(--success-color)';
+    feedback.style.color = 'var(--success-color)';
+    feedback.innerHTML = `<strong>🟢 CORRECT!</strong><br>${explanation}`;
+    playSyntheticBeep(659, 0.12);
+  } else {
+    feedback.style.background = 'rgba(179,57,57,0.08)';
+    feedback.style.border = '1px solid var(--danger-color)';
+    feedback.style.color = 'var(--danger-color)';
+    feedback.innerHTML = `<strong>🔴 INCORRECT!</strong><br>${explanation}`;
+    playSyntheticBeep(220, 0.2);
+  }
+  feedback.style.display = 'block';
+  setTimeout(() => {
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'restart-btn';
+    nextBtn.style.marginTop = '20px';
+    nextBtn.style.fontSize = '0.85rem';
+    nextBtn.style.padding = '10px 22px';
+    if (qNum < 5) {
+      nextBtn.innerHTML = `Next Situation <i class="fa-solid fa-arrow-right"></i>`;
+      nextBtn.onclick = () => { card.style.display='none'; document.getElementById(`quiz-q-${qNum+1}`).style.display='block'; };
+    } else {
+      nextBtn.innerHTML = `Finish Assessment <i class="fa-solid fa-flag-checkered"></i>`;
+      nextBtn.onclick = () => {
+        card.style.display='none';
+        document.getElementById('quiz-report-card').style.display='block';
+        const finalReport = document.getElementById('quiz-report-card');
+        finalReport.querySelector('p').textContent = quizScore >= 4
+          ? `Fantastic! You scored ${quizScore}/5. You have an excellent eye for warning signs! 🛡️`
+          : `You scored ${quizScore}/5. Some traps are very sneaky! Review the warning signs and try again.`;
+      };
+    }
+    feedback.appendChild(nextBtn);
+  }, 500);
+}
+
+function resetQuiz() {
+  quizScore = 0;
+  document.getElementById('quiz-score-value').textContent = 0;
+  answeredQuestions.clear();
+  document.getElementById('quiz-report-card').style.display = 'none';
+  for (let i=1; i<=5; i++) {
+    const card = document.getElementById(`quiz-q-${i}`);
+    card.style.display = i===1 ? 'block' : 'none';
+    const feedback = document.getElementById(`quiz-feedback-${i}`);
+    feedback.style.display = 'none';
+    feedback.innerHTML = '';
+    card.querySelectorAll('.option-btn').forEach(btn => { btn.disabled=false; btn.style.opacity='1'; btn.style.cursor='pointer'; });
+  }
+}
+
+// ── Scroll-reveal ────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.animate-scroll-item').forEach(item => {
+    item.style.opacity = '0.4';
+    item.style.transform = 'translateY(15px)';
+    observer.observe(item);
+  });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CyberSafe QR – Interactive Cyber Awareness{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="{{ url_for('index') }}" class="logo">
+                <i class="fa-solid fa-shield-halved logo-icon"></i>
+                <span class="logo-text">CyberSafe <span class="accent-text">QR</span></span>
+            </a>
+            <div class="tracker">
+                <i class="fa-solid fa-trophy tracker-icon"></i>
+                <span id="tracker-text">Scenarios Solved: 0 / 8</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Specific Content -->
+    {% block content %}{% endblock %}
+
+    <!-- Global Celebration Modal (Upon completing all scenarios) -->
+    <div class="completion-modal-overlay" id="completionModal">
+        <div class="completion-modal">
+            <div class="confetti-icon">🏆</div>
+            <h2>You've Graduated Cyber Academy!</h2>
+            <p>Congratulations! You successfully completed all 8 scenarios and spotted every digital scam. You've earned the title of <strong>Cyber Awareness Champion</strong>! 🛡️</p>
+            <div class="certificate-card">
+                <i class="fa-solid fa-award cert-award"></i>
+                <div class="cert-details">
+                    <h4>CyberSafe QR Security Graduate</h4>
+                    <p>Awarded to: <strong>The Shield of Safety</strong></p>
+                </div>
+            </div>
+            <button class="restart-btn" id="restart-progress-btn">Explore Scenarios Again</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 CyberSafe QR. Made to protect our families, children, and elders. 🛡️</p>
+            <p class="footer-note">Spotted a cyber crime? Report it immediately to <a href="https://www.cybercrime.gov.in" target="_blank">cybercrime.gov.in</a> or your local cyber emergency authority.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

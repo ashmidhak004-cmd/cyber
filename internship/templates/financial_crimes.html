@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Financial Crimes – CyberSafe QR{% endblock %}
+
+{% block content %}
+<main class="scenarios-container" style="margin-top: 20px;">
+    <!-- Category Header Banner -->
+    <div class="category-banner color-fin" style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div class="banner-content">
+            <h2>💰 Financial Crimes</h2>
+            <p>Learn about common financial cyber frauds, how they work, warning signs, and ways to stay safe.</p>
+        </div>
+        <a href="{{ url_for('index') }}" class="restart-btn" style="background: rgba(255,255,255,0.25); box-shadow: none; display: flex; align-items: center; gap: 8px; text-decoration: none; color: white;">
+            <i class="fa-solid fa-arrow-left-long"></i> Back to Home
+        </a>
+    </div>
+
+    <!-- Intro Text -->
+    <div class="section-header" style="margin-bottom: 40px; text-align: left; max-width: 100%;">
+        <h3>Explore Fraud Types</h3>
+        <p>Cybercriminals target bank accounts, cards, and mobile connections using sophisticated social engineering. Click on any card below to understand how these scams work and how to shield yourself.</p>
+    </div>
+
+    <!-- Grid of Fraud Cards -->
+    <div class="financial-grid" style="margin-bottom: 50px;">
+        {% for fraud_id, fraud in frauds.items() %}
+        <a href="{{ url_for('financial_fraud_detail', fraud_id=fraud_id) }}" class="category-card financial-card" id="card-{{ fraud_id }}" style="text-decoration: none; color: inherit; align-items: flex-start; text-align: left; padding: 28px; position: relative; overflow: hidden; border-radius: var(--border-radius); transition: var(--transition);">
+            <div class="card-icon-wrapper color-fin" style="margin-bottom: 16px;">
+                <i class="{{ fraud.icon }}"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--dark-text);">{{ fraud.title }}</h3>
+            <p style="font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; color: var(--light-text);">{{ fraud.desc }}</p>
+            
+            <span class="explore-btn" style="font-size: 0.9rem; font-weight: 700; color: var(--primary-color);">Learn More <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

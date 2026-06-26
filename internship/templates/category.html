@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.title }} – CyberSafe QR{% endblock %}
+
+{% block content %}
+<main class="scenarios-container" style="margin-top: 20px;">
+    <!-- Category Header Banner -->
+    <div class="category-banner {{ category.class }}" style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div class="banner-content">
+            <h2>{{ category.title }}</h2>
+            <p>{{ category.desc }}</p>
+        </div>
+        <a href="{{ url_for('index') }}" class="restart-btn" style="background: rgba(255,255,255,0.25); box-shadow: none; display: flex; align-items: center; gap: 8px; text-decoration: none; color: white;">
+            <i class="fa-solid fa-arrow-left-long"></i> Back to Home
+        </a>
+    </div>
+
+    <!-- Scenarios List Grid -->
+    <div class="section-header" style="margin-bottom: 40px; text-align: left; max-width: 100%;">
+        <h3>Available Scenarios</h3>
+        <p>Select a scenario below to explore a real-world cybersecurity challenge, review clues, and test your safety skills.</p>
+    </div>
+
+    <div class="categories-grid" style="margin-bottom: 50px;">
+        {% for scen in scenarios %}
+        <a href="{{ url_for('scenario_view', id=scen.id) }}" class="category-card subtopic-card" id="card-{{ scen.id }}" style="text-decoration: none; color: inherit; align-items: flex-start; text-align: left; padding: 24px;">
+            <div class="card-icon-wrapper {{ category.class }}" style="margin-bottom: 14px;">
+                <i class="{{ scen.icon }}"></i>
+            </div>
+            <h3 style="font-size: 1.15rem; margin-bottom: 8px;">{{ scen.title }}</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 16px;">{{ scen.desc }}</p>
+            
+            <!-- Solved Status Badge (Updated by JS) -->
+            <div class="solve-status-badge status-unsolved" id="badge-{{ scen.id }}" style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 12px; background: rgba(0,0,0,0.05); color: #7f8c8d; margin-bottom: 16px;">
+                <i class="fa-solid fa-circle-question"></i> Unsolved
+            </div>
+            
+            <span class="explore-btn" style="font-size: 0.85rem; font-weight: 700; color: var(--primary-color);">Start Scenario <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

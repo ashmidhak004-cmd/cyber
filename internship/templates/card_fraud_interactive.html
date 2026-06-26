@@ -1,0 +1,1033 @@
+{% extends "base.html" %}
+
+{% block title %}Interactive Card Fraud Simulator – CyberSafe QR{% endblock %}
+
+{% block content %}
+<main class="scenarios-container" style="margin-top: 20px; min-height: 90vh;">
+    <!-- Navigation back button -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <a href="{{ url_for('financial_crimes') }}" class="explore-btn" style="text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.95rem;">
+            <i class="fa-solid fa-arrow-left"></i> Back to Financial Crimes
+        </a>
+        <div style="font-weight: 700; font-size: 0.95rem; color: var(--primary-color);">
+            Simulator: Card Fraud
+        </div>
+    </div>
+
+    <!-- 1. Hero Section -->
+    <section class="simulator-hero card-section-card" style="position: relative; overflow: hidden; padding: 40px; margin-bottom: 30px; text-align: center;">
+        <div class="hero-bg-shapes">
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+        </div>
+        <div class="hero-icons-wrapper" style="margin-bottom: 20px; display: flex; justify-content: center; gap: 25px; align-items: center;">
+            <div class="animated-icon shield-icon" style="font-size: 2.5rem; color: var(--primary-color);"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="animated-icon main-card-icon" style="font-size: 4rem; color: #e67e22; filter: drop-shadow(0 8px 20px rgba(230,126,34,0.3));"><i class="fa-solid fa-credit-card"></i></div>
+            <div class="animated-icon alert-icon" style="font-size: 2.2rem; color: var(--danger-color);"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        </div>
+        <h1 style="font-size: 2.5rem; margin-bottom: 12px; color: var(--dark-text);">Credit/Debit Card Frauds</h1>
+        <p style="font-size: 1.15rem; color: var(--light-text); max-width: 700px; margin: 0 auto 30px auto; line-height: 1.6;">
+            Experience real-life scam situations, make decisions, and learn how to stay safe.
+        </p>
+
+        <!-- 10. Progress System Header -->
+        <div class="simulator-progress-header" style="max-width: 400px; margin: 0 auto; background: rgba(255,255,255,0.6); padding: 15px 25px; border-radius: 30px; border: 1px solid rgba(101,146,135,0.15); display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap;">
+            <span style="font-weight: 700; font-size: 0.9rem; color: var(--dark-text);">Scenario Progress:</span>
+            <div style="flex: 1; min-width: 120px; height: 10px; background: rgba(0,0,0,0.06); border-radius: 5px; overflow: hidden;">
+                <div id="sim-progress-bar" style="width: 10%; height: 100%; background: linear-gradient(90deg, #e67e22, var(--primary-color)); transition: width 0.5s ease;"></div>
+            </div>
+            <span id="sim-progress-text" style="font-weight: 800; font-size: 0.85rem; color: var(--primary-color);">10%</span>
+        </div>
+    </section>
+
+    <!-- 2. Interactive Scam Simulation Section -->
+    <section class="simulator-interactive-area" style="margin-bottom: 50px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 25px; max-width: 100%;">
+            <h3>Scam Call Simulator</h3>
+            <p>A simulated telephone call from an unknown number. Interact to see the consequences of your choices.</p>
+        </div>
+
+        <div class="simulation-viewport" style="background: var(--white); border-radius: var(--border-radius); border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); min-height: 480px; overflow: hidden; position: relative;">
+            
+            <!-- RINGING PHASE -->
+            <div id="phase-ringing" class="sim-phase" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center; height: 100%;">
+                <div class="phone-ring-container" style="position: relative; margin-bottom: 40px; display: inline-block;">
+                    <div class="ring-pulse ring-1"></div>
+                    <div class="ring-pulse ring-2"></div>
+                    <div class="phone-icon-box" style="width: 90px; height: 90px; border-radius: 50%; background: #e67e22; color: white; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; box-shadow: 0 10px 25px rgba(230,126,34,0.4); z-index: 2; position: relative; animation: phoneVibrate 0.6s infinite ease-in-out;">
+                        <i class="fa-solid fa-phone-volume"></i>
+                    </div>
+                </div>
+                <h4 style="font-size: 1.3rem; color: var(--dark-text); margin-bottom: 8px;">Incoming Emergency Alert</h4>
+                <p style="font-size: 1rem; color: var(--light-text); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;">+91 98765 04321</p>
+                <div style="font-style: italic; color: #e67e22; font-size: 0.95rem; margin-bottom: 40px; display: flex; align-items: center; gap: 8px; justify-content: center;">
+                    <span class="dot-blink"></span> Possible Bank Security Call
+                </div>
+                <div class="call-action-buttons" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <button class="call-btn btn-decline" onclick="declineCall()" style="background: var(--danger-color); color: white; border: none; padding: 14px 32px; border-radius: 30px; font-weight: 700; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(179,57,57,0.3); transition: var(--transition);">
+                        <i class="fa-solid fa-phone-slash"></i> Decline Alert
+                    </button>
+                    <button class="call-btn btn-accept" onclick="acceptCall()" style="background: var(--success-color); color: white; border: none; padding: 14px 32px; border-radius: 30px; font-weight: 700; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(75,128,98,0.3); transition: var(--transition);">
+                        <i class="fa-solid fa-phone"></i> Answer Call
+                    </button>
+                </div>
+                <p id="decline-warning-text" style="color: var(--danger-color); font-weight: 700; margin-top: 20px; display: none; opacity: 0; transition: opacity 0.4s; font-size: 0.9rem;">
+                    ⚠️ The emergency line keeps ringing. Declining calls is safe, but answer this simulated call to practice!
+                </p>
+            </div>
+
+            <!-- CHAT INTERFACE -->
+            <div id="phase-conversation" class="sim-phase" style="display: none; flex-direction: column; height: 520px;">
+                <!-- Chat Header -->
+                <div class="chat-header-bar" style="background: rgba(101,146,135,0.06); padding: 15px 25px; border-bottom: 1px solid rgba(101,146,135,0.15); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 42px; height: 42px; border-radius: 50%; background: rgba(230,126,34,0.15); color: #e67e22; display: flex; justify-content: center; align-items: center; font-size: 1.2rem;">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div>
+                            <span style="font-weight: 700; color: var(--dark-text); font-size: 0.95rem; display: block;">Bank Security Division</span>
+                            <span style="font-size: 0.75rem; color: var(--success-color); font-weight: 700; display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-circle" style="font-size: 0.5rem;"></i> Call in Progress</span>
+                        </div>
+                    </div>
+                    <!-- Sound Toggle -->
+                    <button onclick="toggleMute()" id="sound-btn" style="background: none; border: none; font-size: 1.1rem; color: var(--primary-color); cursor: pointer; padding: 6px;" title="Toggle ringing feedback">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
+
+                <!-- Chat Messages Body -->
+                <div id="chat-messages-container" style="flex: 1; padding: 25px; overflow-y: auto; background: #fafdf8; display: flex; flex-direction: column; gap: 16px;">
+                    <!-- Message bubbles inserted dynamically -->
+                </div>
+
+                <!-- Typing indicator -->
+                <div id="typing-indicator" style="display: none; padding: 10px 25px; align-items: center; gap: 8px;">
+                    <span style="font-size: 0.8rem; font-weight: 700; color: var(--light-text);">Scammer is typing</span>
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <!-- Reply Area -->
+                <div class="chat-reply-controls" style="padding: 20px 25px; border-top: 1px solid rgba(101,146,135,0.15); background: var(--white);">
+                    <div id="reply-label" style="font-size: 0.85rem; font-weight: 700; color: var(--light-text); margin-bottom: 12px;">Choose your response:</div>
+                    <div id="chat-options-grid" style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+                        <!-- Options generated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. DECISION-BASED INTERACTION OUTCOMES -->
+            <!-- FAIL OUTCOME (SCAMMED) -->
+            <div id="outcome-scammed" class="sim-phase" style="display: none; flex-direction: column; padding: 40px 30px; text-align: center; animation: slideDownFade 0.5s ease both;">
+                <div class="scammed-alert-banner" style="background: rgba(179,57,57,0.08); border: 2px dashed var(--danger-color); border-radius: var(--border-radius); padding: 30px; margin-bottom: 30px; position: relative; overflow: hidden;">
+                    <!-- Money Transferring Visual -->
+                    <div class="money-transfer-animation" style="margin-bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 30px; position: relative;">
+                        <div class="transfer-box box-card" style="font-size: 2.2rem; color: var(--light-text); position: relative; z-index: 2;"><i class="fa-solid fa-credit-card"></i></div>
+                        <div class="transfer-arrow-line" style="flex: 1; max-width: 100px; height: 4px; background: rgba(0,0,0,0.08); position: relative;">
+                            <div class="cash-packet" style="width: 14px; height: 14px; background: var(--danger-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: absolute; top: -5px; animation: transferCash 1.5s infinite linear; color: white; font-size: 0.55rem;"><i class="fa-solid fa-dollar-sign"></i></div>
+                        </div>
+                        <div class="transfer-box box-scammer" style="font-size: 2.2rem; color: var(--danger-color); position: relative; z-index: 2;"><i class="fa-solid fa-user-secret"></i></div>
+                    </div>
+                    <div style="font-size: 3rem; color: var(--danger-color); margin-bottom: 10px;"><i class="fa-solid fa-circle-exclamation animate-pulse"></i></div>
+                    <h4 style="font-size: 1.6rem; color: var(--danger-color); font-weight: 800; margin-bottom: 8px;">YOU GOT SCAMMED!</h4>
+                    <p style="font-size: 1rem; color: var(--dark-text); max-width: 600px; margin: 0 auto;">
+                        By sharing your card details and OTP, you handed full access of your funds to the attacker.
+                    </p>
+                </div>
+
+                <div class="outcome-explanation" style="text-align: left; max-width: 800px; margin: 0 auto 40px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                    <div style="background: rgba(0,0,0,0.02); padding: 20px; border-radius: var(--border-radius); border: 1px solid rgba(0,0,0,0.05);">
+                        <h5 style="color: var(--danger-color); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-xmark"></i> What Mistake Was Made</h5>
+                        <p style="font-size: 0.9rem; color: var(--light-text); line-height: 1.5;">You trusted an unsolicited caller and provided temporary secure access keys (CVV & OTP). Banks and security operators have full access to your account metadata already and will <strong>never</strong> ask for secure codes to execute a block.</p>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.02); padding: 20px; border-radius: var(--border-radius); border: 1px solid rgba(0,0,0,0.05);">
+                        <h5 style="color: var(--danger-color); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-lock-open"></i> What Was Stolen</h5>
+                        <p style="font-size: 0.9rem; color: var(--light-text); line-height: 1.5;">The scammer obtained your 16-digit card number, CVV (validation code), and expiration date to write transaction bills, and the OTP to override transaction 2-factor verification.</p>
+                    </div>
+                </div>
+
+                <!-- 4. Emergency Actions Section -->
+                <div class="emergency-actions-checklist" style="text-align: left; max-width: 650px; margin: 0 auto 30px auto; background: rgba(101,146,135,0.05); padding: 30px; border-radius: var(--border-radius); border: 1px solid rgba(101,146,135,0.15);">
+                    <h4 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: var(--dark-text); font-size: 1.2rem;">
+                        <i class="fa-solid fa-kit-medical" style="color: var(--primary-color);"></i> What should you do immediately?
+                    </h4>
+                    <p style="font-size: 0.9rem; color: var(--light-text); margin-bottom: 20px;">Animate and check off each step to complete this recovery procedure:</p>
+                    
+                    <div class="checklist-grid" style="display: flex; flex-direction: column; gap: 12px;">
+                        <label class="checklist-item-wrapper" style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 8px 12px; background: var(--white); border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); transition: all 0.3s;">
+                            <input type="checkbox" class="emergency-check" onchange="checkEmergencyItem()" style="width: 18px; height: 18px; accent-color: var(--primary-color); cursor: pointer;">
+                            <span class="check-text" style="font-size: 0.95rem; font-weight: 700; color: var(--dark-text);">Block your debit/credit card immediately</span>
+                        </label>
+                        <label class="checklist-item-wrapper" style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 8px 12px; background: var(--white); border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); transition: all 0.3s;">
+                            <input type="checkbox" class="emergency-check" onchange="checkEmergencyItem()" style="width: 18px; height: 18px; accent-color: var(--primary-color); cursor: pointer;">
+                            <span class="check-text" style="font-size: 0.95rem; font-weight: 700; color: var(--dark-text);">Call your official bank customer helpline</span>
+                        </label>
+                        <label class="checklist-item-wrapper" style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 8px 12px; background: var(--white); border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); transition: all 0.3s;">
+                            <input type="checkbox" class="emergency-check" onchange="checkEmergencyItem()" style="width: 18px; height: 18px; accent-color: var(--primary-color); cursor: pointer;">
+                            <span class="check-text" style="font-size: 0.95rem; font-weight: 700; color: var(--dark-text);">Change all banking internet and app passwords</span>
+                        </label>
+                        <label class="checklist-item-wrapper" style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 8px 12px; background: var(--white); border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); transition: all 0.3s;">
+                            <input type="checkbox" class="emergency-check" onchange="checkEmergencyItem()" style="width: 18px; height: 18px; accent-color: var(--primary-color); cursor: pointer;">
+                            <span class="check-text" style="font-size: 0.95rem; font-weight: 700; color: var(--dark-text);">Report the scam on National Cyber Crime Portal (cybercrime.gov.in)</span>
+                        </label>
+                        <label class="checklist-item-wrapper" style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 8px 12px; background: var(--white); border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); transition: all 0.3s;">
+                            <input type="checkbox" class="emergency-check" onchange="checkEmergencyItem()" style="width: 18px; height: 18px; accent-color: var(--primary-color); cursor: pointer;">
+                            <span class="check-text" style="font-size: 0.95rem; font-weight: 700; color: var(--dark-text);">Call the National Cyber Helpline number 1930 immediately</span>
+                        </label>
+                        <label class="checklist-item-wrapper" style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 8px 12px; background: var(--white); border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); transition: all 0.3s;">
+                            <input type="checkbox" class="emergency-check" onchange="checkEmergencyItem()" style="width: 18px; height: 18px; accent-color: var(--primary-color); cursor: pointer;">
+                            <span class="check-text" style="font-size: 0.95rem; font-weight: 700; color: var(--dark-text);">Monitor account statements and dispute unauthorized charges</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="restart-btn" onclick="resetSimulator()" style="border-radius: 30px; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-rotate-left"></i> Try Simulation Again
+                    </button>
+                    <button id="sim-recover-done-btn" disabled class="restart-btn" onclick="completeRecoveredSimulation()" style="border-radius: 30px; font-size: 0.95rem; background: var(--light-text); display: flex; align-items: center; gap: 8px; opacity: 0.6; cursor: not-allowed; box-shadow: none;">
+                        Complete Scenario <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SUCCESS OUTCOME (SAFE DECISION) -->
+            <div id="outcome-safe" class="sim-phase" style="display: none; flex-direction: column; padding: 40px 30px; align-items: center; text-align: center; animation: slideDownFade 0.5s ease both;">
+                
+                <!-- Confetti Canvas Container -->
+                <canvas id="confetti-canvas" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 5;"></canvas>
+
+                <div class="safe-success-banner" style="background: rgba(75,128,98,0.08); border: 2px solid var(--success-color); border-radius: var(--border-radius); padding: 30px; margin-bottom: 30px; width: 100%; position: relative;">
+                    <!-- Shield animation -->
+                    <div style="font-size: 4rem; color: var(--success-color); margin-bottom: 15px; animation: shieldPulse 2s infinite ease-in-out;">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h4 style="font-size: 1.6rem; color: var(--success-color); font-weight: 800; margin-bottom: 8px;">EXCELLENT DECISION!</h4>
+                    <p style="font-size: 1.05rem; color: var(--dark-text); max-width: 650px; margin: 0 auto; line-height: 1.5;">
+                        You refused to share credentials and decided to verify with the bank directly. This is the safest response!
+                    </p>
+                </div>
+
+                <div class="outcome-explanation" style="text-align: left; max-width: 750px; margin: 0 auto 35px auto; background: rgba(0,0,0,0.02); padding: 25px; border-radius: var(--border-radius); border: 1px solid rgba(0,0,0,0.05);">
+                    <h5 style="color: var(--success-color); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-size: 1.1rem;">
+                        <i class="fa-solid fa-circle-info"></i> Why this response is safest
+                    </h5>
+                    <ul style="padding-left: 20px; color: var(--light-text); display: flex; flex-direction: column; gap: 10px; font-size: 0.95rem; line-height: 1.5;">
+                        <li><strong>No Exposure</strong>: By keeping CVVs and OTPs secret, you deny unauthorized payment authorization.</li>
+                        <li><strong>Caller Verification</strong>: Bank details should only be handled via incoming connections that YOU initiated using official, documented numbers.</li>
+                        <li><strong>Defense against Urgency</strong>: Ignoring the caller's pressure statements neutralizes social engineering coercion tricks.</li>
+                    </ul>
+                </div>
+
+                <!-- 10. Progress badge reveal -->
+                <div id="success-badge-award" class="badge-award-card" style="margin-bottom: 40px; display: flex; align-items: center; gap: 20px; background: linear-gradient(135deg, rgba(230,126,34,0.08) 0%, rgba(101,146,135,0.08) 100%); border: 1px solid rgba(101,146,135,0.2); padding: 20px 30px; border-radius: var(--border-radius); max-width: 480px; text-align: left;">
+                    <div style="font-size: 3rem; color: #e67e22; animation: rotateTrophy 4s infinite linear;"><i class="fa-solid fa-award"></i></div>
+                    <div>
+                        <h5 style="margin: 0; font-size: 1rem; color: var(--dark-text); font-weight: 800;">Badge Unlocked!</h5>
+                        <p style="margin: 3px 0 0 0; font-size: 0.9rem; color: var(--light-text); font-weight: 700;">Card Fraud Awareness Completed</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px;">
+                    <button class="restart-btn" onclick="resetSimulator()" style="border-radius: 30px; font-size: 0.95rem; background: var(--light-text); display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-rotate-left"></i> Run Simulation Again
+                    </button>
+                    <a href="{{ url_for('financial_crimes') }}" class="restart-btn" style="text-decoration: none; border-radius: 30px; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+                        Back to Portal <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. How the Scam Works Section -->
+    <section class="simulator-how-works-area" style="margin-bottom: 60px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 30px; max-width: 100%;">
+            <h3>Scam Mechanism Flow</h3>
+            <p>Scroll down or observe the sequential stages showing how card scammers execute this attack.</p>
+        </div>
+
+        <div class="horizontal-flow-container" style="overflow-x: auto; padding: 20px 10px; display: flex; justify-content: space-between; gap: 20px; align-items: stretch; scrollbar-width: thin;">
+            
+            <div class="flow-step-card animate-scroll-item" style="flex: 1; min-width: 160px; text-align: center; background: var(--white); border-radius: 12px; padding: 20px 15px; border: 1px solid rgba(101,146,135,0.12); box-shadow: var(--card-shadow); transition: transform 0.5s;">
+                <div style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 12px;"><i class="fa-solid fa-phone-volume"></i></div>
+                <h5 style="margin-bottom: 6px; font-size: 0.95rem;">1. Scammer Calls</h5>
+                <p style="font-size: 0.75rem; color: var(--light-text); line-height: 1.4; margin: 0;">Attacker calls, masquerading as bank security agent.</p>
+            </div>
+
+            <div class="flow-connector" style="display: flex; align-items: center; font-size: 1.2rem; color: var(--secondary-color);"><i class="fa-solid fa-circle-arrow-right"></i></div>
+
+            <div class="flow-step-card animate-scroll-item" style="flex: 1; min-width: 160px; text-align: center; background: var(--white); border-radius: 12px; padding: 20px 15px; border: 1px solid rgba(101,146,135,0.12); box-shadow: var(--card-shadow); transition: transform 0.5s;">
+                <div style="font-size: 1.8rem; color: var(--danger-color); margin-bottom: 12px;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <h5 style="margin-bottom: 6px; font-size: 0.95rem;">2. Creates Fear</h5>
+                <p style="font-size: 0.75rem; color: var(--light-text); line-height: 1.4; margin: 0;">Claims fake high-value transaction of ₹48,000.</p>
+            </div>
+
+            <div class="flow-connector" style="display: flex; align-items: center; font-size: 1.2rem; color: var(--secondary-color);"><i class="fa-solid fa-circle-arrow-right"></i></div>
+
+            <div class="flow-step-card animate-scroll-item" style="flex: 1; min-width: 160px; text-align: center; background: var(--white); border-radius: 12px; padding: 20px 15px; border: 1px solid rgba(101,146,135,0.12); box-shadow: var(--card-shadow); transition: transform 0.5s;">
+                <div style="font-size: 1.8rem; color: #e67e22; margin-bottom: 12px;"><i class="fa-solid fa-credit-card"></i></div>
+                <h5 style="margin-bottom: 6px; font-size: 0.95rem;">3. Asks Details</h5>
+                <p style="font-size: 0.75rem; color: var(--light-text); line-height: 1.4; margin: 0;">Demands 16-digit card number and CVV.</p>
+            </div>
+
+            <div class="flow-connector" style="display: flex; align-items: center; font-size: 1.2rem; color: var(--secondary-color);"><i class="fa-solid fa-circle-arrow-right"></i></div>
+
+            <div class="flow-step-card animate-scroll-item" style="flex: 1; min-width: 160px; text-align: center; background: var(--white); border-radius: 12px; padding: 20px 15px; border: 1px solid rgba(101,146,135,0.12); box-shadow: var(--card-shadow); transition: transform 0.5s;">
+                <div style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 12px;"><i class="fa-solid fa-key"></i></div>
+                <h5 style="margin-bottom: 6px; font-size: 0.95rem;">4. Obtains OTP</h5>
+                <p style="font-size: 0.75rem; color: var(--light-text); line-height: 1.4; margin: 0;">Asks victim to verify SMS verification passcode.</p>
+            </div>
+
+            <div class="flow-connector" style="display: flex; align-items: center; font-size: 1.2rem; color: var(--secondary-color);"><i class="fa-solid fa-circle-arrow-right"></i></div>
+
+            <div class="flow-step-card animate-scroll-item" style="flex: 1; min-width: 160px; text-align: center; background: var(--white); border-radius: 12px; padding: 20px 15px; border: 1px solid rgba(101,146,135,0.12); box-shadow: var(--card-shadow); transition: transform 0.5s;">
+                <div style="font-size: 1.8rem; color: var(--danger-color); margin-bottom: 12px;"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                <h5 style="margin-bottom: 6px; font-size: 0.95rem;">5. Transfers Cash</h5>
+                <p style="font-size: 0.75rem; color: var(--light-text); line-height: 1.4; margin: 0;">OTP authorizes online transfer on card portals.</p>
+            </div>
+
+            <div class="flow-connector" style="display: flex; align-items: center; font-size: 1.2rem; color: var(--secondary-color);"><i class="fa-solid fa-circle-arrow-right"></i></div>
+
+            <div class="flow-step-card animate-scroll-item" style="flex: 1; min-width: 160px; text-align: center; background: var(--white); border-radius: 12px; padding: 20px 15px; border: 1px solid rgba(101,146,135,0.12); box-shadow: var(--card-shadow); transition: transform 0.5s;">
+                <div style="font-size: 1.8rem; color: #b33939; margin-bottom: 12px;"><i class="fa-solid fa-sack-xmark"></i></div>
+                <h5 style="margin-bottom: 6px; font-size: 0.95rem;">6. Money Lost</h5>
+                <p style="font-size: 0.75rem; color: var(--light-text); line-height: 1.4; margin: 0;">Attacker withdraws funds; account depleted.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 6. Warning Signs Section -->
+    <section class="simulator-warning-signs" style="margin-bottom: 60px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 30px; max-width: 100%;">
+            <h3>Key Warning Signs (Red Flags)</h3>
+            <p>Hover over these cards to examine immediate warning indicators that signify an ongoing attack.</p>
+        </div>
+        
+        <div class="warning-signs-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div class="warning-sign-card shake-hover" style="background: var(--white); padding: 24px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); text-align: center;">
+                <div style="font-size: 2.2rem; color: var(--danger-color); margin-bottom: 15px;"><i class="fa-solid fa-key"></i></div>
+                <h4 style="font-size: 1.05rem; margin-bottom: 8px; color: var(--dark-text);">Asking for OTP</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.4; margin: 0;">Banks NEVER ask for OTPs to check profiles or cancel payments.</p>
+            </div>
+            
+            <div class="warning-sign-card shake-hover" style="background: var(--white); padding: 24px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); text-align: center;">
+                <div style="font-size: 2.2rem; color: var(--danger-color); margin-bottom: 15px;"><i class="fa-solid fa-credit-card"></i></div>
+                <h4 style="font-size: 1.05rem; margin-bottom: 8px; color: var(--dark-text);">Asking for CVV</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.4; margin: 0;">CVV is a private local security code. Bank databases hold card profiles without CVVs.</p>
+            </div>
+            
+            <div class="warning-sign-card shake-hover" style="background: var(--white); padding: 24px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); text-align: center;">
+                <div style="font-size: 2.2rem; color: var(--danger-color); margin-bottom: 15px;"><i class="fa-solid fa-hourglass-half"></i></div>
+                <h4 style="font-size: 1.05rem; margin-bottom: 8px; color: var(--dark-text);">Urgent Pressure</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.4; margin: 0;">Scammers demand action "within minutes" to panic victims into ignoring rules.</p>
+            </div>
+            
+            <div class="warning-sign-card shake-hover" style="background: var(--white); padding: 24px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); text-align: center;">
+                <div style="font-size: 2.2rem; color: var(--danger-color); margin-bottom: 15px;"><i class="fa-solid fa-ban"></i></div>
+                <h4 style="font-size: 1.05rem; margin-bottom: 8px; color: var(--dark-text);">Threats to Block</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.4; margin: 0;">Threatening to block credit cards instantly is used to override caution.</p>
+            </div>
+            
+            <div class="warning-sign-card shake-hover" style="background: var(--white); padding: 24px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); text-align: center;">
+                <div style="font-size: 2.2rem; color: var(--danger-color); margin-bottom: 15px;"><i class="fa-solid fa-laptop-medical"></i></div>
+                <h4 style="font-size: 1.05rem; margin-bottom: 8px; color: var(--dark-text);">Remote App Request</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.4; margin: 0;">Asking to download AnyDesk or screen-shares lets them read codes off your screen.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Fake vs Genuine Quiz Section -->
+    <section class="simulator-quiz-area" style="margin-bottom: 60px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 30px; max-width: 100%;">
+            <h3>Fake vs Genuine Quiz</h3>
+            <p>Review the following real-life situations. Identify if the prompt describes a <strong>Scam</strong> or a <strong>Genuine</strong> banking request.</p>
+        </div>
+
+        <div class="quiz-container" style="background: var(--white); border-radius: var(--border-radius); border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); padding: 30px; position: relative;">
+            <!-- Quiz Score Panel -->
+            <div class="quiz-score-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 15px; margin-bottom: 25px;">
+                <span style="font-weight: 700; font-size: 1rem; color: var(--dark-text);">Situational Assessment</span>
+                <span style="background: rgba(101,146,135,0.1); color: var(--primary-color); padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 0.9rem;">
+                    Score: <span id="quiz-score-value">0</span> / 5
+                </span>
+            </div>
+
+            <!-- Quiz Questions Layout -->
+            <div class="quiz-question-blocks">
+                
+                <!-- Q1 -->
+                <div class="quiz-question-card" id="quiz-q-1" style="display: block; animation: slideDownFade 0.4s both;">
+                    <span style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--primary-color); display: block; margin-bottom: 8px;">Situation 1 of 5</span>
+                    <h4 style="font-size: 1.15rem; color: var(--dark-text); margin-bottom: 15px; line-height: 1.5;">
+                        "You receive an SMS from your bank alerting you of a card purchase of ₹3,500. It lists the remaining balance and has a toll-free customer care number to report unauthorized use."
+                    </h4>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <button class="option-btn" onclick="checkQuizAnswer(1, 'genuine', 'Correct! Legitimate transaction alerts do not demand your passwords or CVVs. They simply notify you and provide security contacts.')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🟢 Genuine Alert
+                        </button>
+                        <button class="option-btn" onclick="checkQuizAnswer(1, 'scam', 'Incorrect! This is a genuine transaction warning. It carries no phishing links or requests to read passwords, helping you stay alert.')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🔴 Scam Trap
+                        </button>
+                    </div>
+                    <div id="quiz-feedback-1" class="quiz-feedback-box" style="display: none; padding: 15px 20px; border-radius: 8px; margin-top: 15px; font-size: 0.95rem; line-height: 1.5;"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="quiz-question-card" id="quiz-q-2" style="display: none; animation: slideDownFade 0.4s both;">
+                    <span style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--primary-color); display: block; margin-bottom: 8px;">Situation 2 of 5</span>
+                    <h4 style="font-size: 1.15rem; color: var(--dark-text); margin-bottom: 15px; line-height: 1.5;">
+                        "A caller claims they represent your card issuer and demands your 16-digit card number and CVV to credit a loyalty cash reward points payout of ₹5,000 directly to your balance."
+                    </h4>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <button class="option-btn" onclick="checkQuizAnswer(2, 'genuine', 'Incorrect! Legitimate cashback payouts do not require secure authorization cards or CVVs. Sharing card numbers exposes your profile to online abuse.')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🟢 Genuine Alert
+                        </button>
+                        <button class="option-btn" onclick="checkQuizAnswer(2, 'scam', 'Correct! This is a phishing scam. Attackers lure victims with cash bonuses to harvest card details.')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🔴 Scam Trap
+                        </button>
+                    </div>
+                    <div id="quiz-feedback-2" class="quiz-feedback-box" style="display: none; padding: 15px 20px; border-radius: 8px; margin-top: 15px; font-size: 0.95rem; line-height: 1.5;"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="quiz-question-card" id="quiz-q-3" style="display: none; animation: slideDownFade 0.4s both;">
+                    <span style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--primary-color); display: block; margin-bottom: 8px;">Situation 3 of 5</span>
+                    <h4 style="font-size: 1.15rem; color: var(--dark-text); margin-bottom: 15px; line-height: 1.5;">
+                        "The bank website URL starts with 'https://' and has a padlock symbol beside it. You verify that the spelling of the bank domain is correct before logging into net banking."
+                    </h4>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <button class="option-btn" onclick="checkQuizAnswer(3, 'genuine', 'Correct! Verifying secure protocols (HTTPS) and double-checking web domains protects you from clone banking portals.')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🟢 Genuine Alert
+                        </button>
+                        <button class="option-btn" onclick="checkQuizAnswer(3, 'scam', 'Incorrect! This is safe practice. Inspecting URLs protects you against copycat domains (typosquatting).')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🔴 Scam Trap
+                        </button>
+                    </div>
+                    <div id="quiz-feedback-3" class="quiz-feedback-box" style="display: none; padding: 15px 20px; border-radius: 8px; margin-top: 15px; font-size: 0.95rem; line-height: 1.5;"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="quiz-question-card" id="quiz-q-4" style="display: none; animation: slideDownFade 0.4s both;">
+                    <span style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--primary-color); display: block; margin-bottom: 8px;">Situation 4 of 5</span>
+                    <h4 style="font-size: 1.15rem; color: var(--dark-text); margin-bottom: 15px; line-height: 1.5;">
+                        "You get an email claiming you must update your KYC details immediately by clicking a link provided, or your card will be terminated within 2 hours."
+                    </h4>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <button class="option-btn" onclick="checkQuizAnswer(4, 'genuine', 'Incorrect! Banks do not send urgent external web links for KYC validation, nor do they block profiles within hours without prior secure warnings.')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🟢 Genuine Alert
+                        </button>
+                        <button class="option-btn" onclick="checkQuizAnswer(4, 'scam', 'Correct! This is a KYC phishing alert. Attackers use extreme urgency threats to coerce you to use their fake links.')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🔴 Scam Trap
+                        </button>
+                    </div>
+                    <div id="quiz-feedback-4" class="quiz-feedback-box" style="display: none; padding: 15px 20px; border-radius: 8px; margin-top: 15px; font-size: 0.95rem; line-height: 1.5;"></div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="quiz-question-card" id="quiz-q-5" style="display: none; animation: slideDownFade 0.4s both;">
+                    <span style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--primary-color); display: block; margin-bottom: 8px;">Situation 5 of 5</span>
+                    <h4 style="font-size: 1.15rem; color: var(--dark-text); margin-bottom: 15px; line-height: 1.5;">
+                        "A Google search result lists a phone number for your bank\'s credit card helpline. When called, the representative answers with general greeting styles and requests your 16-digit card details."
+                    </h4>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <button class="option-btn" onclick="checkQuizAnswer(5, 'genuine', 'Incorrect! Scammers frequently create fake helpdesk listings on search engines. Legitimate bank desks will never ask you for full card numbers or security credentials.')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🟢 Genuine Alert
+                        </button>
+                        <button class="option-btn" onclick="checkQuizAnswer(5, 'scam', 'Correct! Fake support numbers are a common hazard. Always gather support contacts directly from the bank website or back of your physical card.')" style="flex: 1; min-width: 140px; padding: 14px 20px; font-size: 1rem;">
+                            🔴 Scam Trap
+                        </button>
+                    </div>
+                    <div id="quiz-feedback-5" class="quiz-feedback-box" style="display: none; padding: 15px 20px; border-radius: 8px; margin-top: 15px; font-size: 0.95rem; line-height: 1.5;"></div>
+                </div>
+
+                <!-- QUIZ FINAL REPORT -->
+                <div class="quiz-final-report" id="quiz-report-card" style="display: none; text-align: center; padding: 20px 10px; animation: bubbleEnter 0.5s ease both;">
+                    <div style="font-size: 3.5rem; color: var(--success-color); margin-bottom: 15px;"><i class="fa-solid fa-square-check"></i></div>
+                    <h4 style="font-size: 1.4rem; color: var(--dark-text); margin-bottom: 8px; font-weight: 800;">Situational Assessment Completed!</h4>
+                    <p style="font-size: 1rem; color: var(--light-text); margin-bottom: 25px;">You have successfully finished the Credit/Debit Card fraud assessment quiz.</p>
+                    <button class="restart-btn" onclick="resetQuiz()" style="border-radius: 30px; font-size: 0.9rem;">
+                        <i class="fa-solid fa-rotate-left"></i> Retake Assessment Quiz
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Related Laws Section -->
+    <section class="simulator-laws-area" style="margin-bottom: 60px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 30px; max-width: 100%;">
+            <h3>Legal Framework</h3>
+            <p>Understanding the statutory regulations penalizing digital financial fraud in India.</p>
+        </div>
+
+        <div class="laws-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+            <div class="law-card" style="background: var(--white); border-radius: 12px; border: 1px solid rgba(101,146,135,0.12); padding: 25px; box-shadow: var(--card-shadow);">
+                <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-color); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Information Technology Act, 2000</div>
+                <h4 style="font-size: 1.15rem; margin-bottom: 10px; color: var(--dark-text);">Section 66C – Identity Theft</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">Penalizes fraudulent use of unique identification details (like passwords, CVVs, or OTPs) belonging to another. Penalty includes imprisonment up to 3 years and a fine up to ₹1 Lakh.</p>
+            </div>
+            
+            <div class="law-card" style="background: var(--white); border-radius: 12px; border: 1px solid rgba(101,146,135,0.12); padding: 25px; box-shadow: var(--card-shadow);">
+                <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-color); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Information Technology Act, 2000</div>
+                <h4 style="font-size: 1.15rem; margin-bottom: 10px; color: var(--dark-text);">Section 66D – Cheating by Personation</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">Covers cheating by impersonation using any computer resource (e.g. calling pretending to be a banker via VoIP). Punishable with imprisonment up to 3 years and a fine up to ₹1 Lakh.</p>
+            </div>
+            
+            <div class="law-card" style="background: var(--white); border-radius: 12px; border: 1px solid rgba(101,146,135,0.12); padding: 25px; box-shadow: var(--card-shadow);">
+                <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-color); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Bharatiya Nyaya Sanhita (BNS)</div>
+                <h4 style="font-size: 1.15rem; margin-bottom: 10px; color: var(--dark-text);">Cheating and Fraud Provisions</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">BNS sections relating to cheating and dishonestly inducing delivery of property penalize scammers for extracting banking passwords to steal cash reserves.</p>
+            </div>
+
+            <div class="law-card" style="background: var(--white); border-radius: 12px; border: 1px solid rgba(101,146,135,0.12); padding: 25px; box-shadow: var(--card-shadow);">
+                <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-color); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Payment & Settlement Systems Act, 2007</div>
+                <h4 style="font-size: 1.15rem; margin-bottom: 10px; color: var(--dark-text);">Zero Customer Liability RBI Rule</h4>
+                <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">Governs liability. If unauthorized card transactions occur due to bank negligence or third-party breaches reported within 3 days, the customer has **Zero Liability** for losses.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Safety Tips Section -->
+    <section class="simulator-safety-tips" style="margin-bottom: 60px;">
+        <div class="section-header" style="text-align: left; margin-bottom: 30px; max-width: 100%;">
+            <h3>Safety Guidelines</h3>
+            <p>Actionable safeguards to shield your cards and finances from theft.</p>
+        </div>
+
+        <div class="safety-tips-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            <div class="safety-tip-card hover-zoom" style="background: var(--white); padding: 25px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); display: flex; gap: 16px; align-items: flex-start;">
+                <div class="tip-icon-wrapper" style="font-size: 1.8rem; color: var(--success-color);"><i class="fa-solid fa-key"></i></div>
+                <div>
+                    <h4 style="font-size: 1.1rem; margin-bottom: 6px; color: var(--dark-text);">Never Share OTPs</h4>
+                    <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">One-Time Passwords are 2FA authentication keys. Sharing OTPs equals sharing account permissions.</p>
+                </div>
+            </div>
+            
+            <div class="safety-tip-card hover-zoom" style="background: var(--white); padding: 25px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); display: flex; gap: 16px; align-items: flex-start;">
+                <div class="tip-icon-wrapper" style="font-size: 1.8rem; color: var(--success-color);"><i class="fa-solid fa-credit-card"></i></div>
+                <div>
+                    <h4 style="font-size: 1.1rem; margin-bottom: 6px; color: var(--dark-text);">Hide your CVV</h4>
+                    <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">Never write down or reveal the 3-digit verification number printed on your card back.</p>
+                </div>
+            </div>
+            
+            <div class="safety-tip-card hover-zoom" style="background: var(--white); padding: 25px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); display: flex; gap: 16px; align-items: flex-start;">
+                <div class="tip-icon-wrapper" style="font-size: 1.8rem; color: var(--success-color);"><i class="fa-solid fa-lock"></i></div>
+                <div>
+                    <h4 style="font-size: 1.1rem; margin-bottom: 6px; color: var(--dark-text);">Banks Never Ask Secrets</h4>
+                    <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">Your bank holds system admin rights. They will never query passwords, PINs, or credentials.</p>
+                </div>
+            </div>
+
+            <div class="safety-tip-card hover-zoom" style="background: var(--white); padding: 25px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); display: flex; gap: 16px; align-items: flex-start;">
+                <div class="tip-icon-wrapper" style="font-size: 1.8rem; color: var(--success-color);"><i class="fa-solid fa-circle-phone"></i></div>
+                <div>
+                    <h4 style="font-size: 1.1rem; margin-bottom: 6px; color: var(--dark-text);">Verify Official Contacts</h4>
+                    <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">Only call numbers listed on bank statements or printed directly on physical card backs.</p>
+                </div>
+            </div>
+
+            <div class="safety-tip-card hover-zoom" style="background: var(--white); padding: 25px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); display: flex; gap: 16px; align-items: flex-start;">
+                <div class="tip-icon-wrapper" style="font-size: 1.8rem; color: var(--success-color);"><i class="fa-solid fa-bell"></i></div>
+                <div>
+                    <h4 style="font-size: 1.1rem; margin-bottom: 6px; color: var(--dark-text);">Enable SMS Transaction Alerts</h4>
+                    <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">Instant push/SMS notifications help detect unauthorized activity in real-time.</p>
+                </div>
+            </div>
+
+            <div class="safety-tip-card hover-zoom" style="background: var(--white); padding: 25px; border-radius: 12px; border: 1px solid rgba(101,146,135,0.15); box-shadow: var(--card-shadow); display: flex; gap: 16px; align-items: flex-start;">
+                <div class="tip-icon-wrapper" style="font-size: 1.8rem; color: var(--success-color);"><i class="fa-solid fa-globe"></i></div>
+                <div>
+                    <h4 style="font-size: 1.1rem; margin-bottom: 6px; color: var(--dark-text);">Use Secure Gateway Portals Only</h4>
+                    <p style="font-size: 0.85rem; color: var(--light-text); line-height: 1.5; margin: 0;">Make payments only on certified web portals displaying security lock credentials.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. Navigation Section -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 50px; flex-wrap: wrap; gap: 15px;">
+        <a href="{{ url_for('financial_crimes') }}" class="explore-btn" style="text-decoration: none; font-weight: 700;">
+            <i class="fa-solid fa-chevron-left"></i> Back to Financial Crimes
+        </a>
+        <a href="{{ url_for('financial_fraud_detail', fraud_id='upi-fraud') }}" class="explore-btn" style="text-decoration: none; font-weight: 700;">
+            Next: UPI Fraud <i class="fa-solid fa-chevron-right"></i>
+        </a>
+    </div>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // State Variables
+    let isMuted = false;
+    let currentStep = 0;
+    let quizScore = 0;
+    let answeredQuestions = new Set();
+    let currentAggressiveTries = 0;
+
+    // Ringing sound synthetic configuration
+    let audioCtx = null;
+    let ringInterval = null;
+
+    function playSyntheticBeep(freq, duration) {
+        if (isMuted) return;
+        try {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            let osc = audioCtx.createOscillator();
+            let gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            osc.frequency.value = freq;
+            gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        } catch (e) {
+            console.log("Audio not supported or interaction required", e);
+        }
+    }
+
+    function startRingingSound() {
+        ringInterval = setInterval(() => {
+            // bank alert ring sound (short high double beep)
+            playSyntheticBeep(880, 0.15);
+            setTimeout(() => {
+                playSyntheticBeep(880, 0.15);
+            }, 250);
+        }, 1500);
+    }
+
+    function stopRingingSound() {
+        if (ringInterval) {
+            clearInterval(ringInterval);
+            ringInterval = null;
+        }
+    }
+
+    function toggleMute() {
+        isMuted = !isMuted;
+        const btn = document.getElementById('sound-btn');
+        if (isMuted) {
+            btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            stopRingingSound();
+        } else {
+            btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+            if (document.getElementById('phase-ringing').style.display !== 'none') {
+                startRingingSound();
+            }
+        }
+    }
+
+    // Initialize Simulator
+    window.addEventListener('DOMContentLoaded', () => {
+        startRingingSound();
+        
+        // Stagger diagram scrolling items animations on scroll load
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.animate-scroll-item').forEach(item => {
+            item.style.opacity = '0.4';
+            item.style.transform = 'translateY(15px)';
+            observer.observe(item);
+        });
+    });
+
+    // Decline Phone Call
+    function declineCall() {
+        const warning = document.getElementById('decline-warning-text');
+        warning.style.display = 'block';
+        setTimeout(() => {
+            warning.style.opacity = '1';
+        }, 50);
+    }
+
+    // Accept Phone Call
+    function acceptCall() {
+        stopRingingSound();
+        document.getElementById('phase-ringing').style.display = 'none';
+        document.getElementById('phase-conversation').style.display = 'flex';
+        updateSimulatorProgress(25);
+        
+        // Start conversation
+        appendMessage('scammer', "Hello! I'm calling from the bank's security department.", 0);
+        appendMessage('scammer', "We detected a suspicious transaction of ₹48,000 on your credit card.", 1500);
+        appendMessage('scammer', "To block this immediately, please verify your card number, expiry date, CVV, and OTP.", 3500, () => {
+            showResponseOptions([
+                { text: "✅ I'll share the details to block it.", action: 'share' },
+                { text: "🤔 Why do you need these details to block a transaction?", action: 'ask_why' },
+                { text: "❌ I won't share anything. I will contact the bank directly.", action: 'refuse' }
+            ]);
+        });
+    }
+
+    // Update Progress Indicator
+    function updateSimulatorProgress(percentage) {
+        document.getElementById('sim-progress-bar').style.width = percentage + '%';
+        document.getElementById('sim-progress-text').textContent = percentage + '%';
+    }
+
+    // Stagger Chat Bubbles & Bouncing typing dots
+    function appendMessage(sender, text, delay, callback) {
+        setTimeout(() => {
+            const container = document.getElementById('chat-messages-container');
+            const typing = document.getElementById('typing-indicator');
+            
+            // Show typing indicator
+            if (sender === 'scammer') {
+                typing.style.display = 'flex';
+                container.scrollTop = container.scrollHeight;
+            }
+
+            setTimeout(() => {
+                typing.style.display = 'none';
+                
+                const bubble = document.createElement('div');
+                bubble.className = `chat-bubble bubble-${sender}`;
+                bubble.style.padding = '14px 18px';
+                bubble.style.borderRadius = '16px';
+                bubble.style.maxWidth = '75%';
+                bubble.style.fontSize = '0.95rem';
+                bubble.style.lineHeight = '1.5';
+                bubble.style.animation = 'bubbleEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1) both';
+
+                if (sender === 'scammer') {
+                    bubble.style.alignSelf = 'flex-start';
+                    bubble.style.background = 'rgba(230,126,34,0.06)';
+                    bubble.style.border = '1px solid rgba(230,126,34,0.15)';
+                    bubble.style.color = 'var(--dark-text)';
+                    bubble.innerHTML = `<strong>Bank Security:</strong><br>${text}`;
+                    playSyntheticBeep(600, 0.08);
+                } else {
+                    bubble.style.alignSelf = 'flex-end';
+                    bubble.style.background = 'var(--primary-color)';
+                    bubble.style.color = 'white';
+                    bubble.innerHTML = `<strong>You:</strong><br>${text}`;
+                }
+
+                container.appendChild(bubble);
+                container.scrollTop = container.scrollHeight;
+
+                if (callback) callback();
+            }, 800); // simulation typing delay
+
+        }, delay);
+    }
+
+    // Show Reply Buttons
+    function showResponseOptions(options) {
+        const grid = document.getElementById('chat-options-grid');
+        grid.innerHTML = '';
+        
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.style.width = '100%';
+            btn.style.textAlign = 'left';
+            btn.style.padding = '12px 18px';
+            btn.style.fontSize = '0.92rem';
+            btn.innerHTML = opt.text;
+            btn.onclick = () => handleUserChoice(opt.action, opt.text);
+            grid.appendChild(btn);
+        });
+    }
+
+    // Branch Logic Handler
+    function handleUserChoice(action, text) {
+        // Clear buttons
+        document.getElementById('chat-options-grid').innerHTML = '';
+        appendMessage('user', text, 0);
+
+        if (action === 'share') {
+            updateSimulatorProgress(60);
+            appendMessage('scammer', "Processing card block details... Thank you. Transaction is being halted.", 1200, () => {
+                setTimeout(() => {
+                    transitionToOutcome('scammed');
+                }, 1500);
+            });
+        } 
+        else if (action === 'ask_why') {
+            updateSimulatorProgress(45);
+            currentAggressiveTries++;
+            
+            let responseMsg = "Sir, we need the CVV and OTP code to authenticate you are the true owner of the account. Without authentication we cannot override payment gateway logs!";
+            if (currentAggressiveTries > 1) {
+                responseMsg = "Sir, if you don't cooperate immediately your card will be permanently disabled, and a penalty of ₹10,000 will be deducted! Please give CVV immediately!";
+            }
+
+            appendMessage('scammer', responseMsg, 1200, () => {
+                showResponseOptions([
+                    { text: "✅ Okay, I will share CVV/OTP to prevent blocking.", action: 'share' },
+                    { text: "❌ Still, I won't share PIN or CVV. I'm calling the bank hotline directly.", action: 'refuse' }
+                ]);
+            });
+        } 
+        else if (action === 'refuse') {
+            updateSimulatorProgress(100);
+            appendMessage('scammer', "Hmph! If you don't verify now, you will be responsible for all financial losses. [The caller abruptly hangs up...]", 1200, () => {
+                setTimeout(() => {
+                    transitionToOutcome('safe');
+                }, 1800);
+            });
+        }
+    }
+
+    // Transition between phases
+    function transitionToOutcome(outcome) {
+        document.getElementById('phase-conversation').style.display = 'none';
+        
+        if (outcome === 'scammed') {
+            document.getElementById('outcome-scammed').style.display = 'flex';
+            playSyntheticBeep(220, 0.4); // sad beep
+        } else {
+            document.getElementById('outcome-safe').style.display = 'flex';
+            playConfetti();
+            playSyntheticBeep(523, 0.15); // happy beeps
+            setTimeout(() => playSyntheticBeep(659, 0.15), 150);
+            setTimeout(() => playSyntheticBeep(784, 0.25), 300);
+            awardBadgeGlobal();
+        }
+    }
+
+    // Check emergency checklist items
+    function checkEmergencyItem() {
+        const checks = document.querySelectorAll('.emergency-check');
+        let count = 0;
+        checks.forEach(chk => {
+            if (chk.checked) {
+                count++;
+                chk.closest('.checklist-item-wrapper').style.background = 'rgba(75,128,98,0.06)';
+                chk.closest('.checklist-item-wrapper').style.borderColor = 'var(--success-color)';
+            } else {
+                chk.closest('.checklist-item-wrapper').style.background = 'var(--white)';
+                chk.closest('.checklist-item-wrapper').style.borderColor = 'rgba(0,0,0,0.06)';
+            }
+        });
+        
+        const doneBtn = document.getElementById('sim-recover-done-btn');
+        if (count === checks.length) {
+            doneBtn.disabled = false;
+            doneBtn.style.background = 'var(--primary-color)';
+            doneBtn.style.opacity = '1';
+            doneBtn.style.cursor = 'pointer';
+            doneBtn.style.boxShadow = '0 4px 15px rgba(101, 146, 135, 0.3)';
+        } else {
+            doneBtn.disabled = true;
+            doneBtn.style.background = 'var(--light-text)';
+            doneBtn.style.opacity = '0.6';
+            doneBtn.style.cursor = 'not-allowed';
+            doneBtn.style.boxShadow = 'none';
+        }
+    }
+
+    function completeRecoveredSimulation() {
+        updateSimulatorProgress(100);
+        document.getElementById('outcome-scammed').style.display = 'none';
+        document.getElementById('outcome-safe').style.display = 'flex';
+        playConfetti();
+        awardBadgeGlobal();
+    }
+
+    // Reset Simulator
+    function resetSimulator() {
+        currentStep = 0;
+        currentAggressiveTries = 0;
+        document.getElementById('outcome-scammed').style.display = 'none';
+        document.getElementById('outcome-safe').style.display = 'none';
+        document.getElementById('phase-conversation').style.display = 'none';
+        document.getElementById('chat-messages-container').innerHTML = '';
+        
+        // Reset checklist checks
+        document.querySelectorAll('.emergency-check').forEach(chk => {
+            chk.checked = false;
+            chk.closest('.checklist-item-wrapper').style.background = 'var(--white)';
+            chk.closest('.checklist-item-wrapper').style.borderColor = 'rgba(0,0,0,0.06)';
+        });
+        checkEmergencyItem();
+
+        document.getElementById('phase-ringing').style.display = 'flex';
+        updateSimulatorProgress(10);
+        startRingingSound();
+    }
+
+    // Award Badge & Sync overall counter
+    function awardBadgeGlobal() {
+        let solved = JSON.parse(localStorage.getItem('cybersafe_solved_scenarios') || '[]');
+        if (!solved.includes('card-fraud')) {
+            solved.push('card-fraud');
+            localStorage.setItem('cybersafe_solved_scenarios', JSON.stringify(solved));
+        }
+        
+        // Update tracker count
+        const trackerText = document.getElementById('tracker-text');
+        if (trackerText) {
+            trackerText.textContent = `Scenarios Solved: ${solved.length} / 8`;
+        }
+    }
+
+    // Confetti Effect
+    function playConfetti() {
+        const canvas = document.getElementById('confetti-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+
+        let particles = [];
+        const colors = ['#e67e22', '#659287', '#88BDA4', '#f1c40f', '#3498db'];
+
+        for (let i = 0; i < 70; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                r: Math.random() * 6 + 4,
+                d: Math.random() * canvas.height,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                tilt: Math.random() * 10 - 5,
+                tiltAngleIncremental: Math.random() * 0.07 + 0.02,
+                tiltAngle: 0
+            });
+        }
+
+        let animationFrame;
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let active = false;
+            
+            particles.forEach((p, idx) => {
+                p.tiltAngle += p.tiltAngleIncremental;
+                p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+                p.x += Math.sin(p.tiltAngle);
+                p.tilt = Math.sin(p.tiltAngle - idx / 3) * 15;
+
+                if (p.y < canvas.height) {
+                    active = true;
+                }
+
+                ctx.beginPath();
+                ctx.lineWidth = p.r;
+                ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+                ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+                ctx.stroke();
+            });
+
+            if (active) {
+                animationFrame = requestAnimationFrame(draw);
+            }
+        }
+        draw();
+    }
+
+    // Fake vs Genuine Quiz Handler
+    function checkQuizAnswer(qNum, selected, explanation) {
+        const card = document.getElementById(`quiz-q-${qNum}`);
+        const feedback = document.getElementById(`quiz-feedback-${qNum}`);
+        const buttons = card.querySelectorAll('.option-btn');
+
+        if (answeredQuestions.has(qNum)) return;
+        answeredQuestions.add(qNum);
+
+        // Disable buttons
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+        });
+
+        // Determine if selection matches answer key
+        // Keys: Q1=genuine, Q2=scam, Q3=genuine, Q4=scam, Q5=scam
+        let correctAnswer = 'scam';
+        if (qNum === 1 || qNum === 3) correctAnswer = 'genuine';
+
+        const isCorrect = selected === correctAnswer;
+        if (isCorrect) {
+            quizScore++;
+            document.getElementById('quiz-score-value').textContent = quizScore;
+            feedback.style.background = 'rgba(75,128,98,0.08)';
+            feedback.style.border = '1px solid var(--success-color)';
+            feedback.style.color = 'var(--success-color)';
+            feedback.innerHTML = `<strong>🟢 CORRECT!</strong><br>${explanation}`;
+            playSyntheticBeep(659, 0.12);
+        } else {
+            feedback.style.background = 'rgba(179,57,57,0.08)';
+            feedback.style.border = '1px solid var(--danger-color)';
+            feedback.style.color = 'var(--danger-color)';
+            feedback.innerHTML = `<strong>🔴 INCORRECT!</strong><br>${explanation}`;
+            playSyntheticBeep(220, 0.2);
+        }
+        feedback.style.display = 'block';
+
+        // Add next button or show final report
+        setTimeout(() => {
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'restart-btn';
+            nextBtn.style.marginTop = '20px';
+            nextBtn.style.fontSize = '0.85rem';
+            nextBtn.style.padding = '10px 22px';
+            
+            if (qNum < 5) {
+                nextBtn.innerHTML = `Next Situation <i class="fa-solid fa-arrow-right"></i>`;
+                nextBtn.onclick = () => {
+                    card.style.display = 'none';
+                    document.getElementById(`quiz-q-${qNum + 1}`).style.display = 'block';
+                };
+            } else {
+                nextBtn.innerHTML = `Finish Assessment <i class="fa-solid fa-flag-checkered"></i>`;
+                nextBtn.onclick = () => {
+                    card.style.display = 'none';
+                    document.getElementById('quiz-report-card').style.display = 'block';
+                    // Show final visual message depending on score
+                    const finalReport = document.getElementById('quiz-report-card');
+                    if (quizScore >= 4) {
+                        finalReport.querySelector('p').textContent = `Fantastic! You scored ${quizScore}/5. You have an excellent eye for card fraud warning signs! 🛡️`;
+                    } else {
+                        finalReport.querySelector('p').textContent = `You scored ${quizScore}/5. Some traps are very sneaky! Review the warning signs above and try again.`;
+                    }
+                };
+            }
+            feedback.appendChild(nextBtn);
+        }, 500);
+    }
+
+    function resetQuiz() {
+        quizScore = 0;
+        document.getElementById('quiz-score-value').textContent = 0;
+        answeredQuestions.clear();
+        
+        // Hide reports and details
+        document.getElementById('quiz-report-card').style.display = 'none';
+        
+        for (let i = 1; i <= 5; i++) {
+            const card = document.getElementById(`quiz-q-${i}`);
+            card.style.display = i === 1 ? 'block' : 'none';
+            
+            const feedback = document.getElementById(`quiz-feedback-${i}`);
+            feedback.style.display = 'none';
+            feedback.innerHTML = '';
+            
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            });
+        }
+    }
+</script>
+{% endblock %}

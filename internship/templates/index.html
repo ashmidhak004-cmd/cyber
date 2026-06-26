@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}CyberSafe QR – Interactive Cyber Awareness{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <!-- Animated Cyber City Background Canvas -->
+        <div class="cyber-city-bg">
+            <div class="grid-overlay"></div>
+            <div class="moving-light line1"></div>
+            <div class="moving-light line2"></div>
+            <div class="moving-light line3"></div>
+            <div class="floating-particle icon1"><i class="fa-solid fa-lock"></i></div>
+            <div class="floating-particle icon2"><i class="fa-solid fa-key"></i></div>
+            <div class="floating-particle icon3"><i class="fa-solid fa-shield"></i></div>
+            <div class="floating-particle icon4"><i class="fa-solid fa-wifi"></i></div>
+        </div>
+
+        <div class="hero-container">
+            <div class="hero-text-content">
+                <div class="tagline">
+                    <i class="fa-solid fa-circle-check"></i> Cyber Safety Made Simple
+                </div>
+                <h1 class="hero-title">Think Before You Click.<br><span class="highlight-text">Verify Before You Trust.</span></h1>
+                <p class="hero-description">
+                    Cyber scams are everywhere today. They target our savings, our passwords, and our peace of mind. But staying safe doesn't require complex code. By learning to spot simple clues, anyone from children to grandparents can lock out hackers!
+                </p>
+                <div class="scroll-instruction">
+                    <p>Scroll down to explore categories</p>
+                    <i class="fa-solid fa-chevron-down bounce-arrow"></i>
+                </div>
+            </div>
+            <div class="hero-image-content">
+                <div class="avatar-container">
+                    <div class="pulse-ring"></div>
+                    <img src="{{ url_for('static', filename='images/cyberbot.png') }}" alt="CyberBot Guide" class="cyberbot-avatar">
+                </div>
+                <div class="cyberbot-bubble">
+                    <span class="bubble-tail"></span>
+                    <p>Hi! I'm <strong>CyberBot</strong>. I'll guide you through real cyber-scam scenarios. Let's scroll down to start!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section" id="categories">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Choose a Category to Learn</h2>
+                <p>Click on any category below to immediately open and explore its interactive real-world scenarios.</p>
+            </div>
+            
+            <div class="categories-grid">
+                <!-- Financial Crimes Card -->
+                <a href="{{ url_for('financial_crimes') }}" class="category-card" style="text-decoration: none; color: inherit;">
+                    <div class="card-icon-wrapper color-fin">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <h3>💰 Financial Crimes</h3>
+                    <p>Fake lotteries, emergency SMS alerts, and deceptive phishing emails designed to empty accounts.</p>
+                    <span class="explore-btn">Explore Category <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Social Media Crimes Card -->
+                <a href="{{ url_for('social_media_crimes') }}" class="category-card" style="text-decoration: none; color: inherit;">
+                    <div class="card-icon-wrapper color-soc">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </div>
+                    <h3>📱 Social Media Crimes</h3>
+                    <p>Fake friend emergencies, identity theft, and fake copyright complaints trying to steal profiles.</p>
+                    <span class="explore-btn">Explore Category <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Hacking & Technical Attacks Card -->
+                <a href="{{ url_for('category_view', name='hacking') }}" class="category-card" style="text-decoration: none; color: inherit;">
+                    <div class="card-icon-wrapper color-hac">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h3>💻 Hacking Attacks</h3>
+                    <p>Fake computer virus alerts (scareware) and public Wi-Fi networks waiting to intercept passwords.</p>
+                    <span class="explore-btn">Explore Category <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Miscellaneous Crimes Card -->
+                <a href="{{ url_for('category_view', name='misc') }}" class="category-card" style="text-decoration: none; color: inherit;">
+                    <div class="card-icon-wrapper color-misc">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <h3>⚠️ Misc Crimes</h3>
+                    <p>Easy-money job scams on messaging apps and voice scams mimicking relatives in jail.</p>
+                    <span class="explore-btn">Explore Category <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
