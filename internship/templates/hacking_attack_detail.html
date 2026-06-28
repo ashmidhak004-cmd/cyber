@@ -1,0 +1,519 @@
+{% extends "base.html" %}
+
+{% block title %}{{ attack.title }} – CyberSafe QR{% endblock %}
+
+{% block content %}
+<style>
+    .dos-simulation-card, .interaction-card, .quiz-card { width: 100%; }
+    .sim-screen {
+        background: linear-gradient(135deg, rgba(101, 146, 135, 0.08), rgba(255,255,255,0.9));
+        border: 1px solid rgba(101, 146, 135, 0.15);
+        border-radius: 16px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .website-pill {
+        display: inline-block;
+        width: fit-content;
+        padding: 8px 12px;
+        background: var(--primary-color);
+        color: white;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+    .sim-status {
+        font-weight: 700;
+        color: var(--dark-text);
+    }
+    .sim-button, .request-choice, .quiz-submit, .quiz-reset {
+        border: none;
+        border-radius: 999px;
+        padding: 10px 14px;
+        cursor: pointer;
+        font-weight: 700;
+        transition: var(--transition);
+    }
+    .sim-button, .quiz-submit { background: var(--primary-color); color: white; }
+    .sim-button:hover, .quiz-submit:hover { transform: translateY(-2px); }
+    .sim-option-group { display: grid; gap: 10px; margin-top: 12px; }
+    .sim-option { padding: 10px 14px; border: 1px solid rgba(101, 146, 135, 0.2); border-radius: 12px; background: white; text-align: left; cursor: pointer; }
+    .sim-option:hover { border-color: var(--primary-color); }
+    .sim-feedback { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: rgba(101, 146, 135, 0.06); }
+    .dos-animation {
+        position: relative;
+        min-height: 180px;
+        margin: 16px 0;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(101, 146, 135, 0.08), rgba(255,255,255,0.95));
+        overflow: hidden;
+    }
+    .server {
+        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+        width: 120px; height: 90px; border-radius: 14px; background: var(--primary-color); color: white;
+        display: flex; align-items: center; justify-content: center; font-weight: 800;
+    }
+    .request {
+        position: absolute; width: 16px; height: 16px; border-radius: 50%; background: var(--secondary-color);
+        animation: pulse-dot 1.4s infinite ease-in-out;
+    }
+    .request-a { left: 12%; top: 35%; }
+    .request-b { left: 20%; top: 70%; animation-delay: 0.3s; }
+    .request-c { left: 78%; top: 35%; animation-delay: 0.6s; }
+    .request-d { left: 70%; top: 70%; animation-delay: 0.9s; }
+    .request-line { position: absolute; height: 2px; background: rgba(101, 146, 135, 0.35); transform-origin: left center; }
+    .line-a { left: 15%; top: 40%; width: 32%; transform: rotate(-10deg); }
+    .line-b { left: 18%; top: 75%; width: 30%; transform: rotate(10deg); }
+    .line-c { right: 15%; top: 40%; width: 32%; transform: rotate(10deg); }
+    .line-d { right: 18%; top: 75%; width: 30%; transform: rotate(-10deg); }
+    .request-card { border: 1px solid rgba(101, 146, 135, 0.15); border-radius: 12px; padding: 12px; background: rgba(255,255,255,0.85); }
+    .request-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+    .request-choice { background: rgba(101, 146, 135, 0.1); color: var(--primary-color); }
+    .request-choice:hover { background: rgba(101, 146, 135, 0.2); }
+    .quiz-item { margin-top: 10px; padding: 12px 14px; border: 1px solid rgba(101, 146, 135, 0.15); border-radius: 12px; background: rgba(101, 146, 135, 0.04); }
+    .quiz-feedback { margin-top: 8px; color: var(--light-text); font-size: 0.95rem; }
+    .quiz-reset { background: rgba(101, 146, 135, 0.12); color: var(--dark-text); margin-top: 10px; }
+    @keyframes pulse-dot { 0%, 100% { transform: scale(0.8); opacity: 0.7;} 50% { transform: scale(1.2); opacity: 1;} }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+</style>
+
+<main class="scenarios-container" style="margin-top: 20px; margin-bottom: 50px;">
+    <div class="category-banner color-hac" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div class="banner-content">
+            <h2>💻 {{ attack.title }}</h2>
+            <p>{{ attack.desc }}</p>
+        </div>
+        <a href="{{ url_for('hacking_attacks') }}" class="restart-btn" style="background: rgba(255,255,255,0.25); box-shadow: none; display: flex; align-items: center; gap: 8px; text-decoration: none; color: white;">
+            <i class="fa-solid fa-arrow-left-long"></i> Back to Hacking Attacks
+        </a>
+    </div>
+
+    {% if attack_id == 'dos-attack' %}
+    <div class="category-card interaction-card" style="margin-bottom: 24px; align-items: flex-start; text-align: left;">
+        <h3>1. Try the simulation</h3>
+        <p>{{ attack.simulation_prompt }}</p>
+        <div class="dos-simulation-card" style="margin-top: 14px;">
+            <div class="sim-screen">
+                <span class="website-pill">School Portal</span>
+                <div class="sim-status" id="sim-status">Tap below to try opening the website.</div>
+                <button class="sim-button" id="simulate-btn">Try to open website</button>
+            </div>
+            <div class="sim-option-group" id="sim-option-group" style="display: none;">
+                {% for option in attack.simulation_options %}
+                <button class="sim-option" data-correct="{{ option.correct|lower }}" data-feedback="{{ option.feedback }}">{{ option.text }}</button>
+                {% endfor %}
+            </div>
+            <div class="sim-feedback" id="sim-feedback" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="category-card interaction-card" id="dos-explanation" style="margin-bottom: 24px; display: none; align-items: flex-start; text-align: left;">
+        <h3>2. How a DoS attack works</h3>
+        <div class="dos-animation" aria-label="Animated illustration of a server getting overwhelmed by requests">
+            <div class="request-line line-a"></div>
+            <div class="request-line line-b"></div>
+            <div class="request-line line-c"></div>
+            <div class="request-line line-d"></div>
+            <div class="request request-a"></div>
+            <div class="request request-b"></div>
+            <div class="request request-c"></div>
+            <div class="request request-d"></div>
+            <div class="server">Server</div>
+        </div>
+        <p>Attackers send a huge number of fake requests to a server. The server becomes too busy to respond to real visitors, so the site shows errors like “Server Busy” or “Request Timed Out.”</p>
+    </div>
+
+    <div class="categories-grid" style="margin-bottom: 24px;">
+        <div class="category-card" style="align-items: flex-start; text-align: left;">
+            <h3>Definition</h3>
+            <p>{{ attack.definition }}</p>
+        </div>
+        <div class="category-card" style="align-items: flex-start; text-align: left;">
+            <h3>How it works</h3>
+            <ul style="padding-left: 16px; color: var(--light-text);">
+                {% for step in attack.how_it_works %}
+                <li>{{ step }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="category-card" style="align-items: flex-start; text-align: left;">
+            <h3>Where it happens</h3>
+            <p>{{ attack.where_it_happens | join(', ') }}</p>
+        </div>
+        <div class="category-card" style="align-items: flex-start; text-align: left;">
+            <h3>Who is targeted</h3>
+            <p>{{ attack.targeted | join(', ') }}</p>
+        </div>
+    </div>
+
+    {% endif %}
+
+    {% if attack.cartoon_conversation %}
+    <div class="category-card" style="margin-bottom: 24px; align-items: flex-start; text-align: left;">
+        <h3>2. Cartoon Conversation: The Banana-Prank Website</h3>
+        <div style="margin-top: 14px; background: linear-gradient(135deg, #fff8d6, #eef7ff); border: 1px solid rgba(101, 146, 135, 0.15); border-radius: 18px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+                <div style="font-weight: 800; color: var(--primary-color);">Story Progress</div>
+                <div style="flex: 1; min-width: 180px; height: 10px; background: rgba(101, 146, 135, 0.15); border-radius: 999px; overflow: hidden;">
+                    <div id="cartoon-progress" style="height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary-color), #ffb703); transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+            <div style="position: relative; min-height: 280px; border-radius: 16px; padding: 16px; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(238,247,255,0.95)); overflow: hidden;">
+                <div style="position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(101, 146, 135, 0.08) 1px, transparent 1px); background-size: 22px 22px; opacity: 0.5;"></div>
+                <div style="position: absolute; left: 8%; top: 20%; font-size: 2.8rem; animation: bob 2.4s infinite ease-in-out;">🦝</div>
+                <div style="position: absolute; right: 8%; top: 18%; font-size: 2.8rem; animation: bob 2.4s infinite ease-in-out 0.6s;">🦉</div>
+                <div id="cartoon-scene" style="position: relative; z-index: 1; display: flex; flex-direction: column; gap: 10px; max-width: 420px; margin: 70px auto 0;">
+                    <div id="cartoon-bubble" style="background: white; border-radius: 16px; padding: 12px 14px; box-shadow: var(--card-shadow); border: 1px solid rgba(101, 146, 135, 0.16); min-height: 84px; display: flex; align-items: center; font-size: 0.95rem;">
+                        <span id="cartoon-text">Loading conversation…</span>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 6px;">
+                        <button class="sim-button" id="next-cartoon">Continue</button>
+                    </div>
+                </div>
+            </div>
+            <div id="cartoon-questions" style="margin-top: 14px; display: none;">
+                <div class="quiz-item">
+                    <strong>Question 1: Is changing a website's logo without permission Website Defacement?</strong>
+                    <div style="margin-top: 8px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="sim-option" data-answer="yes">✅ Yes</button>
+                        <button class="sim-option" data-answer="no">❌ No</button>
+                    </div>
+                    <div class="quiz-feedback" id="q1-feedback" style="display: none;"></div>
+                </div>
+                <div class="quiz-item">
+                    <strong>Question 2: Which helps protect a website?</strong>
+                    <div style="margin-top: 8px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="sim-option" data-answer="correct">🔐 Strong Passwords & Regular Updates</button>
+                        <button class="sim-option" data-answer="wrong">🔑 Password: 123456</button>
+                        <button class="sim-option" data-answer="wrong">🚫 Ignore Updates</button>
+                    </div>
+                    <div class="quiz-feedback" id="q2-feedback" style="display: none;"></div>
+                </div>
+                <div class="quiz-item">
+                    <strong>Question 3: If you notice a website has been changed without permission, what should you do?</strong>
+                    <div style="margin-top: 8px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="sim-option" data-answer="correct">🚨 Inform the website administrator</button>
+                        <button class="sim-option" data-answer="wrong">😂 Ignore it</button>
+                        <button class="sim-option" data-answer="wrong">📢 Share it as a joke</button>
+                    </div>
+                    <div class="quiz-feedback" id="q3-feedback" style="display: none;"></div>
+                </div>
+            </div>
+            <div id="cartoon-ending" style="display: none; margin-top: 14px; padding: 14px; border-radius: 14px; background: rgba(255,255,255,0.85); border: 1px solid rgba(101, 146, 135, 0.18);">
+                <p style="font-weight: 800; color: var(--primary-color);">Website Defacement means changing a website without permission. It may seem funny, but it can spread misinformation, damage trust, and harm organizations. Protect websites with strong security practices.</p>
+                <a href="#interactive-challenge" class="sim-button" style="display: inline-flex; margin-top: 10px; text-decoration: none;">Continue to Interactive Challenge →</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if attack_id != 'website-defacement' %}
+    <div class="category-card" style="margin-bottom: 24px; align-items: flex-start; text-align: left;">
+        <h3>4. Awareness Videos</h3>
+        <div class="categories-grid" style="margin-top: 12px;">
+            {% for video in attack.videos %}
+            <div class="category-card" style="align-items: flex-start; text-align: left;">
+                <h3>{{ video.title }}</h3>
+                <p style="margin-top: 8px; color: var(--light-text);">{{ video.category }} • {{ video.duration }}</p>
+                <a href="{{ video.url }}" target="_blank" class="explore-btn" style="margin-top: 12px; display: inline-flex; align-items: center; gap: 8px; color: var(--primary-color); font-weight: 700; text-decoration: none;">Watch <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="section-header" style="margin-bottom: 20px; text-align: left; max-width: 100%;">
+        <h3>{% if attack_id == 'website-defacement' %}4. Prevention Tips{% else %}5. Prevention Tips{% endif %}</h3>
+    </div>
+    <div class="categories-grid" style="margin-bottom: 24px;">
+        {% for tip in attack.prevention_tips %}
+        <div class="category-card" style="align-items: flex-start; text-align: left;">
+            <p><i class="fa-solid fa-check-circle" style="color: var(--success-color); margin-right: 8px;"></i>{{ tip }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if attack_id == 'website-defacement' %}
+    <div class="category-card" style="margin-bottom: 24px; align-items: flex-start; text-align: left;">
+        <h3>5. Legal Awareness</h3>
+        <p>Website defacement is a punishable cybercrime under the Information Technology Act, 2000. Unauthorized changes to a website or its content can violate Indian cyber laws and lead to legal consequences.</p>
+        <div class="categories-grid" style="margin-top: 14px;">
+            <div class="category-card" style="align-items: flex-start; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 1.1rem;">⚖️</span>
+                    <h3 style="margin: 0;">Information Technology Act, 2000</h3>
+                </div>
+                <p style="margin-top: 6px; color: var(--light-text);">The main Indian law that covers unauthorized access, interference with computer systems, and cyber offences involving digital platforms.</p>
+            </div>
+            <div class="category-card" style="align-items: flex-start; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 1.1rem;">📜</span>
+                    <h3 style="margin: 0;">Section 43</h3>
+                </div>
+                <p style="margin-top: 6px; color: var(--light-text);">Covers unauthorized access, damage to computer systems, or alteration of data without permission.</p>
+            </div>
+            <div class="category-card" style="align-items: flex-start; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 1.1rem;">🛡️</span>
+                    <h3 style="margin: 0;">Section 66</h3>
+                </div>
+                <p style="margin-top: 6px; color: var(--light-text);">Punishes dishonest or fraudulent acts under Section 43. Penalties may include up to 3 years imprisonment, a fine of ₹5 lakh, or both.</p>
+            </div>
+            <div class="category-card" style="align-items: flex-start; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 1.1rem;">🔐</span>
+                    <h3 style="margin: 0;">Section 66C</h3>
+                </div>
+                <p style="margin-top: 6px; color: var(--light-text);">Addresses identity theft involving stolen usernames, passwords, or other digital credentials.</p>
+            </div>
+            <div class="category-card" style="align-items: flex-start; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 1.1rem;">🧑‍💻</span>
+                    <h3 style="margin: 0;">Section 66D</h3>
+                </div>
+                <p style="margin-top: 6px; color: var(--light-text);">Covers cheating by personation using computer resources, including using a defaced website to deceive users.</p>
+            </div>
+        </div>
+        <div style="margin-top: 16px; padding: 14px 16px; border-radius: 14px; background: rgba(179, 57, 57, 0.08); border: 1px solid rgba(179, 57, 57, 0.16); color: var(--dark-text); font-weight: 700; line-height: 1.6;">
+            <span style="margin-right: 8px;">⚠️</span>
+            "Website defacement is a serious cybercrime. Never access, modify, or test a website without explicit authorization. Unauthorized actions can result in legal penalties under Indian cyber laws."
+        </div>
+    </div>
+    {% else %}
+    <div class="category-card" style="margin-bottom: 24px; align-items: flex-start; text-align: left;">
+        <h3>6. Legal Awareness</h3>
+        <p>Launching a DoS attack is not a prank. In India, such acts can be treated as cyber offences under the Information Technology Act, 2000.</p>
+        <div class="categories-grid" style="margin-top: 12px;">
+            {% for item in attack.legal_awareness %}
+            <div class="category-card" style="align-items: flex-start; text-align: left;">
+                <h3>{{ item.title }}</h3>
+                <p style="margin-top: 8px; color: var(--light-text);">{{ item.detail }}</p>
+                <p style="margin-top: 8px; font-weight: 700; color: var(--dark-text);">Penalty: {{ item.penalty }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+<!-- 
+    <div class="category-card" style="margin-bottom: 24px; align-items: flex-start; text-align: left;">
+        <h3>{% if attack_id == 'website-defacement' %}7. Emergency Reporting Options{% else %}8. Emergency Reporting Options{% endif %}</h3>
+        <div class="categories-grid" style="margin-top: 12px;">
+            {% for option in attack.emergency_options %}
+            <div class="category-card" style="align-items: flex-start; text-align: left;">
+                <h3>{{ option.title }}</h3>
+                <p style="margin-top: 8px; color: var(--light-text);">{{ option.detail }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div> -->
+
+    <div class="category-card" style="margin-bottom: 24px; align-items: flex-start; text-align: left;">
+        <h3>If You Become a Victim</h3>
+        <ul style="padding-left: 16px; color: var(--light-text); margin-top: 10px;">
+            {% for step in attack.victim_steps %}
+            <li>{{ step }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if attack_id != 'dos-attack' and attack_id != 'website-defacement' %}
+    <div class="section-header" style="margin-bottom: 30px; text-align: left; max-width: 100%;">
+        <h3>What is this Attack?</h3>
+        <p>{{ attack.definition }}</p>
+    </div>
+
+    <div class="categories-grid" style="margin-bottom: 30px;">
+        <div class="category-card" style="align-items: flex-start; text-align: left;">
+            <h3>Definition</h3>
+            <p>{{ attack.definition }}</p>
+        </div>
+        <div class="category-card" style="align-items: flex-start; text-align: left;">
+            <h3>How it works</h3>
+            <ul style="padding-left: 16px; color: var(--light-text);">
+                {% for step in attack.how_it_works %}
+                <li>{{ step }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="category-card" style="align-items: flex-start; text-align: left;">
+            <h3>Where it happens</h3>
+            <p>{{ attack.where_it_happens | join(', ') }}</p>
+        </div>
+        <div class="category-card" style="align-items: flex-start; text-align: left;">
+            <h3>Who is targeted</h3>
+            <p>{{ attack.targeted | join(', ') }}</p>
+        </div>
+    </div>
+
+    <div class="section-header" style="margin-bottom: 24px; text-align: left; max-width: 100%;">
+        <h3>Real-Life Scenario</h3>
+        <p>{{ attack.scenario }}</p>
+    </div>
+
+    <div class="category-card" style="margin-bottom: 30px; align-items: flex-start; text-align: left;">
+        <h3>Interactive Story</h3>
+        <p>Choose the safer action and see what could happen.</p>
+        <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 12px;">
+            {% for choice in attack.story_choices %}
+            <div class="category-card" style="padding: 16px; margin: 0; min-width: 220px;">
+                <strong>{{ choice.label }}</strong>
+                <p style="margin-top: 8px; font-size: 0.92rem; color: var(--light-text);">{{ choice.outcome }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="category-card" style="margin-bottom: 30px; align-items: flex-start; text-align: left;">
+        <h3>Spot the Mistake</h3>
+        <p>{{ attack.mistake_scenario }}</p>
+        <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 12px;">
+            {% for option in attack.mistake_choices %}
+            <div class="category-card" style="padding: 16px; margin: 0; min-width: 240px;">
+                <strong>{{ option.label }}</strong>
+                <p style="margin-top: 8px; font-size: 0.92rem; color: var(--light-text);">{{ option.feedback }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="category-card" style="margin-bottom: 30px; align-items: flex-start; text-align: left;">
+        <h3>True or False Quiz</h3>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+            {% for item in attack.quiz_questions %}
+            <div style="padding: 12px 14px; border: 1px solid rgba(101, 146, 135, 0.15); border-radius: 12px; background: rgba(101, 146, 135, 0.04);">
+                <strong>{{ item.question }}</strong>
+                <p style="margin-top: 6px; color: var(--light-text);">Answer: {{ item.answer }}. {{ item.explanation }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="category-card" style="margin-bottom: 30px; align-items: flex-start; text-align: left;">
+        <h3>Videos</h3>
+        <div class="categories-grid" style="margin-top: 12px;">
+            {% for video in attack.videos %}
+            <div class="category-card" style="align-items: flex-start; text-align: left;">
+                <h3>{{ video.title }}</h3>
+                <p style="margin-top: 8px; color: var(--light-text);">Duration: {{ video.duration }}</p>
+                <a href="{{ video.url }}" target="_blank" class="explore-btn" style="margin-top: 12px; display: inline-flex; align-items: center; gap: 8px; color: var(--primary-color); font-weight: 700; text-decoration: none;">Watch <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section-header" style="margin-bottom: 24px; text-align: left; max-width: 100%;">
+        <h3>Prevention Tips</h3>
+    </div>
+    <div class="categories-grid" style="margin-bottom: 30px;">
+        {% for tip in attack.prevention_tips %}
+        <div class="category-card" style="align-items: flex-start; text-align: left;">
+            <p><i class="fa-solid fa-check-circle" style="color: var(--success-color); margin-right: 8px;"></i>{{ tip }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="category-card" style="margin-bottom: 30px; align-items: flex-start; text-align: left;">
+        <h3>Quick Knowledge Check</h3>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+            {% for item in attack.quick_questions %}
+            <div style="padding: 12px 14px; border: 1px solid rgba(101, 146, 135, 0.15); border-radius: 12px; background: rgba(101, 146, 135, 0.04);">
+                <strong>{{ item.question }}</strong>
+                <p style="margin-top: 6px; color: var(--light-text);">Correct answer: {{ item.answer }}. {{ item.explanation }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="category-card" style="margin-bottom: 30px; align-items: flex-start; text-align: left;">
+        <h3>If You Become a Victim</h3>
+        <ul style="padding-left: 16px; color: var(--light-text); margin-top: 10px;">
+            {% for step in attack.victim_steps %}
+            <li>{{ step }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</main>
+
+<script>
+    const cartoonLines = {{ attack.cartoon_conversation|tojson }};
+    const cartoonText = document.getElementById('cartoon-text');
+    const cartoonProgress = document.getElementById('cartoon-progress');
+    const nextCartoonBtn = document.getElementById('next-cartoon');
+    const cartoonQuestions = document.getElementById('cartoon-questions');
+    const cartoonEnding = document.getElementById('cartoon-ending');
+    let cartoonIndex = 0;
+
+    if (cartoonLines && cartoonText) {
+        const showCartoonLine = () => {
+            if (cartoonIndex < cartoonLines.length) {
+                const line = cartoonLines[cartoonIndex];
+                cartoonText.textContent = `${line.speaker}: ${line.line}`;
+                cartoonProgress.style.width = `${Math.round((cartoonIndex + 1) / cartoonLines.length * 100)}%`;
+                cartoonIndex += 1;
+                if (cartoonIndex === cartoonLines.length) {
+                    cartoonQuestions.style.display = 'block';
+                    cartoonEnding.style.display = 'block';
+                    nextCartoonBtn.style.display = 'none';
+                }
+            }
+        };
+
+        nextCartoonBtn.addEventListener('click', showCartoonLine);
+        showCartoonLine();
+
+        document.querySelectorAll('#cartoon-questions .sim-option').forEach(button => {
+            button.addEventListener('click', () => {
+                const feedback = button.parentElement.nextElementSibling;
+                const isCorrect = button.getAttribute('data-answer') === 'correct' || button.getAttribute('data-answer') === 'yes';
+                feedback.style.display = 'block';
+                feedback.innerHTML = isCorrect ? '✅ Correct! Great job.' : '❌ Try again. The safer answer is the one that protects the website.';
+                feedback.style.color = isCorrect ? 'var(--success-color)' : '#b33939';
+                if (isCorrect) {
+                    const confetti = document.createElement('div');
+                    confetti.innerHTML = '🎉';
+                    confetti.style.position = 'absolute';
+                    confetti.style.right = '12px';
+                    confetti.style.top = '12px';
+                    confetti.style.fontSize = '1.5rem';
+                    button.closest('.quiz-item').appendChild(confetti);
+                }
+            });
+        });
+    }
+
+    const simulateBtn = document.getElementById('simulate-btn');
+    const simStatus = document.getElementById('sim-status');
+    const simOptionGroup = document.getElementById('sim-option-group');
+    const simFeedback = document.getElementById('sim-feedback');
+    const explanationBox = document.getElementById('dos-explanation');
+
+    if (simulateBtn) {
+        simulateBtn.addEventListener('click', () => {
+            simStatus.textContent = 'Server Busy — request timed out';
+            simStatus.style.color = '#b33939';
+            simOptionGroup.style.display = 'grid';
+            simFeedback.style.display = 'none';
+            if (explanationBox) {
+                explanationBox.style.display = 'none';
+            }
+        });
+
+        document.querySelectorAll('.sim-option').forEach(button => {
+            button.addEventListener('click', () => {
+                const isCorrect = button.getAttribute('data-correct') === 'true';
+                simFeedback.style.display = 'block';
+                simFeedback.innerHTML = `<strong>${isCorrect ? 'Correct!' : 'Not quite.'}</strong> ${button.getAttribute('data-feedback')}`;
+                simFeedback.style.background = isCorrect ? 'rgba(75, 128, 98, 0.12)' : 'rgba(179, 57, 57, 0.1)';
+                simFeedback.style.color = isCorrect ? 'var(--success-color)' : '#b33939';
+                if (explanationBox) {
+                    explanationBox.style.display = 'block';
+                }
+                simOptionGroup.style.display = 'none';
+            });
+        });
+    }
+
+</script>
+{% endblock %}

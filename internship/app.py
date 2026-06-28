@@ -26,6 +26,342 @@ CATEGORIES = {
     }
 }
 
+HACKING_ATTACKS = {
+    'dos-attack': {
+        'title': 'DoS Attack',
+        'desc': 'Understand how attackers overload a system to make it unavailable.',
+        'icon': 'fa-solid fa-burst',
+        'class': 'color-hac',
+        'definition': 'A Denial of Service attack floods a website or service with so much traffic that real users cannot access it.',
+        'how_it_works': [
+            'Attackers send thousands of fake requests to overload a server.',
+            'The target becomes too slow or crashes under the pressure.',
+            'The aim is disruption, often to pressure a business or gain attention.'
+        ],
+        'where_it_happens': ['School portals', 'Online stores', 'Government websites', 'Game servers'],
+        'targeted': ['Schools', 'Small businesses', 'Public services', 'Online platforms'],
+        'scenario': 'A school exam portal receives thousands of fake requests before the test starts, and students cannot log in.',
+        'simulation_prompt': 'Try opening a school website. What do you think is happening?',
+        'simulation_options': [
+            {'text': 'Too many fake requests are hitting the server at once.', 'correct': True, 'feedback': 'Correct. This is a classic DoS overload.'},
+            {'text': 'The website turned off for the day.', 'correct': False, 'feedback': 'That is unlikely. The site is still being flooded by requests.'},
+            {'text': 'The internet itself is broken.', 'correct': False, 'feedback': 'Not always. The problem is often the server getting overwhelmed.'}
+        ],
+        'game_requests': [
+            {'text': 'A real student opens the portal once to log in.', 'expected': 'legitimate', 'feedback': 'This is a normal, legitimate request.'},
+            {'text': 'A bot sends 20,000 requests every second to slow the site.', 'expected': 'fake', 'feedback': 'This is a fake or harmful request designed to overload the system.'},
+            {'text': 'A teacher checks attendance from a trusted device.', 'expected': 'legitimate', 'feedback': 'That is a normal request from a real user.'},
+            {'text': 'A script repeatedly refreshes the page to create traffic pressure.', 'expected': 'fake', 'feedback': 'This is suspicious and can be part of a denial attack.'}
+        ],
+        'quiz_questions': [
+            {'question': 'A DoS attack mainly aims to make a website unavailable.', 'answer': 'true', 'explanation': 'True. The goal is disruption and downtime.'},
+            {'question': 'A larger number of requests can slow or crash a server.', 'answer': 'true', 'explanation': 'True. Too much traffic overwhelms the server.'},
+            {'question': 'A DoS attack is the same thing as a normal traffic spike during a sale.', 'answer': 'false', 'explanation': 'False. A safe traffic spike is normal; a DoS attack is deliberate overload.'}
+        ],
+        'videos': [
+            {'title': 'How a DDoS attack works', 'duration': '2:15', 'category': 'Real awareness video', 'url': 'https://www.youtube.com/watch?v=H3uLMa1ErM4'},
+            {'title': 'Simple animation: why servers crash', 'duration': '1:40', 'category': 'AI-generated explainer', 'url': 'https://www.youtube.com/watch?v=EJf4H7rYJw0'}
+        ],
+        'prevention_tips': ['Use traffic monitoring and rate limits', 'Keep backup servers ready', 'Watch for unusual traffic spikes', 'Update security tools and firewalls'],
+        'legal_awareness': [
+            {'title': 'Section 43', 'detail': 'Unauthorized access, damage to computer systems, or causing disruption can be treated as a civil and criminal offence under the IT Act.', 'penalty': 'May lead to compensation, penalties, and possible imprisonment depending on the nature of the damage.'},
+            {'title': 'Section 66', 'detail': 'Computer-related offences such as cheating, dishonesty, or fraud using a computer resource are punishable under the Act.', 'penalty': 'Can attract imprisonment up to 3 years and a fine which may extend to ₹5 lakh.'},
+            {'title': 'Section 66F', 'detail': 'Cyber terrorism includes acts that threaten the unity, integrity, security, or sovereignty of India by disrupting critical systems.', 'penalty': 'This is a very serious offence and may lead to life imprisonment.'}
+        ],
+        'emergency_options': [
+            {'title': 'National Cyber Crime Reporting Portal', 'detail': 'Report online crimes, cyber fraud, hacking, phishing, and related incidents at cybercrime.gov.in.'},
+            {'title': 'Cyber Helpline 1930', 'detail': 'Call 1930 for immediate help in financial cyber fraud and related cybercrime complaints.'}
+        ],
+        'victim_steps': ['Note the time and screenshots of the outage', 'Contact the hosting provider or IT team', 'Report the incident and review server logs'],
+        'story_choices': [
+            {'label': 'Close the site and wait', 'outcome': 'The outage spreads and students lose time before the test begins.'},
+            {'label': 'Report the issue and switch to backup access', 'outcome': 'The school keeps students informed and limits the disruption.'}
+        ],
+        'mistake_scenario': 'A website owner notices a traffic spike but waits too long to respond.',
+        'mistake_choices': [
+            {'label': 'Ignore the warning and hope it stops', 'correct': False, 'feedback': 'That makes the outage longer. Monitoring and protection help.'},
+            {'label': 'Enable rate limits and alert the team', 'correct': True, 'feedback': 'Correct. Early protection reduces the damage.'}
+        ],
+        'drag_items': [
+            {'label': 'Flood traffic', 'match': '1'},
+            {'label': 'Use backup access', 'match': '2'}
+        ],
+        'drag_zones': [
+            {'label': 'What attackers do', 'match': '1'},
+            {'label': 'What a good response looks like', 'match': '2'}
+        ],
+        'red_flags': [
+            {'label': 'Sudden traffic spike', 'correct': True, 'feedback': 'Correct. A sudden spike can indicate a DoS attempt.'},
+            {'label': 'Normal login pattern', 'correct': False, 'feedback': 'Not quite. This is not a warning sign.'}
+        ],
+        'quick_questions': [
+            {'question': 'What is the main goal of a DoS attack?', 'options': ['Steal passwords', 'Make a service unavailable', 'Create a fake website'], 'answer': 'Make a service unavailable', 'explanation': 'The goal is disruption and downtime.'}
+        ]
+    },
+    'website-defacement': {
+        'title': 'Website Defacement',
+        'desc': 'Learn how hackers change the appearance or content of websites.',
+        'icon': 'fa-solid fa-globe',
+        'class': 'color-hac',
+        'definition': 'Website defacement is when an attacker changes a web page so it displays unwanted messages, images, or fake content.',
+        'how_it_works': [
+            'Attackers exploit weak passwords, outdated plugins, or security flaws.',
+            'They change the page content to spread a message or cause embarrassment.',
+            'The attack often damages trust and may also expose other weaknesses.'
+        ],
+        'where_it_happens': ['News websites', 'School portals', 'Personal blogs', 'Company websites'],
+        'targeted': ['Organizations', 'Public groups', 'Small businesses', 'Individuals'],
+        'scenario': 'A student group website is replaced with a fake political message, leaving visitors confused and concerned.',
+        'story_choices': [
+            {'label': 'Ignore it and keep the page live', 'outcome': 'The message stays visible and the damage grows.'},
+            {'label': 'Restore a backup and secure the login', 'outcome': 'The site is brought back safely and future attacks become harder.'}
+        ],
+        'mistake_scenario': 'A page owner uses the same password on the website and email account.',
+        'mistake_choices': [
+            {'label': 'Use a strong, unique password', 'correct': True, 'feedback': 'Correct. Unique passwords make account takeover harder.'},
+            {'label': 'Reuse the same password everywhere', 'correct': False, 'feedback': 'That increases the chance of a breach.'}
+        ],
+        'quiz_questions': [
+            {'question': 'Website defacement changes a page’s contents without permission.', 'answer': 'true', 'explanation': 'True. The attacker alters the visible content.'},
+            {'question': 'Defacement only affects the website’s design and not the owner’s reputation.', 'answer': 'false', 'explanation': 'False. It can damage trust and credibility.'}
+        ],
+        'drag_items': [
+            {'label': 'Weak admin password', 'match': '1'},
+            {'label': 'Restore backup', 'match': '2'}
+        ],
+        'drag_zones': [
+            {'label': 'Common cause', 'match': '1'},
+            {'label': 'Safe response', 'match': '2'}
+        ],
+        'red_flags': [
+            {'label': 'Unexpected page messages', 'correct': True, 'feedback': 'Correct. Strange messages are a common sign.'},
+            {'label': 'Normal website footer', 'correct': False, 'feedback': 'Not quite. That is expected and harmless.'}
+        ],
+        'videos': [
+            {'title': 'What is website defacement?', 'duration': '1:30', 'url': 'https://www.youtube.com/watch?v=0f4f5tM5w3I'},
+            {'title': 'Protecting websites from defacement', 'duration': '2:00', 'url': 'https://www.youtube.com/watch?v=98aJv4mTQ0k'}
+        ],
+        'prevention_tips': ['Use strong admin passwords', 'Update plugins and themes regularly', 'Keep website backups'],
+        'cartoon_conversation': [
+            {'speaker': '🦝 Mischief Raccoon', 'line': "Oops! I painted over a company's homepage. Now it says 'Welcome to the Banana Kingdom! 🍌😂'", 'type': 'start'},
+            {'speaker': '🦉 Wise Owl', 'line': "That's called Website Defacement. Changing a website without permission isn't a harmless prank.", 'type': 'reply'},
+            {'speaker': '🦝 Mischief Raccoon', 'line': 'But I only changed the logo and added dancing bananas!', 'type': 'reply'},
+            {'speaker': '🦉 Wise Owl', 'line': 'Even small changes can confuse visitors, damage trust, and make people think the website is not safe.', 'type': 'reply'},
+            {'speaker': '🦝 Mischief Raccoon', 'line': "Imagine visiting your school's website and seeing 'Today is Pizza Day Forever!' 🍕😂", 'type': 'reply'},
+            {'speaker': '🦉 Wise Owl', 'line': 'Exactly! People would not know what is real anymore.', 'type': 'reply'},
+            {'speaker': '🦝 Mischief Raccoon', 'line': 'So how do websites stop silly raccoons like me?', 'type': 'reply'},
+            {'speaker': '🦉 Wise Owl', 'line': 'Strong passwords, regular updates, secure backups, limited admin access, and Multi-Factor Authentication help keep websites safe.', 'type': 'reply'},
+            {'speaker': '🦝 Mischief Raccoon', 'line': "Aww... cybersecurity ruins all my funny ideas!", 'type': 'reply'},
+            {'speaker': '🦉 Wise Owl', 'line': 'That is because cybersecurity protects everyone.', 'type': 'end'}
+        ],
+        'quiz_questions': [
+            {'question': 'Is changing a website logo without permission website defacement?', 'options': ['Yes', 'No'], 'answer': 'Yes', 'explanation': 'Yes. Changing a website without permission is defacement.'},
+            {'question': 'Which helps protect a website?', 'options': ['Strong passwords and regular updates', 'Password: 123456', 'Ignore updates'], 'answer': 'Strong passwords and regular updates', 'explanation': 'Good security practices keep websites safer.'},
+            {'question': 'If you notice a website has changed without permission, what should you do?', 'options': ['Inform the website administrator', 'Ignore it', 'Share it as a joke'], 'answer': 'Inform the website administrator', 'explanation': 'Reporting the issue helps the owner fix it quickly.'}
+        ],
+        'quick_questions': [
+            {'question': 'What is a common cause of website defacement?', 'options': ['Strong passwords', 'Outdated plugins', 'Regular backups'], 'answer': 'Outdated plugins', 'explanation': 'Old software often contains known security weaknesses.'}
+        ],
+        'victim_steps': ['Take screenshots of the changes', 'Restore the site from a trusted backup', 'Update passwords and security settings']
+    },
+    'malware-attack': {
+        'title': 'Malware Attack',
+        'desc': 'Explore viruses, worms, ransomware, spyware, and trojans.',
+        'icon': 'fa-solid fa-virus-covid',
+        'class': 'color-hac',
+        'definition': 'Malware is a broad term for harmful software that damages systems, steals data, or locks files.',
+        'how_it_works': [
+            'A malicious file or link is downloaded or opened.',
+            'The software installs itself and starts harming the device.',
+            'It can steal passwords, encrypt files, or monitor activity.'
+        ],
+        'where_it_happens': ['Email attachments', 'Fake downloads', 'USB drives', 'Compromised websites'],
+        'targeted': ['Individuals', 'Offices', 'Schools', 'Banks'],
+        'scenario': 'A student downloads a cracked game from an unknown site and later finds their passwords stolen.',
+        'story_choices': [
+            {'label': 'Install the game and hope it is safe', 'outcome': 'The malware enters the device and begins stealing data.'},
+            {'label': 'Use a trusted source and scan the file', 'outcome': 'The risk is reduced and the student stays safer.'}
+        ],
+        'mistake_scenario': 'A user downloads software from a pop-up ad and clicks any button to continue.',
+        'mistake_choices': [
+            {'label': 'Avoid unfamiliar downloads', 'correct': True, 'feedback': 'Correct. Unknown downloads often carry malware.'},
+            {'label': 'Download everything from pop-ups', 'correct': False, 'feedback': 'That is risky and can infect the device.'}
+        ],
+        'quiz_questions': [
+            {'question': 'Malware includes viruses and ransomware.', 'answer': 'true', 'explanation': 'True. Malware is a broad class of harmful software.'},
+            {'question': 'A trusted-looking pop-up is always safe.', 'answer': 'false', 'explanation': 'False. Pop-ups can be used to trick users into installing malware.'}
+        ],
+        'drag_items': [
+            {'label': 'Ransomware', 'match': '1'},
+            {'label': 'Antivirus scan', 'match': '2'}
+        ],
+        'drag_zones': [
+            {'label': 'Harmful software', 'match': '1'},
+            {'label': 'Safe response', 'match': '2'}
+        ],
+        'red_flags': [
+            {'label': 'Unknown installer file', 'correct': True, 'feedback': 'Correct. Unknown installers are a top risk.'},
+            {'label': 'Official app store download', 'correct': False, 'feedback': 'Not quite. Official sources are safer.'}
+        ],
+        'videos': [
+            {'title': 'What is malware?', 'duration': '2:00', 'url': 'https://www.youtube.com/watch?v=Rj2EipOQvxc'},
+            {'title': 'How ransomware works', 'duration': '1:50', 'url': 'https://www.youtube.com/watch?v=2x5v3R4GfU0'}
+        ],
+        'prevention_tips': ['Install antivirus software', 'Keep software updated', 'Avoid pirated or untrusted downloads'],
+        'quick_questions': [
+            {'question': 'Which file source is most risky?', 'options': ['Official app store', 'Trusted school portal', 'Unknown website download'], 'answer': 'Unknown website download', 'explanation': 'Unknown downloads are a common source of malware.'}
+        ],
+        'victim_steps': ['Disconnect from the internet', 'Run a full antivirus scan', 'Change passwords and report the incident']
+    },
+    'data-theft': {
+        'title': 'Data Theft',
+        'desc': 'Understand how personal and confidential information is stolen.',
+        'icon': 'fa-solid fa-lock',
+        'class': 'color-hac',
+        'definition': 'Data theft is the unauthorized access or taking of personal, financial, or confidential information.',
+        'how_it_works': [
+            'Attackers use phishing, malware, or weak systems to collect information.',
+            'They may steal account credentials, IDs, cards, and private messages.',
+            'The stolen data can then be sold, misused, or used for fraud.'
+        ],
+        'where_it_happens': ['Email accounts', 'Banking apps', 'Cloud storage', 'Company systems'],
+        'targeted': ['Students', 'Workers', 'Families', 'Businesses'],
+        'scenario': 'A worker clicks a fake invoice link and shares their work login, giving attackers access to company files.',
+        'story_choices': [
+            {'label': 'Give the information quickly', 'outcome': 'The attacker steals the account details and continues the breach.'},
+            {'label': 'Verify the sender and report the message', 'outcome': 'The account remains protected and the company limits the damage.'}
+        ],
+        'mistake_scenario': 'A person receives a message asking for a password to “verify the account.”',
+        'mistake_choices': [
+            {'label': 'Share it to fix the issue', 'correct': False, 'feedback': 'That gives attackers exactly what they need.'},
+            {'label': 'Ignore it and contact the real service', 'correct': True, 'feedback': 'Correct. Legitimate services do not ask for passwords by message.'}
+        ],
+        'quiz_questions': [
+            {'question': 'Phishing is a common way to steal data.', 'answer': 'true', 'explanation': 'True. Attackers trick people into revealing private information.'},
+            {'question': 'Sharing a password over message is safe if the sender says it is urgent.', 'answer': 'false', 'explanation': 'False. Never share your password with anyone.'}
+        ],
+        'drag_items': [
+            {'label': 'Steal passwords', 'match': '1'},
+            {'label': 'Enable MFA', 'match': '2'}
+        ],
+        'drag_zones': [
+            {'label': 'What attackers want', 'match': '1'},
+            {'label': 'How to protect yourself', 'match': '2'}
+        ],
+        'red_flags': [
+            {'label': 'Unexpected password request', 'correct': True, 'feedback': 'Correct. This is a strong warning sign.'},
+            {'label': 'Official support message on the real website', 'correct': False, 'feedback': 'Not quite. Real support uses verified channels.'}
+        ],
+        'videos': [
+            {'title': 'How phishing steals data', 'duration': '1:40', 'url': 'https://www.youtube.com/watch?v=R4N5Tg2k4nE'},
+            {'title': 'Data privacy basics', 'duration': '2:10', 'url': 'https://www.youtube.com/watch?v=Z1e9eT0Wn56'}
+        ],
+        'prevention_tips': ['Use MFA on important accounts', 'Never share OTPs or passwords', 'Watch for phishing emails and links'],
+        'quick_questions': [
+            {'question': 'What should you do if a message asks for your password?', 'options': ['Share it quickly', 'Ignore it and verify through the official channel', 'Reply with the password again'], 'answer': 'Ignore it and verify through the official channel', 'explanation': 'Legitimate services will never ask for passwords over chat.'}
+        ],
+        'victim_steps': ['Change the affected passwords immediately', 'Check bank and account activity', 'Report the incident and secure recovery options']
+    },
+    'data-alteration': {
+        'title': 'Data Alteration',
+        'desc': 'Learn how hackers modify or manipulate digital information.',
+        'icon': 'fa-solid fa-pen-to-square',
+        'class': 'color-hac',
+        'definition': 'Data alteration means changing information in a system so it becomes false, misleading, or harmful.',
+        'how_it_works': [
+            'Attackers gain access to files, records, or online forms.',
+            'They modify the information for fraud, disruption, or personal gain.',
+            'The changed data can mislead people and damage decisions.'
+        ],
+        'where_it_happens': ['Student records', 'Company databases', 'Online forms', 'Financial systems'],
+        'targeted': ['Schools', 'Offices', 'Hospitals', 'Governments'],
+        'scenario': 'A school record is changed so a student appears to have failed classes they never missed.',
+        'story_choices': [
+            {'label': 'Accept the changed record without checking', 'outcome': 'The false data causes confusion and stress.'},
+            {'label': 'Verify the record and report the change', 'outcome': 'The school corrects the issue and protects the data.'}
+        ],
+        'mistake_scenario': 'An office allows staff to edit sensitive records without approval.',
+        'mistake_choices': [
+            {'label': 'Set approval rules and audit access', 'correct': True, 'feedback': 'Correct. Controlled access limits tampering.'},
+            {'label': 'Let anyone edit the records', 'correct': False, 'feedback': 'That makes data manipulation easier.'}
+        ],
+        'quiz_questions': [
+            {'question': 'Data alteration means changing information without permission.', 'answer': 'true', 'explanation': 'True. It involves unauthorized modification of data.'},
+            {'question': 'Changing a school record is always harmless if the change is small.', 'answer': 'false', 'explanation': 'False. Even small changes can have serious consequences.'}
+        ],
+        'drag_items': [
+            {'label': 'Alter records', 'match': '1'},
+            {'label': 'Review audit logs', 'match': '2'}
+        ],
+        'drag_zones': [
+            {'label': 'What attackers do', 'match': '1'},
+            {'label': 'What a defender should do', 'match': '2'}
+        ],
+        'red_flags': [
+            {'label': 'Unexpected changes to files', 'correct': True, 'feedback': 'Correct. That is a clear warning sign.'},
+            {'label': 'A well-documented backup history', 'correct': False, 'feedback': 'Not quite. Good backups are a protection measure.'}
+        ],
+        'videos': [
+            {'title': 'Data integrity and tampering', 'duration': '1:45', 'url': 'https://www.youtube.com/watch?v=J9m9z5MHoA0'},
+            {'title': 'Secure record keeping', 'duration': '1:55', 'url': 'https://www.youtube.com/watch?v=Y1cT4fZ5L2M'}
+        ],
+        'prevention_tips': ['Use access controls', 'Keep audit logs', 'Verify sensitive records regularly'],
+        'quick_questions': [
+            {'question': 'What helps detect data tampering?', 'options': ['Audit logs', 'Ignoring the issue', 'Sharing passwords'], 'answer': 'Audit logs', 'explanation': 'Audit logs show who changed information and when.'}
+        ],
+        'victim_steps': ['Identify the altered data', 'Restore from a trusted backup', 'Report the change and review permissions']
+    },
+    'misc-hacking-techniques': {
+        'title': 'Miscellaneous Hacking Techniques',
+        'desc': 'Discover other common cyber attacks and hacking methods.',
+        'icon': 'fa-solid fa-shield-halved',
+        'class': 'color-hac',
+        'definition': 'This category covers other common hacking methods such as phishing, social engineering, and credential stuffing.',
+        'how_it_works': [
+            'Attackers use human trust and weak security habits to gain access.',
+            'They may send convincing messages, exploit reused passwords, or create urgency.',
+            'The goal is to trick someone into giving access or data.'
+        ],
+        'where_it_happens': ['Emails', 'Messages', 'Phone calls', 'Fake websites'],
+        'targeted': ['Everyone', 'Families', 'Students', 'Businesses'],
+        'scenario': 'A fake support caller pressures a family member to share an account code, but the family member pauses and checks the real number.',
+        'story_choices': [
+            {'label': 'Share the code to be helpful', 'outcome': 'The attacker gains access and causes harm.'},
+            {'label': 'Pause, verify, and choose a safe response', 'outcome': 'The family member avoids the scam and protects the account.'}
+        ],
+        'mistake_scenario': 'A user receives a message that says their account will be deleted unless they act immediately.',
+        'mistake_choices': [
+            {'label': 'Act immediately without checking', 'correct': False, 'feedback': 'That is exactly what attackers want.'},
+            {'label': 'Slow down and verify through the official app', 'correct': True, 'feedback': 'Correct. Calm verification is safer.'}
+        ],
+        'quiz_questions': [
+            {'question': 'Social engineering uses human trust and pressure to trick people.', 'answer': 'true', 'explanation': 'True. It targets behavior rather than just technology.'},
+            {'question': 'Urgency is a sign that a request might be legitimate.', 'answer': 'false', 'explanation': 'False. Attackers often use urgency to rush people into mistakes.'}
+        ],
+        'drag_items': [
+            {'label': 'Social engineering', 'match': '1'},
+            {'label': 'Verify through official channels', 'match': '2'}
+        ],
+        'drag_zones': [
+            {'label': 'Attack method', 'match': '1'},
+            {'label': 'Safe response', 'match': '2'}
+        ],
+        'red_flags': [
+            {'label': 'Urgent account warning', 'correct': True, 'feedback': 'Correct. Attackers use urgency to create panic.'},
+            {'label': 'A trusted message from the official app', 'correct': False, 'feedback': 'Not quite. Real alerts come from verified channels.'}
+        ],
+        'videos': [
+            {'title': 'Social engineering explained', 'duration': '2:20', 'url': 'https://www.youtube.com/watch?v=9N8Q0xL4TqA'},
+            {'title': 'How to spot phishing', 'duration': '1:35', 'url': 'https://www.youtube.com/watch?v=pSha1jD8eZ0'}
+        ],
+        'prevention_tips': ['Pause before reacting to urgent messages', 'Use unique passwords', 'Verify requests through official channels'],
+        'quick_questions': [
+            {'question': 'What is a common tactic used by attackers?', 'options': ['Slow explanations', 'Urgency and fear', 'Friendly reminders'], 'answer': 'Urgency and fear', 'explanation': 'Attackers often create pressure so people make mistakes quickly.'}
+        ],
+        'victim_steps': ['Stop responding to the attacker', 'Change affected passwords', 'Report the incident and secure your accounts']
+    }
+}
+
 # Scenario to category mapping and next link configuration
 SCENARIOS = {
     'sms-lottery': {'category': 'financial', 'next': 'email-bank'},
@@ -884,6 +1220,19 @@ def financial_fraud_detail(fraud_id):
     if fraud_id == 'card-fraud':
         return render_template('card_fraud_interactive.html', fraud_id=fraud_id, fraud=fraud)
     return render_template('financial_fraud_interactive.html', fraud_id=fraud_id, fraud=fraud)
+
+@app.route('/hacking-attacks')
+def hacking_attacks():
+    return render_template('hacking_attacks.html', attacks=HACKING_ATTACKS)
+
+@app.route('/hacking-attacks/<attack_id>')
+def hacking_attack_detail(attack_id):
+    if attack_id not in HACKING_ATTACKS:
+        abort(404)
+    attack = HACKING_ATTACKS[attack_id]
+    if attack_id == 'malware-attack':
+        return render_template('malware_attack_interactive.html', attack_id=attack_id, attack=attack)
+    return render_template('hacking_attack_detail.html', attack_id=attack_id, attack=attack)
 
 @app.route('/category/<name>')
 def category_view(name):
